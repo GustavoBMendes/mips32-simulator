@@ -4,6 +4,7 @@
 #define memCapacity 536870912
 
 extern unsigned char *memory;
+extern unsigned char *palavra;
 
 void inicializeMemory();
 void readFromMemory();
