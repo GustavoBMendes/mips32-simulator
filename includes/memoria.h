@@ -7,8 +7,8 @@ extern unsigned char *memory;
 extern unsigned char *palavra;
 
 void inicializeMemory();
-void readFromMemory();
-void writeInMemory();
+void readFromMemory(int);
+void writeInMemory(int);
 void printMemory();
 
 
