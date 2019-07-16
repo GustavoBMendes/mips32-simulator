@@ -61,7 +61,6 @@ void writeInMemory(int endereco){
 
         int i;
         for(i = 0; i < 4; i++){
-
             memory[endereco + i] = palavra[i];
         }
     }
