@@ -3,6 +3,8 @@
 
 #define memCapacity 536870912
 
+#include "barramento.h"
+
 extern unsigned char *memory;
 extern unsigned char *palavra;
 

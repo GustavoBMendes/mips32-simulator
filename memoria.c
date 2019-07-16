@@ -1,5 +1,5 @@
 /*!
- * @header memory.c
+ * @header memoria.c
  * @author Luiz Joaquim Aderaldo Amichi <ra90568@uem.br>
  * @author Gustavo Belançon Mendes <ra99037@uem.br>
  * @author Fernando Silva Silvério <ra98936@uem.br>
@@ -19,7 +19,7 @@ unsigned char *memory;
 unsigned char *palavra;
 
 /*
- * @function alocar
+ * @function inicializeMemory()
  * @abstract FUNÇÃO QUE ALOCA ESPAÇO PARA A MEMÓRIA PRINCIPAL
  * E PARA A PALAVRA AUXILIAR
  */
@@ -30,7 +30,7 @@ void inicializeMemory(){
 }
 
 /*
- * @function ler
+ * @function readFromMemory(int endereco)
  * @abstract FUNÇÃO PARA REALIZAR A LEITURA DA MEMÓRIA
  * LEITURA REALIZADA POR PALAVRA
  * RETORNA OS 4 BYTES CONSECUTIVOS A PARTIR DO ENDEREÇO PASSADO COMO PARÂMETRO
@@ -45,7 +45,7 @@ void readFromMemory(int endereco){
             palavra[i] = memory[endereco + i];
         }
 
-        //caso implementarmos um barramento, inserir palavra no barramento
+        inserirNoBarramento(palavra);
     }
 
     else
@@ -53,13 +53,20 @@ void readFromMemory(int endereco){
     
 }
 
+/*
+ * @function writeInMemory(int endereco)
+ * @abstract FUNÇÃO PARA REALIZAR UMA ESCRITA NA MEMÓRIA
+ * PALAVRAS DE 32 BITS (4 BYTES)
+ * ESCRITA 4 BYTES EM UM ENDEREÇO PASSADO COMO PARÂMETRO
+ */
 void writeInMemory(int endereco){
 
     if(endereco % 4 == 0){
 
-        //caso implementarmos um barramento, fazer um for para pegar a palavra do barramento
-
         int i;
+
+        palavra = recuperarNoBarramento();
+        
         for(i = 0; i < 4; i++){
             memory[endereco + i] = palavra[i];
         }
@@ -69,6 +76,12 @@ void writeInMemory(int endereco){
         printf("Não foi possível acessar este endereço de memória");
 }
 
+/*
+ * @function printMemory()
+ * @abstract FUNÇÃO PARA REALIZAR UMA ESCRITA NA MEMÓRIA
+ * PALAVRAS DE 32 BITS (4 BYTES)
+ * ESCRITA 4 BYTES EM UM ENDEREÇO PASSADO COMO PARÂMETRO
+ */
 void printMemory(){
 
     int i;

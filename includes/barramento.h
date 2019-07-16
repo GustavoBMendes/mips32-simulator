@@ -6,7 +6,10 @@
 #include <stdlib.h>
 #include "memoria.h"
 
-extern unsigned char biuMemToProcessor[4];
+/*
+ * BARRAMENTO QUE FAZ A CONEXÃO ENTRE O PROCESSADOR E A MEMÓRIA
+ */
+extern unsigned char biu[4];
 
 void inserirNoBarramento(unsigned char*);
 unsigned char* recuperarNoBarramento();
