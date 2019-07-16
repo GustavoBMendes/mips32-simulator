@@ -1,5 +1,5 @@
-#ifndef RESGISTERS_H
-
+#ifndef REGISTERS_H
+#define REGISTERS_H
 //Mudar para o tipo adequado para o vetor
 extern unsigned int reg[32];
 
