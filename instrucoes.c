@@ -95,13 +95,20 @@ void lui(int regDestino, int imediato){
 void madd(int regOrigem1, int regOrigem2, int regAcumulador){
     regAcumulador += regOrigem1 * regOrigem2;
 }
-
-void mfhi(){
-    //conceito de HI e LO atrapalha aqui
+/*
+* @function mfhi(int HI, int regOrigem1)
+* @abstract Move o conteúdo do registrador especial HI para o registrador de origem   
+*/
+void mfhi(int regOrigem1, int HI){
+    regOrigem1 = HI;
 }
-
-void mflo(){
-    //conceito de HI e LO atrapalha aqui
+/*
+* @function mflo(int LO, int regOrigem1)
+* @abstract Move o conteúdo do registrador especial LO para o registrador de origem   
+*/
+void mflo(int regOrigem1, int LO){
+    
+    regOrigem1 = LO;
 }
 /*
 * @function void movn(int regDestino,int regOrigem1, int regOrigem2)
@@ -131,13 +138,19 @@ void movz(int regDestino,int regOrigem1, int regOrigem2){
 void msub(int regOrigem1, int regOrigem2, int regAcumulador){
     regAcumulador -= regOrigem1 * regOrigem2;
 }
-
-void mthi(){
-    //conceito de HI e LO atrapalha aqui
+/*
+* @function mthi(int regOrigem1, int HI)
+* @abstract Move o conteúdo do registrador de origem para o registrador especial HI 
+*/
+void mthi(int regOrigem1, int HI){
+    HI = regOrigem1;
 }
-
-void mtlo(){
-    //conceito de HI e LO atrapalha aqui
+/*
+* @function mtlo(int regOrigem1, int HI)
+* @abstract Move o conteúdo do registrador de origem para o registrador especial LO 
+*/
+void mtlo(int regOrigem1, int LO){
+    LO = regOrigem1;
 }
 /*
 * @function void mul(int regDestino,int regOrigem1, int regOrigem2)
