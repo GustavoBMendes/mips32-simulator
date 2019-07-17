@@ -13,7 +13,7 @@ void And(int regDestino,int regOrigem1, int regOrigem2);
 void andi(int regDestino,int regOrigem1, int imediato);
 void b(int PC, int offset);
 void beq(int regOrigem1,int regOrigem2,int PC, int offset);
-void beql(int regOrigem1,int regOrigem2,int PC, int offset);
+void beql(int regOrigem1,int regOrigem2,int PC, int offset); //faltou uma forma de fazer o else desse aqui
 void bgez(int regOrigem1, int PC, int offset);
 void bgtz(int regOrigem1, int PC, int offset);
 void blez(int regOrigem1, int PC, int offset);
