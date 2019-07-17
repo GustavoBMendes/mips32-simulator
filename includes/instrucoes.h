@@ -14,14 +14,14 @@ void andi(int regDestino,int regOrigem1, int imediato);
 void b(int PC, int offset);
 void beq(int regOrigem1,int regOrigem2,int PC, int offset);
 void beql(int regOrigem1,int regOrigem2,int PC, int offset);
-void bgez();
-void bgtz();
-void blez();
-void bltz();
-void bne();
-void div(int regOrigem1, int regOrigem2, int HI, int LO);
-void j();
-void jr();
+void bgez(int regOrigem1, int PC, int offset);
+void bgtz(int regOrigem1, int PC, int offset);
+void blez(int regOrigem1, int PC, int offset);
+void bltz(int regOrigem1, int PC, int offset);
+void bne(int regOrigem1,int regOrigem2,int PC, int offset);
+void div(int regOrigem1, int regOrigem2, int HI, int LO); //falta o abstract desse
+void j(); //falta esse
+void jr(); // e esse
 void lui(int regDestino, int imediato);
 void madd(int regOrigem1, int regOrigem2, int regAcumulador);
 void mfhi(int regOrigem1, int HI);

@@ -68,43 +68,57 @@ void beql(int regOrigem1,int regOrigem2,int PC, int offset){
     }
 }
 /* 
-* @function
-* @abstract .
+* @function bgez(int regOrigem1, int PC, int offset)
+* @abstract Realiza o desvio incrementando o registrador especial PC com um offset desde que o valor 
+* armazenado no registrador de origem seja maior ou igual a 0.
 */
-void bgez(){
-
+void bgez(int regOrigem1, int PC, int offset){
+    if(regOrigem1 >= 0){
+        PC += offset;
+    }
 }
 /* 
-* @function
-* @abstract .
+* @function bgtz(int regOrigem1, int PC, int offset)
+* @abstract  Realiza o desvio incrementando o registrador especial PC com um offset desde que o valor armazenado no
+* registrador de origem seja maior que 0.
 */
-void bgtz(){
-
+void bgtz(int regOrigem1, int PC, int offset){
+    if(regOrigem1 > 0){
+        PC += offset;
+    }
 }
 /* 
-* @function
-* @abstract .
+* @function blez(int regOrigem1, int PC, int offset)
+* @abstract  Realiza o desvio incrementando o registrador especial PC com um offset desde que o valor 
+* armazenado no registrador de origem seja menor ou igual a 0 .
 */
-void blez(){
-
+void blez(int regOrigem1, int PC, int offset){
+    if(regOrigem1 <= 0){
+        PC += offset;
+    }
 }
 /* 
-* @function
-* @abstract .
+* @function bltz(int regOrigem1, int PC, int offset)
+* @abstract Realiza o desvio incrementando o registrador especial PC com um offset desde que o valor armazenado no
+* registrador de origem seja menor que 0.
 */
-void bltz(){
-
+void bltz(int regOrigem1, int PC, int offset){
+    if(regOrigem1 < 0){
+        PC += offset;
+    }
 }
 /* 
-* @function
-* @abstract .
+* @function bne(int regOrigem1,int regOrigem2,int PC, int offset)
+* @abstract Realiza o desvio, incrementando o registrador especial PC em um valor de offset,
+* desde que os dois registradores de origem sejam diferentes.
 */
-void bne(){
-
+void bne(int regOrigem1,int regOrigem2,int PC, int offset){
+    if(regOrigem1 != regOrigem2){
+        PC += offset;
+    }
 }
-//não sei oq comentar nessa mas a documentação mandou fazer isso
 /* 
-* @function
+* @function div(int regOrigem1, int regOrigem2, int HI, int LO)
 * @abstract .
 */
 void div(int regOrigem1, int regOrigem2, int HI, int LO){
@@ -113,7 +127,7 @@ void div(int regOrigem1, int regOrigem2, int HI, int LO){
 }
 /* 
 * @function
-* @abstract .
+* @abstract Realiza o salto incondicional.
 */
 void j(){
 
