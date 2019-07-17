@@ -154,6 +154,10 @@ void sub(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = regOrigem1 - regOrigem2;
 }
 
+/*
+* @function void Xor(int regDestino,int regOrigem1, int regOrigem2)
+* @abstract Faz a operação lógica XOR entre os valores contidos em dois registradores de origem e a insere em um registrador de destino
+ */
 void Xor(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = regOrigem1 ^ regOrigem2;
 }
