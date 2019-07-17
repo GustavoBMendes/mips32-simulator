@@ -95,11 +95,11 @@ void madd(int regOrigem1, int regOrigem2, int regAcumulador){
 }
 
 void mfhi(){
-
+    //conceito de HI e LO atrapalha aqui
 }
 
 void mflo(){
-
+    //conceito de HI e LO atrapalha aqui
 }
 /*
 * @function void movn(int regDestino,int regOrigem1, int regOrigem2)
@@ -131,11 +131,11 @@ void msub(int regOrigem1, int regOrigem2, int regAcumulador){
 }
 
 void mthi(){
-
+    //conceito de HI e LO atrapalha aqui
 }
 
 void mtlo(){
-
+    //conceito de HI e LO atrapalha aqui
 }
 /*
 * @function void mul(int regDestino,int regOrigem1, int regOrigem2)
@@ -151,9 +151,12 @@ void mul(int regDestino,int regOrigem1, int regOrigem2){
 void mult(int regOrigem1, int regOrigem2, int regAcumulador){
     regAcumulador = regOrigem1 * regOrigem2;
 }
-
+/* 
+* @function void nop()
+* @abstract Apenas retorna uma mensagem dizendo que não há nenhuma operação a ser executada
+*/
 void nop(){
-
+    printf("Sem operação");
 }
 /*
 * @function void nor(int regDestino,int regOrigem1, int regOrigem2)
