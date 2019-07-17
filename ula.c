@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ula.h"
-#include "instrucoes.h"
+#include "includes/instrucoes.h"
 
 void ulaAdd(ula *ula_executavel){
     ula_executavel->saida_ula = ula_executavel->operando1 + ula_executavel->operando2;

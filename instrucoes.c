@@ -128,16 +128,18 @@ void div(int regOrigem1, int regOrigem2, int HI, int LO){
 /* 
 * @function
 * @abstract Realiza o salto incondicional.
+* Altera o program counter (PC) 
+* Acumulando com o endereco desejado para a próxima instrução.
 */
-void j(){
-
+void j(int PC, int endereco){
+    PC += endereco;
 }
 /* 
 * @function
-* @abstract .
+* @abstract Realiza um salto para o endereco contido no registrador especificado
 */
-void jr(){
-
+void jr(int PC, int regOrigem1){
+    PC += regOrigem1;
 }
 /* 
 * @function
