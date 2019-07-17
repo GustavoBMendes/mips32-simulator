@@ -89,13 +89,20 @@ void mfhi(){
 void mflo(){
 
 }
-
+/*
+* @abstract Movimenta o conteúdo do primeiro registrador de origem para o registrador de destino se o segundo
+* registrador de origem for diferente de 0
+*/
 void movn(int regDestino,int regOrigem1, int regOrigem2){
     if(regOrigem2 != 0){
         regDestino = regOrigem1;
     }
 }
 
+/*
+* @abstract Movimenta o conteúdo do primeiro registrador de origem para o registrador de destino se o segundo
+* registrador de origem for igual a 0
+*/
 void movz(int regDestino,int regOrigem1, int regOrigem2){
     if(regOrigem2 == 0){
         regDestino = regOrigem1;
