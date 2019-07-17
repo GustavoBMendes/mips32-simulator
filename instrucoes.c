@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "includes/instrucoes.h"
+#include "includes/registradores.h"
 
 
 //Acredito que com certeza não serão do tipo void mas isso vamos ver ainda, por enquanto meti um void
@@ -69,9 +70,10 @@ void bltz(){
 void bne(){
 
 }
-
-void div(){
-    //não entendi essa parada de Lo e Hi
+//não sei oq comentar nessa mas a documentação mandou fazer isso
+void div(int regOrigem1, int regOrigem2, int HI, int LO){
+    LO = regOrigem1 / regOrigem2;
+    HI = regOrigem1 % regOrigem2;
 }
 
 void j(){

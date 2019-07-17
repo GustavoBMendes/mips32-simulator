@@ -5,6 +5,7 @@
 
 extern unsigned int imediato;
 
+
 //Acredito que com certeza não serão do tipo void mas isso vamos ver ainda, por enquanto meti um void
 void add(int regDestino,int regOrigem1, int regOrigem2);
 void addi(int regDestino,int regOrigem1, int imediato);
@@ -18,7 +19,7 @@ void bgtz();
 void blez();
 void bltz();
 void bne();
-void div(int regOrigem1, int regOrigem2);
+void div(int regOrigem1, int regOrigem2, int HI, int LO);
 void j();
 void jr();
 void lui(int regDestino, int imediato);
