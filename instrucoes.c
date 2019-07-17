@@ -6,16 +6,16 @@
 //Falta definir os registradores que iriam entrar nas operações porém os desconheço
 //Acredito que com certeza não serão do tipo void mas isso vamos ver ainda, por enquanto meti um void
 
-void add(){
-
+void add(int regDestino,int regOrigem1, int regOrigem2){
+    regDestino = regOrigem1 + regOrigem2;
 }
 
 void addi(){
 
 }
 
-void op_and(){
-
+void And(int regDestino,int regOrigem1, int regOrigem2){
+    regDestino = regOrigem1 & regOrigem2;
 }
 
 void andi(){
@@ -55,7 +55,7 @@ void bne(){
 }
 
 void div(){
-
+    //não entendi essa parada de Lo e Hi
 }
 
 void j(){
@@ -82,12 +82,16 @@ void mflo(){
 
 }
 
-void movn(){
-
+void movn(int regDestino,int regOrigem1, int regOrigem2){
+    if(regOrigem2 != 0){
+        regDestino = regOrigem1;
+    }
 }
 
-void movz(){
-
+void movz(int regDestino,int regOrigem1, int regOrigem2){
+    if(regOrigem2 == 0){
+        regDestino = regOrigem1;
+    }
 }
 
 void msub(){
@@ -102,8 +106,8 @@ void mtlo(){
 
 }
 
-void mul(){
-
+void mul(int regDestino,int regOrigem1, int regOrigem2){
+    regDestino = regOrigem1 * regOrigem2;
 }
 
 void mult(){
@@ -114,26 +118,31 @@ void nop(){
 
 }
 
-void nor(){
-
+void nor(int regDestino,int regOrigem1, int regOrigem2){
+    regDestino = ~(regOrigem1 | regOrigem2);
 }
 
-void op_or(){
-
+void Or(int regDestino,int regOrigem1, int regOrigem2){
+    regDestino = (regOrigem1 | regOrigem2);
 }
 
 void ori(){
 
 }
 
-void sub(){
-
+void sub(int regDestino,int regOrigem1, int regOrigem2){
+    regDestino = regOrigem1 - regOrigem2;
 }
 
-void op_xor(){
-
+void Xor(int regDestino,int regOrigem1, int regOrigem2){
+    regDestino = regOrigem1 ^ regOrigem2;
 }
 
 void xori(){
 
 }
+
+//funções sem comentários significa "sim"
+
+
+//na verdade significa "sim eu não sei como implementar ainda"
