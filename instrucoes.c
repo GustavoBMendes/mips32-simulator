@@ -10,24 +10,32 @@
 /*
 * @function void add(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a soma entre os valores contidos em dois registradores de origem e a insere em um registrador de destino
- */
+*/
 void add(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = regOrigem1 + regOrigem2;
 }
-
-void addi(){
-
+/*
+* @function void addi(int regDestino,int regOrigem1, int imediato)
+* @abstract Faz a operação de soma entre os valores contidos em um registrador de origem e um imediato
+*  e a insere em um registrador de destino
+*/
+void addi(int regDestino,int regOrigem1, int imediato){
+    regDestino = regOrigem1 + imediato;
 }
 /*
 * @function void And(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a operação lógica AND entre os valores contidos em dois registradores de origem e a insere em um registrador de destino
- */
+*/
 void And(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = regOrigem1 & regOrigem2;
 }
-
-void andi(){
-
+/*
+* @function void andi(int regDestino,int regOrigem1, int imediato)
+* @abstract Faz a operação lógica AND entre os valores contidos em um registrador de origem e um imediato
+*  e a insere em um registrador de destino
+*/
+void andi(int regDestino,int regOrigem1, int imediato){
+    regDestino = regOrigem1 & imediato;
 }
 
 void b(){
@@ -74,7 +82,7 @@ void jr(){
 
 }
 
-void lui(){
+void lui(int regDestino, int imediato){
 
 }
 
@@ -123,7 +131,7 @@ void mtlo(){
 /*
 * @function void mul(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a multiplicação entre os valores contidos em dois registradores de origem e a insere em um registrador de destino
- */
+*/
 void mul(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = regOrigem1 * regOrigem2;
 }
@@ -138,25 +146,29 @@ void nop(){
 /*
 * @function void nor(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a operação lógica NOR entre os valores contidos em dois registradores de origem e a insere em um registrador de destino
- */
+*/
 void nor(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = ~(regOrigem1 | regOrigem2);
 }
 /*
 * @function void Or(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a operação lógica OR entre os valores contidos em dois registradores de origem e a insere em um registrador de destino
- */
+*/
 void Or(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = (regOrigem1 | regOrigem2);
 }
-
-void ori(){
-
+/*
+* @function void ori(int regDestino,int regOrigem1, int imediato)
+* @abstract Faz a operação lógica OR entre os valores contidos em um registrador de origem e um imediato
+*  e a insere em um registrador de destino
+*/
+void ori(int regDestino,int regOrigem1, int imediato){
+    regDestino = (regOrigem1 | imediato);
 }
 /*
 * @function void sub(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a subtração entre os valores contidos em dois registradores de origem e a insere em um registrador de destino
- */
+*/
 void sub(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = regOrigem1 - regOrigem2;
 }
@@ -164,13 +176,17 @@ void sub(int regDestino,int regOrigem1, int regOrigem2){
 /*
 * @function void Xor(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a operação lógica XOR entre os valores contidos em dois registradores de origem e a insere em um registrador de destino
- */
+*/
 void Xor(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = regOrigem1 ^ regOrigem2;
 }
-
-void xori(){
-
+/*
+* @function void xori(int regDestino,int regOrigem1, int imediato)
+* @abstract Faz a operação lógica XOR entre os valores contidos em um registrador de origem e um imediato
+*  e a insere em um registrador de destino
+*/
+void xori(int regDestino,int regOrigem1, int imediato){
+    regDestino = regOrigem1 ^ imediato;
 }
 
 //funções sem comentários significa "sim"
