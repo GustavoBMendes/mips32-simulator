@@ -2,6 +2,7 @@
 #define REGISTERS_H
 
 //Mudar para o tipo adequado para o vetor
+//Registradores de uso geral 
 extern unsigned int reg[32];
 
 #define ZERO reg[0]
@@ -36,5 +37,8 @@ extern unsigned int reg[32];
 #define SP reg[29]
 #define FP reg[30]
 #define RA reg[31]
+
+//Registradores especiais
+extern unsigned int HI, LO, PC; 
 
 #endif
