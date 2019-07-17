@@ -3,7 +3,7 @@
 #include <string.h>
 #include "includes/instrucoes.h"
 
-//Falta definir os registradores que iriam entrar nas operações porém os desconheço
+
 //Acredito que com certeza não serão do tipo void mas isso vamos ver ainda, por enquanto meti um void
 
 
@@ -83,11 +83,15 @@ void jr(){
 }
 
 void lui(int regDestino, int imediato){
-
+    regDestino = imediato << 16;
+    
 }
-
-void madd(){
-
+/* 
+* @function madd(int regOrigem1, int regOrigem2, int regAcumulador)
+* @abstract Adiciona a multiplicação entre os valores de dois registradores de origem a um registrador acumulador
+*/
+void madd(int regOrigem1, int regOrigem2, int regAcumulador){
+    regAcumulador += regOrigem1 * regOrigem2;
 }
 
 void mfhi(){
@@ -98,6 +102,7 @@ void mflo(){
 
 }
 /*
+* @function void movn(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Movimenta o conteúdo do primeiro registrador de origem para o registrador de destino se o segundo
 * registrador de origem for diferente de 0
 */
@@ -108,6 +113,7 @@ void movn(int regDestino,int regOrigem1, int regOrigem2){
 }
 
 /*
+* @function void movz(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Movimenta o conteúdo do primeiro registrador de origem para o registrador de destino se o segundo
 * registrador de origem for igual a 0
 */
@@ -116,9 +122,12 @@ void movz(int regDestino,int regOrigem1, int regOrigem2){
         regDestino = regOrigem1;
     }
 }
-
-void msub(){
-
+/* 
+* @function msub(int regOrigem1, int regOrigem2, int regAcumulador)
+* @abstract Subtrai a multiplicação entre os valores de dois registradores de origem a um registrador acumulador
+*/
+void msub(int regOrigem1, int regOrigem2, int regAcumulador){
+    regAcumulador -= regOrigem1 * regOrigem2;
 }
 
 void mthi(){
@@ -135,9 +144,12 @@ void mtlo(){
 void mul(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = regOrigem1 * regOrigem2;
 }
-
-void mult(){
-
+/* 
+* @function mult(int regOrigem1, int regOrigem2, int regAcumulador)
+* @abstract Armazena a multiplicação entre os valores de dois registradores de origem a um registrador acumulador
+*/
+void mult(int regOrigem1, int regOrigem2, int regAcumulador){
+    regAcumulador = regOrigem1 * regOrigem2;
 }
 
 void nop(){
@@ -188,8 +200,3 @@ void Xor(int regDestino,int regOrigem1, int regOrigem2){
 void xori(int regDestino,int regOrigem1, int imediato){
     regDestino = regOrigem1 ^ imediato;
 }
-
-//funções sem comentários significa "sim"
-
-
-//na verdade significa "sim eu não sei como implementar ainda"
