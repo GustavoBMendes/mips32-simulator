@@ -11,48 +11,44 @@
 #include "includes/ula.h"
 #include "includes/instrucoes.h"
 
-void ulaAdd(ula *ula_executavel){
-    ula_executavel->saida_ula = ula_executavel->operando1 + ula_executavel->operando2;
-}
+ula *ula_executavel;
 
-void ulaSub(ula *ula_executavel){
-    ula_executavel->saida_ula = ula_executavel->operando1 - ula_executavel->operando2;
-}
-
-void ulaAnd(ula *ula_executavel){
-    ula_executavel->saida_ula = ula_executavel->operando1 & ula_executavel->operando2;
-}
-
-void ulaOr(ula *ula_executavel){
-    ula_executavel->saida_ula = ula_executavel->operando1 | ula_executavel->operando2;
-}
-
-void ulaXor(ula *ula_executavel){
-    ula_executavel->saida_ula = ula_executavel->operando1 ^ ula_executavel->operando2;
-}
-
-void ulaNot(ula *ula_executavel){
-    ula_executavel->saida_ula = ~(ula_executavel->operando1);
-}
-
-void ulaLeftShift(ula *ula_executavel){
-    ula_executavel->saida_ula = ula_executavel->operando1 << ula_executavel->operando2;
-}
-
-void ulaRightShift(ula *ula_executavel){
-    ula_executavel->saida_ula = ula_executavel->operando1 >> ula_executavel->operando2;
+/*
+* @function void ulaAdd(int regDestino,int regOrigem1, int regOrigem2)
+* @abstract Executa a operação ADD através da chamada da função add() no módulo "instruções"
+*/
+void ulaAdd(){
+    ula_executavel->saida_ula = add(ula_executavel->saida_ula, ula_executavel->operando1, ula_executavel->operando2);
 }
 
 /*
-
- DIV E MULT FICARÃO EM OUTRA UNIDADE DE EXECUÇÃO
- 
-void ulaDiv(){
-
-}
-
-void ulaMult(){
-
-}
-
+* @function void ulaAnd(int regDestino,int regOrigem1, int regOrigem2)
+* @abstract Executa a operação AND através da chamada da função And() no módulo "instruções"
 */
+void ulaAnd(){
+    ula_executavel->saida_ula = And(ula_executavel->saida_ula, ula_executavel->operando1, ula_executavel->operando2);
+}
+
+/*
+* @function void ulaSub(int regDestino,int regOrigem1, int regOrigem2)
+* @abstract Executa a operação SUB através da chamada da função sub() no módulo "instruções"
+*/
+void ulaSub(){
+    ula_executavel->saida_ula = sub(ula_executavel->saida_ula, ula_executavel->operando1, ula_executavel->operando2);
+}
+
+/*
+* @function void ulaOr(int regDestino,int regOrigem1, int regOrigem2)
+* @abstract Executa a operação OR através da chamada da função Or() no módulo "instruções"
+*/
+void ulaOr(){
+    ula_executavel->saida_ula = Or(ula_executavel->saida_ula, ula_executavel->operando1, ula_executavel->operando2);
+}
+
+/*
+* @function void ulaXor(int regDestino,int regOrigem1, int regOrigem2)
+* @abstract Executa a operação XOR através da chamada da função Xor() no módulo "instruções"
+*/
+void ulaXor(){
+    ula_executavel->saida_ula = Xor(ula_executavel->saida_ula, ula_executavel->operando1, ula_executavel->operando2);
+}

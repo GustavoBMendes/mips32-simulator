@@ -9,11 +9,12 @@
 
 
 /*
-* @function void add(int regDestino,int regOrigem1, int regOrigem2)
+* @function int add(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a soma entre os valores contidos em dois registradores de origem e a insere em um registrador de destino.
 */
-void add(int regDestino,int regOrigem1, int regOrigem2){
+int add(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = regOrigem1 + regOrigem2;
+    return regDestino;
 }
 /*
 * @function void addi(int regDestino,int regOrigem1, int imediato)
@@ -27,8 +28,9 @@ void addi(int regDestino,int regOrigem1, int imediato){
 * @function void And(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a operação lógica AND entre os valores contidos em dois registradores de origem e a insere em um registrador de destino.
 */
-void And(int regDestino,int regOrigem1, int regOrigem2){
+int And(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = regOrigem1 & regOrigem2;
+    return regDestino;
 }
 /*
 * @function void andi(int regDestino,int regOrigem1, int imediato)
@@ -247,8 +249,9 @@ void nor(int regDestino,int regOrigem1, int regOrigem2){
 * @function void Or(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a operação lógica OR entre os valores contidos em dois registradores de origem e a insere em um registrador de destino.
 */
-void Or(int regDestino,int regOrigem1, int regOrigem2){
+int Or(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = (regOrigem1 | regOrigem2);
+    return regDestino;
 }
 /*
 * @function void Ori(int regDestino,int regOrigem1, int imediato)
@@ -262,16 +265,18 @@ void Ori(int regDestino,int regOrigem1, int imediato){
 * @function void sub(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a subtração entre os valores contidos em dois registradores de origem e a insere em um registrador de destino.
 */
-void sub(int regDestino,int regOrigem1, int regOrigem2){
+int sub(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = regOrigem1 - regOrigem2;
+    return regDestino;
 }
 
 /*
 * @function void Xor(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a operação lógica XOR entre os valores contidos em dois registradores de origem e a insere em um registrador de destino.
 */
-void Xor(int regDestino,int regOrigem1, int regOrigem2){
+int Xor(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = regOrigem1 ^ regOrigem2;
+    return regDestino;
 }
 /*
 * @function void Xori(int regDestino,int regOrigem1, int imediato)
