@@ -209,7 +209,7 @@ void mthi(int regOrigem1, int HI){
     HI = regOrigem1;
 }
 /*
-* @function mtlo(int regOrigem1, int HI)
+* @function mtlo(int regOrigem1, int LO)
 * @abstract Move o conteúdo do registrador de origem para o registrador especial LO .
 */
 void mtlo(int regOrigem1, int LO){

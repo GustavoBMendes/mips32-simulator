@@ -8,7 +8,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
-#include "ula.h"
+#include "includes/ula.h"
 #include "includes/instrucoes.h"
 
 void ulaAdd(ula *ula_executavel){
