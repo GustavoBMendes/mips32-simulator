@@ -7,38 +7,38 @@ extern unsigned int imediato;
 
 
 //Acredito que com certeza não serão do tipo void mas isso vamos ver ainda, por enquanto meti um void
-int add(int regDestino,int regOrigem1, int regOrigem2);
+int add(int regDestino,int regOrigem1, int regOrigem2); //adicionado a ula
 void addi(int regDestino,int regOrigem1, int imediato);
-int And(int regDestino,int regOrigem1, int regOrigem2);
+int And(int regDestino,int regOrigem1, int regOrigem2); //adicionado a ula
 void andi(int regDestino,int regOrigem1, int imediato);
-void b(int PC, int offset);
-void beq(int regOrigem1,int regOrigem2,int PC, int offset);
-void beql(int regOrigem1,int regOrigem2,int PC, int offset); //else feito
-void bgez(int regOrigem1, int PC, int offset);
-void bgtz(int regOrigem1, int PC, int offset);
-void blez(int regOrigem1, int PC, int offset);
-void bltz(int regOrigem1, int PC, int offset);
-void bne(int regOrigem1,int regOrigem2,int PC, int offset);
-void div(int regOrigem1, int regOrigem2, int HI, int LO);
-void j(int PC, int offset); //feito
-void jr(int PC, int regOrigem1); // feito
-void lui(int regDestino, int imediato);
-void madd(int regOrigem1, int regOrigem2, int regAcumulador);
-void mfhi(int HI,int regOrigem1);
-void mflo(int LO, int regOrigem1);
-void movn(int regDestino,int regOrigem1, int regOrigem2);
-void movz(int regDestino,int regOrigem1, int regOrigem2);
-void msub(int regOrigem1, int regOrigem2, int regAcumulador);
-void mthi(int regOrigem1, int HI);
-void mtlo(int regOrigem1, int LO);
-void mul(int regDestino,int regOrigem1, int regOrigem2);
-void mult(int regOrigem1, int regOrigem2, int regAcumulador);
+void b(int PC, int offset); //adicionado a OPU
+void beq(int regOrigem1,int regOrigem2,int PC, int offset); //adicionado a ula
+void beql(int regOrigem1,int regOrigem2,int PC, int offset); //adicionado a OPU
+void bgez(int regOrigem1, int PC, int offset); //adicionado a OPU
+void bgtz(int regOrigem1, int PC, int offset); //adicionado a OPU
+void blez(int regOrigem1, int PC, int offset); //adicionado a OPU
+void bltz(int regOrigem1, int PC, int offset); //adicionado a OPU
+void bne(int regOrigem1,int regOrigem2,int PC, int offset); //adicionado a OPU
+void div(int regOrigem1, int regOrigem2, int HI, int LO); //adicionado a mdu
+void j(int PC, int offset); //adicionado a OPU
+void jr(int PC, int regOrigem1); //adicionado a OPU
+void lui(int regDestino, int imediato); //revisar | adicionado a OPU
+void madd(int regOrigem1, int regOrigem2, int regAcumulador); //adicionado a mdu
+void mfhi(int HI,int regOrigem1); //adicionado a mdu
+void mflo(int LO, int regOrigem1); //adicionado a mdu
+void movn(int regDestino,int regOrigem1, int regOrigem2); //adicionado a OPU
+void movz(int regDestino,int regOrigem1, int regOrigem2); //adicionado a OPU
+void msub(int regOrigem1, int regOrigem2, int regAcumulador); //adicionado a mdu
+void mthi(int regOrigem1, int HI); //adicionado a mdu
+void mtlo(int regOrigem1, int LO); //adicionado a mdu
+void mul(int regDestino,int regOrigem1, int regOrigem2); //adicionado a mdu
+void mult(int regOrigem1, int regOrigem2, int regAcumulador); //adicionado a mdu
 void nop();
 void nor(int regDestino,int regOrigem1, int regOrigem2);
-int Or(int regDestino,int regOrigem1, int regOrigem2);
+int Or(int regDestino,int regOrigem1, int regOrigem2); //adicionado a ula
 void Ori(int regDestino,int regOrigem1, int imediato);
-int sub(int regDestino,int regOrigem1, int regOrigem2);
-int Xor(int regDestino,int regOrigem1, int regOrigem2);
+int sub(int regDestino,int regOrigem1, int regOrigem2); //adicionado a ula
+int Xor(int regDestino,int regOrigem1, int regOrigem2); //adicionado a ula
 void Xori(int regDestino,int regOrigem1, int imediato);
 
 

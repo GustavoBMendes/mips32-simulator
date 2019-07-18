@@ -69,6 +69,6 @@ void mduMthi(mdu *mdu_executavel){
 * @abstract .
 */
 void mduMtlo(mdu *mdu_executavel){
-    mthi(mdu_executavel->operando1,LO);
+    mtlo(mdu_executavel->operando1,LO);
 }
 
