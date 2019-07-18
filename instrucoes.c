@@ -25,7 +25,7 @@ void addi(int regDestino,int regOrigem1, int imediato){
     regDestino = regOrigem1 + imediato;
 }
 /*
-* @function void And(int regDestino,int regOrigem1, int regOrigem2)
+* @function int And(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a operação lógica AND entre os valores contidos em dois registradores de origem e a insere em um registrador de destino.
 */
 int And(int regDestino,int regOrigem1, int regOrigem2){
@@ -147,7 +147,7 @@ void jr(int PC, int regOrigem1){
 }
 /* 
 * @function
-* @abstract .
+* @abstract Executa um shift em 16 bits no imediato e concatena com outros 16 bits de zero.
 */
 void lui(int regDestino, int imediato){
     regDestino = imediato << 16;
@@ -246,7 +246,7 @@ void nor(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = ~(regOrigem1 | regOrigem2);
 }
 /*
-* @function void Or(int regDestino,int regOrigem1, int regOrigem2)
+* @function int Or(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a operação lógica OR entre os valores contidos em dois registradores de origem e a insere em um registrador de destino.
 */
 int Or(int regDestino,int regOrigem1, int regOrigem2){
@@ -262,7 +262,7 @@ void Ori(int regDestino,int regOrigem1, int imediato){
     regDestino = (regOrigem1 | imediato);
 }
 /*
-* @function void sub(int regDestino,int regOrigem1, int regOrigem2)
+* @function int sub(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a subtração entre os valores contidos em dois registradores de origem e a insere em um registrador de destino.
 */
 int sub(int regDestino,int regOrigem1, int regOrigem2){
@@ -271,7 +271,7 @@ int sub(int regDestino,int regOrigem1, int regOrigem2){
 }
 
 /*
-* @function void Xor(int regDestino,int regOrigem1, int regOrigem2)
+* @function int Xor(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a operação lógica XOR entre os valores contidos em dois registradores de origem e a insere em um registrador de destino.
 */
 int Xor(int regDestino,int regOrigem1, int regOrigem2){
