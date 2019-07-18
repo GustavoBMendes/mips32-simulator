@@ -251,11 +251,11 @@ void Or(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = (regOrigem1 | regOrigem2);
 }
 /*
-* @function void ori(int regDestino,int regOrigem1, int imediato)
+* @function void Ori(int regDestino,int regOrigem1, int imediato)
 * @abstract Faz a operação lógica OR entre os valores contidos em um registrador de origem e um imediato
 *  e a insere em um registrador de destino.
 */
-void ori(int regDestino,int regOrigem1, int imediato){
+void Ori(int regDestino,int regOrigem1, int imediato){
     regDestino = (regOrigem1 | imediato);
 }
 /*
@@ -274,10 +274,10 @@ void Xor(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = regOrigem1 ^ regOrigem2;
 }
 /*
-* @function void xori(int regDestino,int regOrigem1, int imediato)
+* @function void Xori(int regDestino,int regOrigem1, int imediato)
 * @abstract Faz a operação lógica XOR entre os valores contidos em um registrador de origem e um imediato
 *  e a insere em um registrador de destino.
 */
-void xori(int regDestino,int regOrigem1, int imediato){
+void Xori(int regDestino,int regOrigem1, int imediato){
     regDestino = regOrigem1 ^ imediato;
 }

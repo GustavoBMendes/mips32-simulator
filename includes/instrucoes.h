@@ -36,10 +36,10 @@ void mult(int regOrigem1, int regOrigem2, int regAcumulador);
 void nop();
 void nor(int regDestino,int regOrigem1, int regOrigem2);
 void Or(int regDestino,int regOrigem1, int regOrigem2);
-void ori(int regDestino,int regOrigem1, int imediato);
+void Ori(int regDestino,int regOrigem1, int imediato);
 void sub(int regDestino,int regOrigem1, int regOrigem2);
 void Xor(int regDestino,int regOrigem1, int regOrigem2);
-void xori(int regDestino,int regOrigem1, int imediato);
+void Xori(int regDestino,int regOrigem1, int imediato);
 
 
 #endif
