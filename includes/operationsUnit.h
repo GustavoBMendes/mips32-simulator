@@ -7,22 +7,22 @@ typedef struct opu{
     
     int operando1;  //valor de entrada
     int operando2;  //valor de entrada
-    long long int saida_mdu;    //valor de saida
-    unsigned int mdu_op;    
+    long long int saida_opu;    //valor de saida
+    unsigned int opu_op;    //operacao executada pela opu
 }opu;
 
-void OPUb(int PC, int offset);
-void OPUbeq(int regOrigem1, int regOrigem2, int PC, int offset);
-void OPUbeql(int regOrigem1,int regOrigem2,int PC, int offset);
-void OPUbgez(int regOrigem1, int PC, int offset);
-void OPUbgtz(int regOrigem1, int PC, int offset);
-void OPUblez(int regOrigem1, int PC, int offset);
-void OPUbltz(int regOrigem1, int PC, int offset);
-void OPUbne(int regOrigem1,int regOrigem2,int PC, int offset);
-void OPUj(int PC, int offset);
-void OPUjr(int PC, int regOrigem1); 
-void OPUlui(int regDestino, int imediato);
-void OPUmovn(int regDestino,int regOrigem1, int regOrigem2);
-void OPUmovz(int regDestino,int regOrigem1, int regOrigem2);
+void OPUb();
+void OPUbeq();
+void OPUbeql();
+void OPUbgez();
+void OPUbgtz();
+void OPUblez();
+void OPUbltz();
+void OPUbne();
+void OPUj();
+void OPUjr(); 
+void OPUlui();
+void OPUmovn();
+void OPUmovz();
 
 #endif

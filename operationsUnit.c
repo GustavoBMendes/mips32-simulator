@@ -11,57 +11,112 @@
 #include <stdlib.h>
 #include <string.h>
 #include "includes/instrucoes.h"
-#include "includes/mdu.h"
 #include "includes/operationsUnit.h"
+#include "includes/registradores.h"
 
-void OPUb(int PC, int offset){
+opu *opu_executavel;
 
+/* 
+* @function void OPUb(int offset)
+* @abstract Executa a instrução b através da chamada da função b(int PC, int offset) no módulo "instrucoes".
+*/
+void OPUb(int offset){
+
+    b(PC, offset);
 }
 
-void OPUbeq(int regOrigem1, int regOrigem2, int PC, int offset){
-
+/* 
+* @function void OPUbeq(int offset)
+* @abstract Executa a instrução beq através da chamada da função beq(int regOrigem1, int regOrigem2, int PC, int offset) no módulo "instrucoes".
+*/
+void OPUbeq(int offset){
+    beq(opu_executavel->operando1, opu_executavel->operando2, PC, offset);
 }
 
-void OPUbeql(int regOrigem1,int regOrigem2,int PC, int offset){
-
+/* 
+* @function void OPUbeql(int offset)
+* @abstract Executa a instrução beql através da chamada da função beql(int regOrigem1, int regOrigem2, int PC, int offset) no módulo "instrucoes".
+*/
+void OPUbeql(int offset){
+    beql(opu_executavel->operando1, opu_executavel->operando2, PC, offset);
 }
 
-void OPUbgez(int regOrigem1, int PC, int offset){
-
+/* 
+* @function void OPUbgez(int offset)
+* @abstract Executa a instrução bgez através da chamada da função bgez(int regOrigem1, int PC, int offset) no módulo "instrucoes".
+*/
+void OPUbgez(int offset){
+    bgez(opu_executavel->operando1, PC, offset);
 }
 
-void OPUbgtz(int regOrigem1, int PC, int offset){
-
+/* 
+* @function void OPUbgtz(int regOrigem1, int PC, int offset)
+* @abstract Executa a instrução bgtz através da chamada da função bgtz(int regOrigem1, int PC, int offset) no módulo "instrucoes".
+*/
+void OPUbgtz(int offset){
+    bgtz(opu_executavel->operando1, PC, offset);
 }
 
-void OPUblez(int regOrigem1, int PC, int offset){
-
+/* 
+* @function void OPUblez(int offset)
+* @abstract Executa a instrução blez através da chamada da função blez(int regOrigem1, int PC, int offset) no módulo "instrucoes".
+*/
+void OPUblez(int offset){
+    blez(opu_executavel->operando1, PC, offset);
 }
 
+/* 
+* @function void OPUbltz(int offset)
+* @abstract Executa a instrução bltz através da chamada da função bltz(int regOrigem1, int PC, int offset) no módulo "instrucoes".
+*/
 void OPUbltz(int regOrigem1, int PC, int offset){
-
+    bltz(opu_executavel->operando1, PC, offset);
 }
 
+/* 
+* @function void OPUbne(int offset)
+* @abstract Executa a instrução bne através da chamada da função bne(int regOrigem1,int regOrigem2,int PC, int offset) no módulo "instrucoes".
+*/
 void OPUbne(int regOrigem1,int regOrigem2,int PC, int offset){
-
+    bne(opu_executavel->operando1, opu_executavel->operando2, PC, offset);
 }
 
-void OPUj(int PC, int offset){
-
+/* 
+* @function void OPUj(int offset)
+* @abstract Executa a instrução j através da chamada da função j(int PC, int offset) no módulo "instrucoes".
+*/
+void OPUj(int offset){
+    j(PC, offset);
 }
 
-void OPUjr(int PC, int regOrigem1){
-
+/* 
+* @function void OPUjr()
+* @abstract Executa a instrução jr através da chamada da função jr(int PC, int regOrigem1) no módulo "instrucoes".
+*/
+void OPUjr(){
+    jr(PC, opu_executavel->operando1);
 }
 
-void OPUlui(int regDestino, int imediato){
-
+/* 
+* @function void OPUlui(int imediato)
+* @abstract Executa a instrução lui através da chamada da função lui(int regDestino, int imediato) no módulo "instrucoes".
+*/
+void OPUlui(int imediato){
+    lui(opu_executavel->saida_opu, imediato);
 }
 
-void OPUmovn(int regDestino,int regOrigem1, int regOrigem2){
-
+/* 
+* @function void OPUmovn()
+* @abstract Executa a instrução movn através da chamada da função movn(int regDestino,int regOrigem1, int regOrigem2) no módulo "instrucoes".
+*/
+void OPUmovn(){
+    movn(opu_executavel->saida_opu, opu_executavel->operando1, opu_executavel->operando2);
 }
 
-void OPUmovz(int regDestino,int regOrigem1, int regOrigem2){
-
+/* 
+* @function void OPUmovz()
+* @abstract Executa a instrução movz através da chamada da função movz(int regDestino,int regOrigem1, int regOrigem2) no módulo "instrucoes".
+*/
+void OPUmovz(){
+    movz(opu_executavel->saida_opu, opu_executavel->operando1, opu_executavel->operando2);
 }
