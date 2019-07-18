@@ -64,8 +64,8 @@ void beql(int regOrigem1,int regOrigem2,int PC, int offset){
         PC += offset;
     }
     else{
-        //ignorar a proxima instrução ... como fazer isso fica sendo um mistério
-    }
+        PC += 8;    //avançando 4 posições na memória -> pŕoxima instrução
+                    //avançando mais 4 posições -> ignora a próxima instrução
 }
 /* 
 * @function bgez(int regOrigem1, int PC, int offset)
@@ -119,7 +119,9 @@ void bne(int regOrigem1,int regOrigem2,int PC, int offset){
 }
 /* 
 * @function div(int regOrigem1, int regOrigem2, int HI, int LO)
-* @abstract .
+* @abstract REALIZA A OPERAÇÃO DE DIVISÃO 
+* RESULTADO (QUOCIENTE) ARMAZENADO NO REGISTRADOR LO
+* RESTO (MOD) ARMAZENADO NO REGISTRADOR HI
 */
 void div(int regOrigem1, int regOrigem2, int HI, int LO){
     LO = regOrigem1 / regOrigem2;
@@ -131,8 +133,8 @@ void div(int regOrigem1, int regOrigem2, int HI, int LO){
 * Altera o program counter (PC) 
 * Acumulando com o endereco desejado para a próxima instrução.
 */
-void j(int PC, int endereco){
-    PC += endereco;
+void j(int PC, int offset){
+    PC += offset;
 }
 /* 
 * @function

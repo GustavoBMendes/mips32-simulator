@@ -15,6 +15,6 @@ int main(){
 
     int i;
     for(i = 0; i < 4; i++){
-        printf("\n[%d] : %x", i, *(memory + i));
+        printf("\n[%d] : %c", i, *(memory + i));
     }
 }
