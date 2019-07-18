@@ -24,8 +24,8 @@ void j(int PC, int offset); //feito
 void jr(int PC, int regOrigem1); // feito
 void lui(int regDestino, int imediato);
 void madd(int regOrigem1, int regOrigem2, int regAcumulador);
-void mfhi(int regOrigem1, int HI);
-void mflo(int regOrigem1, int LO);
+void mfhi(int HI,int regOrigem1);
+void mflo(int LO, int regOrigem1);
 void movn(int regDestino,int regOrigem1, int regOrigem2);
 void movz(int regDestino,int regOrigem1, int regOrigem2);
 void msub(int regOrigem1, int regOrigem2, int regAcumulador);

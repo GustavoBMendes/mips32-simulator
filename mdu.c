@@ -41,14 +41,14 @@ void mduMadd(mdu *mdu_executavel){
 * @abstract .
 */
 void mduMfhi(mdu *mdu_executavel){
-    mfhi(mdu_executavel->operando1,HI);
+    mfhi(HI, mdu_executavel->operando1);
 }
 /* 
 * @function void mduMflo(mdu *mdu_executavel)
 * @abstract .
 */
 void mduMflo(mdu *mdu_executavel){
-    mflo(mdu_executavel->operando1,LO);
+    mflo(LO, mdu_executavel->operando1);
 }
 /* 
 * @function void mduMsub(mdu *mdu_executavel)
