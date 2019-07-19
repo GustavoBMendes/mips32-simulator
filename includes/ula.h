@@ -3,23 +3,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct alu{
-    
-    int operando1;  //valor de entrada
-    int operando2;  //valor de entrada
-    int saida_ula;    //valor de saida
-    unsigned int ula_op;    //operação executada pela ula
-}ula;
-
 extern unsigned int operando1;
 extern unsigned int operando2;
 extern unsigned int saida_ula;
 
-int ulaAdd();
-void ulaSub();
-void ulaAnd();
-void ulaOr();
-void ulaXor();
+int ulaAdd(int regOrigem1, int regOrigem2);
+int ulaSub(int regOrigem1, int regOrigem2);
+int ulaAnd(int regOrigem1, int regOrigem2);
+int ulaOr(int regOrigem1, int regOrigem2);
+int ulaXor(int regOrigem1, int regOrigem2);
 
 #endif
 
