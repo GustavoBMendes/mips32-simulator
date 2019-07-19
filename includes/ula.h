@@ -11,16 +11,11 @@ typedef struct alu{
     unsigned int ula_op;    //operação executada pela ula
 }ula;
 
-void ulaAdd();
+long long int ulaAdd();
 void ulaSub();
 void ulaAnd();
 void ulaOr();
 void ulaXor();
-void ulaNot();
-void ulaDiv();
-void ulaLeftShift();
-void ulaRightShift();
-void ulaMult();
 
 #endif
 

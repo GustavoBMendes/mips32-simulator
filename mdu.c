@@ -14,14 +14,13 @@
 #include "includes/mdu.h"
 #include "includes/registradores.h"
 
-int HI, LO;
 
 /* 
 * @function void mduDiv(mdu *mdu_executavel)
 * @abstract Executa a operação DIV através da chamada da função div() no módulo "instruções".
 */
 void mduDiv(mdu *mdu_executavel){
-    div(mdu_executavel->operando1,mdu_executavel->operando2,HI,LO);
+    Div(mdu_executavel->operando1,mdu_executavel->operando2,HI,LO);
 }
 /* 
 * @function void mduMul(mdu *mdu_executavel)

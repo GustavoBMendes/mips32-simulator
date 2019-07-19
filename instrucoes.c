@@ -125,7 +125,7 @@ void bne(int regOrigem1,int regOrigem2,int PC, int offset){
 * RESULTADO (QUOCIENTE) ARMAZENADO NO REGISTRADOR LO
 * RESTO (MOD) ARMAZENADO NO REGISTRADOR HI
 */
-void div(int regOrigem1, int regOrigem2, int HI, int LO){
+void Div(int regOrigem1, int regOrigem2, int HI, int LO){
     LO = regOrigem1 / regOrigem2;
     HI = regOrigem1 % regOrigem2;
 }
