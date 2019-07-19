@@ -18,9 +18,9 @@ int main(){
     }
     */
    
-    reg[8] = 15;
-    reg[9] = 5;
+    int T0 = 15;
+    int T1 = 5;
 
-    printf("\nRESULTADO > %lld \n", ulaAdd(reg[8], reg[9]));
+    printf("\nRESULTADO > %lld \n", ulaAdd(T0, T1));
 
 }
