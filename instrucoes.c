@@ -164,26 +164,28 @@ int madd(int regOrigem1, int regOrigem2, int regAcumulador){
 * @function mfhi(int HI, int regOrigem1)
 * @abstract Move o conteúdo do registrador especial HI para o registrador de origem .  
 */
-void mfhi(int HI, int regOrigem1){
+int mfhi(int HI, int regOrigem1){
     regOrigem1 = HI;
+    return regOrigem1;
 }
 /*
 * @function mflo(int LO, int regOrigem1)
 * @abstract Move o conteúdo do registrador especial LO para o registrador de origem. 
 */
-void mflo(int LO, int regOrigem1){
-    
+int mflo(int LO, int regOrigem1){
     regOrigem1 = LO;
+    return regOrigem1;
 }
 /*
 * @function void movn(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Movimenta o conteúdo do primeiro registrador de origem para o registrador de destino se o segundo
 * registrador de origem for diferente de 0.
 */
-void movn(int regDestino,int regOrigem1, int regOrigem2){
+int movn(int regDestino,int regOrigem1, int regOrigem2){
     if(regOrigem2 != 0){
         regDestino = regOrigem1;
     }
+    return regDestino;
 }
 
 /*
@@ -191,10 +193,11 @@ void movn(int regDestino,int regOrigem1, int regOrigem2){
 * @abstract Movimenta o conteúdo do primeiro registrador de origem para o registrador de destino se o segundo
 * registrador de origem for igual a 0.
 */
-void movz(int regDestino,int regOrigem1, int regOrigem2){
+int movz(int regDestino,int regOrigem1, int regOrigem2){
     if(regOrigem2 == 0){
         regDestino = regOrigem1;
     }
+    return regDestino;
 }
 /* 
 * @function msub(int regOrigem1, int regOrigem2, int regAcumulador)
@@ -207,15 +210,17 @@ int msub(int regOrigem1, int regOrigem2, int regAcumulador){
 * @function mthi(int regOrigem1, int HI)
 * @abstract Move o conteúdo do registrador de origem para o registrador especial HI. 
 */
-void mthi(int regOrigem1, int HI){
+int mthi(int regOrigem1, int HI){
     HI = regOrigem1;
+    return HI
 }
 /*
 * @function mtlo(int regOrigem1, int LO)
 * @abstract Move o conteúdo do registrador de origem para o registrador especial LO .
 */
-void mtlo(int regOrigem1, int LO){
+int mtlo(int regOrigem1, int LO){
     LO = regOrigem1;
+    return LO;
 }
 /*
 * @function void mul(int regDestino,int regOrigem1, int regOrigem2)

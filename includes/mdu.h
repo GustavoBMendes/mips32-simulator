@@ -20,10 +20,10 @@ void mduDiv();
 int mduMul(); //ok
 int mduMult(); //ok
 int mduMadd(); //ok
-void mduMfhi();
-void mduMflo();
+int mduMfhi(); //Ok
+int mduMflo(); //ok
 int mduMsub(); //ok
-void mduMthi();
-void mduMtlo();
+int mduMthi(); //ok
+int mduMtlo(); //ok
 
 #endif
