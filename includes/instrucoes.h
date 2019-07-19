@@ -20,7 +20,8 @@ void bgtz(int regOrigem1, int PC, int offset); //adicionado a OPU
 void blez(int regOrigem1, int PC, int offset); //adicionado a OPU
 void bltz(int regOrigem1, int PC, int offset); //adicionado a OPU
 void bne(int regOrigem1,int regOrigem2,int PC, int offset); //adicionado a OPU
-void Div(int regOrigem1, int regOrigem2, int &HI, int &LO); //adicionado a mdu
+int DivHI(int regOrigem1, int regOrigem2, int HI, int LO); //adicionado a mdu
+int DivLO(int regOrigem1, int regOrigem2,int HI, int LO);
 void j(int PC, int offset); //adicionado a OPU
 void jr(int PC, int regOrigem1); //adicionado a OPU
 void lui(int regDestino, int imediato); //revisar | adicionado a OPU

@@ -7,7 +7,7 @@
 
 int main(){
     unsigned int reg[32];
-
+    unsigned int HI = 0,LO = 0;
     //inicializeMemory(); //Ok está alocando
     
     /* 
@@ -28,6 +28,6 @@ int main(){
     printf("\nRESULTADO ACIONANDO O MDU (*) > %d \n", mduMul(T0, T1));
     printf("\nRESULTADO ACIONANDO O MDU (MADD) > %d \n", mduMadd(T0, T1));
     printf("\nRESULTADO ACIONANDO O MDU (MSUB) > %d \n", mduMsub(T0, T1));
-    
+    printf("REsultado do HI: %d\nResultado do LO: %d\n",mduDivHI(T0, T1,HI,LO),mduDivLO(T0, T1,HI,LO));
 
 }

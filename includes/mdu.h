@@ -16,7 +16,8 @@ extern unsigned int operando2;
 extern unsigned int saida_mdu;
 
 
-void mduDiv();
+int mduDivHI();
+int mduDivLO();
 int mduMul(); //ok
 int mduMult(); //ok
 int mduMadd(); //ok

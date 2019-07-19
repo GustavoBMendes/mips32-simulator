@@ -18,14 +18,21 @@ mdu *mdu_executavel;
 unsigned int operando1;
 unsigned int operando2;
 unsigned int saida_mdu;
-unsigned int *HI, *LO, *PC;
+unsigned int HI, LO, PC;
 
 /* 
 * @function void mduDiv(mdu *mdu_executavel)
 * @abstract Executa a operação DIV através da chamada da função div() no módulo "instruções".
 */
-void mduDiv(int regOrigem1, int regOrigem2){
-    
+int mduDivHI(int regOrigem1, int regOrigem2, int HI, int LO){
+    DivHI(regOrigem1,regOrigem2,HI,LO);
+}
+/* 
+* @function void mduDiv(mdu *mdu_executavel)
+* @abstract Executa a operação DIV através da chamada da função div() no módulo "instruções".
+*/
+int mduDivLO(int regOrigem1, int regOrigem2,int HI, int LO){
+    DivLO(regOrigem1,regOrigem2,HI,LO);
 }
 /* 
 * @function void mduMul(mdu *mdu_executavel)
@@ -64,14 +71,14 @@ int mduMadd(int regOrigem1, int regOrigem2){
 * @function void mduMfhi()
 * @abstract Executa a operação MFHI através da chamada da função mfhi() no módulo "instruções".
 */
-void mduMfhi(){
+int mduMfhi(){
     mfhi(HI, mdu_executavel->operando1);
 }
 /* 
 * @function void mduMflo()
 * @abstract Executa a operação MFLO através da chamada da função mflo() no módulo "instruções".
 */
-void mduMflo(){
+int mduMflo(){
     mflo(LO, mdu_executavel->operando1);
 }
 /* 
@@ -88,14 +95,14 @@ int mduMsub(int regOrigem1, int regOrigem2){
 * @function void mduMthi()
 * @abstract Executa a operação MTHI através da chamada da função mthi() no módulo "instruções".
 */
-void mduMthi(){
+int mduMthi(){
     mthi(mdu_executavel->operando1,HI);
 }
 /* 
 * @function void mduMtlo()
 * @abstract Executa a operação MTLO através da chamada da função mtlo() no módulo "instruções".
 */
-void mduMtlo(){
+int mduMtlo(){
     mtlo(mdu_executavel->operando1,LO);
 }
 

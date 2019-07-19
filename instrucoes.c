@@ -120,14 +120,26 @@ void bne(int regOrigem1,int regOrigem2,int PC, int offset){
     }
 }
 /* 
-* @function div(int regOrigem1, int regOrigem2, int HI, int LO)
+* @function divHI(int regOrigem1, int regOrigem2, int HI, int LO)
 * @abstract REALIZA A OPERAÇÃO DE DIVISÃO 
 * RESULTADO (QUOCIENTE) ARMAZENADO NO REGISTRADOR LO
 * RESTO (MOD) ARMAZENADO NO REGISTRADOR HI
 */
-void Div(int regOrigem1, int regOrigem2, int &HI, int &LO){
-    *LO = regOrigem1 / regOrigem2;
-    *HI = regOrigem1 % regOrigem2;
+int DivHI(int regOrigem1, int regOrigem2, int HI, int LO){
+    LO = regOrigem1 / regOrigem2;
+    HI = regOrigem1 % regOrigem2;
+    return HI;
+}
+/* 
+* @function DivLO(int regOrigem1, int regOrigem2, int HI, int LO)
+* @abstract REALIZA A OPERAÇÃO DE DIVISÃO 
+* RESULTADO (QUOCIENTE) ARMAZENADO NO REGISTRADOR LO
+* RESTO (MOD) ARMAZENADO NO REGISTRADOR HI
+*/
+int DivLO(int regOrigem1, int regOrigem2, int HI, int LO){
+    LO = regOrigem1 / regOrigem2;
+    HI = regOrigem1 % regOrigem2;
+    return LO;
 }
 /* 
 * @function
@@ -212,7 +224,7 @@ int msub(int regOrigem1, int regOrigem2, int regAcumulador){
 */
 int mthi(int regOrigem1, int HI){
     HI = regOrigem1;
-    return HI
+    return HI;
 }
 /*
 * @function mtlo(int regOrigem1, int LO)
