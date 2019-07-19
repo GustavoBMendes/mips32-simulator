@@ -14,6 +14,10 @@
 #include "includes/mdu.h"
 #include "includes/registradores.h"
 
+mdu *mdu_executavel;
+unsigned int operando1;
+unsigned int operando2;
+unsigned int saida_mdu;
 unsigned int HI, LO, PC;
 
 /* 
@@ -27,23 +31,34 @@ void mduDiv(mdu *mdu_executavel){
 * @function void mduMul(mdu *mdu_executavel)
 * @abstract Executa a operação MUL através da chamada da função mul() no módulo "instruções".
 */
-void mduMul(mdu *mdu_executavel){
-    mul(mdu_executavel->saida_mdu,mdu_executavel->operando1,mdu_executavel->operando2);
+int mduMul(int regOrigem1, int regOrigem2){
+    //mul(mdu_executavel->saida_mdu,mdu_executavel->operando1,mdu_executavel->operando2);
+    operando1 = regOrigem1;
+    operando2 = regOrigem2;
+    saida_mdu = mul(saida_mdu, operando1, operando2);
+    return saida_mdu;
 }
 /* 
-* @function void mduMult(mdu *mdu_executavel)
+* @function int mduMult(mdu *mdu_executavel)
 * @abstract Executa a operação MULT através da chamada da função mult() no módulo "instruções".
 */
-void mduMult(mdu *mdu_executavel){
-    mult(mdu_executavel->operando1,mdu_executavel->operando2,mdu_executavel->saida_mdu);
+int mduMult(mdu *mdu_executavel){
+    //mult(mdu_executavel->operando1,mdu_executavel->operando2,mdu_executavel->saida_mdu);
+    operando1 = regOrigem1;
+    operando2 = regOrigem2;
+    saida_mdu = mult(operando1, operando2, saida_mdu);
+    return saida_mdu;
 }
 
 /* 
-* @function void mduMadd(mdu *mdu_executavel)
+* @function int mduMadd(mdu *mdu_executavel)
 * @abstract Executa a operação MADD através da chamada da função madd() no módulo "instruções".
 */
-void mduMadd(mdu *mdu_executavel){
-    madd(mdu_executavel->operando1,mdu_executavel->operando2,mdu_executavel->saida_mdu);
+int mduMadd(mdu *mdu_executavel){
+    operando1 = regOrigem1;
+    operando2 = regOrigem2;
+    saida_mdu = madd(operando1, operando2, saida_mdu);
+    return saida_mdu;
 }
 /* 
 * @function void mduMfhi(mdu *mdu_executavel)

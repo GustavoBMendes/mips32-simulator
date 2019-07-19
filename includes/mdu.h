@@ -11,9 +11,14 @@ typedef struct mdu{
     unsigned int mdu_op;    
 }mdu;
 
+extern unsigned int operando1;
+extern unsigned int operando2;
+extern unsigned int saida_mdu;
+
+
 void mduDiv(mdu *mdu_executavel);
-void mduMul(mdu *mdu_executavel);
-void mduMult(mdu *mdu_executavel); 
+int mduMul(); //ok
+int mduMult(); //ok
 void mduMadd(mdu *mdu_executavel);
 void mduMfhi(mdu *mdu_executavel);
 void mduMflo(mdu *mdu_executavel);

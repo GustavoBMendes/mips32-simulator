@@ -157,7 +157,7 @@ void lui(int regDestino, int imediato){
 * @function madd(int regOrigem1, int regOrigem2, int regAcumulador)
 * @abstract Adiciona a multiplicação entre os valores de dois registradores de origem a um registrador acumulador.
 */
-void madd(int regOrigem1, int regOrigem2, int regAcumulador){
+int madd(int regOrigem1, int regOrigem2, int regAcumulador){
     regAcumulador += regOrigem1 * regOrigem2;
 }
 /*
@@ -200,7 +200,7 @@ void movz(int regDestino,int regOrigem1, int regOrigem2){
 * @function msub(int regOrigem1, int regOrigem2, int regAcumulador)
 * @abstract Subtrai a multiplicação entre os valores de dois registradores de origem a um registrador acumulador.
 */
-void msub(int regOrigem1, int regOrigem2, int regAcumulador){
+int msub(int regOrigem1, int regOrigem2, int regAcumulador){
     regAcumulador -= regOrigem1 * regOrigem2;
 }
 /*
@@ -221,7 +221,7 @@ void mtlo(int regOrigem1, int LO){
 * @function void mul(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a multiplicação entre os valores contidos em dois registradores de origem e a insere em um registrador de destino.
 */
-void mul(int regDestino,int regOrigem1, int regOrigem2){
+int mul(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = regOrigem1 * regOrigem2;
 }
 /* 

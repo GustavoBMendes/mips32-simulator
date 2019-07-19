@@ -3,6 +3,7 @@
 #include "includes/barramento.h"
 #include "includes/registradores.h"
 #include "includes/ula.h"
+#include "includes/mdu.h"
 
 int main(){
     unsigned int reg[32];
@@ -23,6 +24,7 @@ int main(){
     T0 = 15;
     T1 = 5;
 
-    printf("\nRESULTADO > %d \n", ulaAdd(T0, T1));
+    printf("\nRESULTADO ACIONANDO A ULA (+) > %d \n", ulaAdd(T0, T1));
+    printf("\nRESULTADO ACIONANDO O MDU (*) > %d \n", mduMul(T0, T1));
 
 }

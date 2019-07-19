@@ -31,8 +31,8 @@ void movz(int regDestino,int regOrigem1, int regOrigem2); //adicionado a OPU
 void msub(int regOrigem1, int regOrigem2, int regAcumulador); //adicionado a mdu
 void mthi(int regOrigem1, int HI); //adicionado a mdu
 void mtlo(int regOrigem1, int LO); //adicionado a mdu
-void mul(int regDestino,int regOrigem1, int regOrigem2); //adicionado a mdu
-void mult(int regOrigem1, int regOrigem2, int regAcumulador); //adicionado a mdu
+int mul(int regDestino,int regOrigem1, int regOrigem2); //adicionado a mdu
+int mult(int regOrigem1, int regOrigem2, int regAcumulador); //adicionado a mdu
 void nop();
 void nor(int regDestino,int regOrigem1, int regOrigem2);
 int Or(int regDestino,int regOrigem1, int regOrigem2); //adicionado a ula
