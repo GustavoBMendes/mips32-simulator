@@ -5,7 +5,9 @@
 #include "includes/ula.h"
 
 int main(){
-    inicializeMemory(); //Ok está alocando
+    unsigned int reg[32];
+
+    //inicializeMemory(); //Ok está alocando
     
     /* 
     unsigned char *dado = "15";
@@ -18,9 +20,9 @@ int main(){
     }
     */
    
-    int T0 = 15;
-    int T1 = 5;
+    T0 = 15;
+    T1 = 5;
 
-    printf("\nRESULTADO > %lld \n", ulaAdd(T0, T1));
+    printf("\nRESULTADO > %d \n", ulaAdd(T0, T1));
 
 }

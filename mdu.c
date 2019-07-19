@@ -14,6 +14,7 @@
 #include "includes/mdu.h"
 #include "includes/registradores.h"
 
+unsigned int HI, LO, PC;
 
 /* 
 * @function void mduDiv(mdu *mdu_executavel)

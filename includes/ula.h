@@ -7,11 +7,15 @@ typedef struct alu{
     
     int operando1;  //valor de entrada
     int operando2;  //valor de entrada
-    long long int saida_ula;    //valor de saida
+    int saida_ula;    //valor de saida
     unsigned int ula_op;    //operação executada pela ula
 }ula;
 
-long long int ulaAdd();
+extern unsigned int operando1;
+extern unsigned int operando2;
+extern unsigned int saida_ula;
+
+int ulaAdd();
 void ulaSub();
 void ulaAnd();
 void ulaOr();

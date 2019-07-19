@@ -14,6 +14,8 @@
 #include "includes/operationsUnit.h"
 #include "includes/registradores.h"
 
+unsigned int PC;
+
 opu *opu_executavel;
 
 /* 

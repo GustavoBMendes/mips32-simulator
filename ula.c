@@ -12,16 +12,19 @@
 #include "includes/instrucoes.h"
 
 ula *ula_executavel;
+unsigned int operando1;
+unsigned int operando2;
+unsigned int saida_ula;
 
 /*
 * @function void ulaAdd(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Executa a operação ADD através da chamada da função add() no módulo "instruções"
 */
-long long int ulaAdd(int regOrigem1, int regOrigem2){
-    ula_executavel->operando1 = regOrigem1;
-    ula_executavel->operando2 = regOrigem2;
-    ula_executavel->saida_ula = add(ula_executavel->saida_ula, ula_executavel->operando1, ula_executavel->operando2);
-    return ula_executavel->saida_ula;
+int ulaAdd(int regOrigem1, int regOrigem2){
+    operando1 = regOrigem1;
+    operando2 = regOrigem2;
+    saida_ula = add(saida_ula, operando1, operando2);
+    return saida_ula;
 }
 
 /*

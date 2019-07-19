@@ -65,9 +65,9 @@ void beql(int regOrigem1,int regOrigem2,int PC, int offset){
     if(regOrigem1 == regOrigem2){
         PC += offset;
     }
-    else{
+    else
         PC += 8;    //avançando 4 posições na memória -> pŕoxima instrução
-                    //avançando mais 4 posições -> ignora a próxima instrução
+                  //avançando mais 4 posições -> ignora a próxima instrução
 }
 /* 
 * @function bgez(int regOrigem1, int PC, int offset)
