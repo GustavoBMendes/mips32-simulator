@@ -19,16 +19,16 @@ void bgtz(int regOrigem1, int PC, int offset); //adicionado a OPU
 void blez(int regOrigem1, int PC, int offset); //adicionado a OPU
 void bltz(int regOrigem1, int PC, int offset); //adicionado a OPU
 void bne(int regOrigem1,int regOrigem2,int PC, int offset); //adicionado a OPU
-void Div(int regOrigem1, int regOrigem2, int HI, int LO); //adicionado a mdu
+void Div(int regOrigem1, int regOrigem2, int &HI, int &LO); //adicionado a mdu
 void j(int PC, int offset); //adicionado a OPU
 void jr(int PC, int regOrigem1); //adicionado a OPU
 void lui(int regDestino, int imediato); //revisar | adicionado a OPU
-void madd(int regOrigem1, int regOrigem2, int regAcumulador); //adicionado a mdu
+int madd(int regOrigem1, int regOrigem2, int regAcumulador); //adicionado a mdu
 void mfhi(int HI,int regOrigem1); //adicionado a mdu
 void mflo(int LO, int regOrigem1); //adicionado a mdu
 void movn(int regDestino,int regOrigem1, int regOrigem2); //adicionado a OPU
 void movz(int regDestino,int regOrigem1, int regOrigem2); //adicionado a OPU
-void msub(int regOrigem1, int regOrigem2, int regAcumulador); //adicionado a mdu
+int msub(int regOrigem1, int regOrigem2, int regAcumulador); //adicionado a mdu
 void mthi(int regOrigem1, int HI); //adicionado a mdu
 void mtlo(int regOrigem1, int LO); //adicionado a mdu
 int mul(int regDestino,int regOrigem1, int regOrigem2); //adicionado a mdu

@@ -125,9 +125,9 @@ void bne(int regOrigem1,int regOrigem2,int PC, int offset){
 * RESULTADO (QUOCIENTE) ARMAZENADO NO REGISTRADOR LO
 * RESTO (MOD) ARMAZENADO NO REGISTRADOR HI
 */
-void Div(int regOrigem1, int regOrigem2, int HI, int LO){
-    LO = regOrigem1 / regOrigem2;
-    HI = regOrigem1 % regOrigem2;
+void Div(int regOrigem1, int regOrigem2, int &HI, int &LO){
+    *LO = regOrigem1 / regOrigem2;
+    *HI = regOrigem1 % regOrigem2;
 }
 /* 
 * @function
@@ -228,7 +228,7 @@ int mul(int regDestino,int regOrigem1, int regOrigem2){
 * @function mult(int regOrigem1, int regOrigem2, int regAcumulador)
 * @abstract Armazena a multiplicação entre os valores de dois registradores de origem a um registrador acumulador.
 */
-void mult(int regOrigem1, int regOrigem2, int regAcumulador){
+int mult(int regOrigem1, int regOrigem2, int regAcumulador){
     regAcumulador = regOrigem1 * regOrigem2;
 }
 /* 

@@ -16,14 +16,14 @@ extern unsigned int operando2;
 extern unsigned int saida_mdu;
 
 
-void mduDiv(mdu *mdu_executavel);
+void mduDiv();
 int mduMul(); //ok
 int mduMult(); //ok
-void mduMadd(mdu *mdu_executavel);
-void mduMfhi(mdu *mdu_executavel);
-void mduMflo(mdu *mdu_executavel);
-void mduMsub(mdu *mdu_executavel);
-void mduMthi(mdu *mdu_executavel);
-void mduMtlo(mdu *mdu_executavel);
+int mduMadd(); //ok
+void mduMfhi();
+void mduMflo();
+int mduMsub(); //ok
+void mduMthi();
+void mduMtlo();
 
 #endif

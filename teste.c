@@ -26,5 +26,8 @@ int main(){
 
     printf("\nRESULTADO ACIONANDO A ULA (+) > %d \n", ulaAdd(T0, T1));
     printf("\nRESULTADO ACIONANDO O MDU (*) > %d \n", mduMul(T0, T1));
+    printf("\nRESULTADO ACIONANDO O MDU (MADD) > %d \n", mduMadd(T0, T1));
+    printf("\nRESULTADO ACIONANDO O MDU (MSUB) > %d \n", mduMsub(T0, T1));
+    
 
 }
