@@ -5,6 +5,13 @@
 
 #include "barramento.h"
 
+typedef struct memoria{
+    char *nomeInstrucao;
+    int valor1,valor2;
+    int reg_destino;
+}memoria;
+
+
 extern unsigned char *memory;
 extern unsigned char *palavra;
 
