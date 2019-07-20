@@ -14,7 +14,7 @@
 #include "includes/mdu.h"
 #include "includes/registradores.h"
 
-mdu *mdu_executavel;
+
 unsigned int operando1;
 unsigned int operando2;
 unsigned int saida_mdu;
@@ -71,15 +71,19 @@ int mduMadd(int regOrigem1, int regOrigem2){
 * @function void mduMfhi()
 * @abstract Executa a operação MFHI através da chamada da função mfhi() no módulo "instruções".
 */
-int mduMfhi(){
-    mfhi(HI, mdu_executavel->operando1);
+int mduMfhi(int HI, int regOrigem1){
+    operando1 = regOrigem1;
+    saida_mdu = mfhi(HI,operando1);
+    return saida_mdu;
 }
 /* 
 * @function void mduMflo()
 * @abstract Executa a operação MFLO através da chamada da função mflo() no módulo "instruções".
 */
-int mduMflo(){
-    mflo(LO, mdu_executavel->operando1);
+int mduMflo(int LO, int regOrigem1){
+    operando1 = regOrigem1;
+    saida_mdu = mflo(LO,operando1);
+    return saida_mdu;
 }
 /* 
 * @function int mduMsub()
@@ -95,14 +99,18 @@ int mduMsub(int regOrigem1, int regOrigem2){
 * @function void mduMthi()
 * @abstract Executa a operação MTHI através da chamada da função mthi() no módulo "instruções".
 */
-int mduMthi(){
-    mthi(mdu_executavel->operando1,HI);
+int mduMthi(int regOrigem1, int HI){
+    operando1 = regOrigem1;
+    saida_mdu = mthi(operando1,HI);
+    return saida_mdu;
 }
 /* 
 * @function void mduMtlo()
 * @abstract Executa a operação MTLO através da chamada da função mtlo() no módulo "instruções".
 */
-int mduMtlo(){
-    mtlo(mdu_executavel->operando1,LO);
+int mduMtlo(int regOrigem1, int LO){
+     operando1 = regOrigem1;
+    saida_mdu = mthi(operando1,LO);
+    return saida_mdu;
 }
 
