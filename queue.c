@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "queue.h"
+#include <string.h>
+#include "includes/queue.h"
 
 struct queue{
-	int valor;
+	char *nomeInstrucao;
+	int valor1,valor2;
+	int reg_destino;
 	struct queue *proximo;
 };
 
@@ -17,17 +20,20 @@ fila* create (){
 }
 
 
-fila *alocar(int dado){
+fila *alocar(char *nome_instrucao,int valor1,int valor2, int reg_destino){
 	fila *novo = (fila *) malloc(sizeof(fila));
 	if(novo != NULL){
-		novo->valor = dado;
+		strcpy(nomeInstrucao,nome_instrucao);
+		novo->valor1 = valor1;
+		novo->valor2 = valor2;
+		novo->reg_destino = reg_destino;
 		novo->proximo = NULL;
 	}
 	return novo;
 }
 
-void queueIn(fila *F,int elemento){
-	fila *novo = alocar(elemento);
+void queueIn(fila *F,char *nome_instrucao,int valor1,int valor2, int reg_destino){
+	fila *novo = alocar(nome_instrucao,valor1,valor2,reg_destino);
 	fila *aux;
 	aux = F;
 	while (aux->proximo != NULL){
