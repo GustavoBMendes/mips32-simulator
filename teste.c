@@ -4,6 +4,7 @@
 #include "includes/registradores.h"
 #include "includes/ula.h"
 #include "includes/mdu.h"
+#include "includes/executionQueue.h"
 
 int main(){
     unsigned int reg[32];
@@ -21,8 +22,8 @@ int main(){
     }
     */
    
-    T0 = 15;
-    T1 = 5;
+    //$T0 = 15;
+    //$T1 = 5;
     /*
     printf("\nRESULTADO ACIONANDO A ULA (+) > %d \n", ulaAdd(T0, T1));
     printf("\nRESULTADO ACIONANDO O MDU (*) > %d \n", mduMul(T0, T1));
@@ -34,4 +35,7 @@ int main(){
     printf("Teste MFLO, MTLO, MTHI E MTHI:\n\n");
     printf("MTHI: %d\nMFHI: %d",mduMthi(T0,HI),mduMfhi(HI,T0));
     */
+
+    ler();
+    inserirElementos();
 }

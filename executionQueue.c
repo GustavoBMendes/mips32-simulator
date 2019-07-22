@@ -84,7 +84,8 @@ void queueIn(fila *F,char *nome,int dado1, int dado2, int dest){
 	aux->prox = novo;
 }
 */
-fila* queueInInst(fila *F,char *nome,int dado1, int dado2, int dest){
+fila* queueInInst(fila *F,char *nome){
+
 	fila *novo = alocarInst(nome);
 	fila *aux;
 	aux = F;
@@ -94,38 +95,35 @@ fila* queueInInst(fila *F,char *nome,int dado1, int dado2, int dest){
 	aux->prox = novo;
 
 	return novo;
+
 }
 
-fila* queueInRegDest(fila *F, fila *novo, char* reg){
+fila* queueInRegDest(fila *novo, char* reg){
+
 	alocarRegDest(novo, reg);
-	fila *aux;
-	aux = F;
-
 	return novo;
+
 }
 
-fila* queueInReg1(fila *F, fila *novo, char* reg){
+fila* queueInReg1(fila *novo, char* reg){
+	
 	alocarReg1(novo, reg);
-	fila *aux;
-	aux = F;
-
 	return novo;
+
 }
 
-fila* queueInReg2(fila *F, fila *novo, char* reg){
+fila* queueInReg2(fila *novo, char* reg){
+
 	alocarReg2(novo, reg);
-	fila *aux;
-	aux = F;
-
 	return novo;
+
 }
 
-fila* queueInImediato(fila *F, fila *novo, int imediato){
-	alocarDado(novo, imediato);
-	fila *aux;
-	aux = F;
+fila* queueInImediato(fila *novo, int imediato){
 
+	alocarDado(novo, imediato);
 	return novo;
+
 }
 
 fila queueOut (fila* F){
@@ -211,13 +209,20 @@ void ler(){
         }
     }
 
-    fclose(saida);
+	fclose(saida);
     fclose(arq_asm);
 
+}
+
+void inserirElementos(){
+
+	FILE *saida = fopen("saida.txt", "r");
+
 	int i;
-    saida = fopen("saida.txt", "r");
     char str[6];
-	fila* fi = create();
+
+	fila *fi = create();
+	fila *novo;
 
     while(!feof(saida)){
 
@@ -230,27 +235,27 @@ void ler(){
 			i++;
 
 			if(i == 1)
-				alocarRegDest(fi, str);
+				queueInRegDest(novo, str);
 
 			else if(i == 2)
-				alocarReg1(fi, str);
+				queueInReg1(novo, str);
 			
 			else
-				alocarReg2(fi, str);	
+				queueInReg2(novo, str);	
 
 		}
 		
 		else if(isdigit(str[0])){
 
 			int valor = atoi(str);
-			alocarDado(fi, valor);
+			queueInImediato(novo, valor);
 
 		}
 
 		else{
 
 			i = 0;
-			fi = alocarInst(str);
+			novo = queueInInst(fi, str);
 
 		}
 		
