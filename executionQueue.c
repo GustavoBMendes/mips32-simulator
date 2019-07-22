@@ -214,6 +214,7 @@ void ler(){
     fclose(saida);
     fclose(arq_asm);
 
+	int i;
     saida = fopen("saida.txt", "r");
     char str[6];
 	fila* fi = create();
@@ -223,18 +224,32 @@ void ler(){
         fgets(str, 6, saida);
 
         if(str[0] == '$'){
+			
 			//é um registrador destino ou operando
 			//inserir str em fila->valor ou fila->regDestino
-			alocarRegDest(fi, str);
+			i++;
+
+			if(i == 1)
+				alocarRegDest(fi, str);
+
+			else if(i == 2)
+				alocarReg1(fi, str);
+			
+			else
+				alocarReg2(fi, str);	
+
 		}
 		
 		else if(isdigit(str[0])){
+
 			int valor = atoi(str);
 			alocarDado(fi, valor);
+
 		}
 
 		else{
 
+			i = 0;
 			fi = alocarInst(str);
 
 		}
