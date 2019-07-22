@@ -34,18 +34,18 @@ void queueIn(fila *F,char *nome,int dado1, int dado2, int dest){
 	fila *novo = alocar(nome,dado1,dado2,dest);
 	fila *aux;
 	aux = F;
-	while (aux->proximo != NULL){
-		aux = aux->proximo;
+	while (aux->prox != NULL){
+		aux = aux->prox;
 	}
-	aux->proximo = novo;
+	aux->prox = novo;
 }
 
 fila queueOut (fila* F){
 	fila *excluir;
 	fila saida;
-	excluir = F->proximo;
+	excluir = F->prox;
 	if(excluir != NULL){
-		F->proximo = F->proximo->proximo;
+		F->prox = F->prox->prox;
 		saida = excluir;
 		free(excluir);
 		return saida;
@@ -55,9 +55,9 @@ fila queueOut (fila* F){
 void clear(fila* F){
 	fila *aux; 							
 	aux = F;
-	while(aux->proximo != NULL){
+	while(aux->prox != NULL){
 		queueOut(F);
-		aux->proximo = aux->proximo->proximo;
+		aux->prox = aux->prox->prox;
 	}
 	free(F);
 	F = NULL; 
@@ -66,7 +66,7 @@ void clear(fila* F){
 
 void printQueue(fila *F){
 	fila *aux;
-	aux = F->proximo;
+	aux = F->prox;
 	int k = 1;
 	if(aux == NULL){
 		printf("FIla vazia!\n");
@@ -75,7 +75,7 @@ void printQueue(fila *F){
 		printf("Inicio --> ");
 		while(aux != NULL){
 			printf("Posição da fila: %d => Nome: %s , Valor1: %d , Valor2: %d , ValorDestino: %d \n",k,aux->instructionName,aux->valor1,aux->valor2,aux->regDestino);
-			aux = aux->proximo;
+			aux = aux->prox;
 			k++;
 		}			
 	}
