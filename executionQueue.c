@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "includes/executionQueue.h"
 
 struct exeQueue{
     char *instructionName;
-    int valor1,valor2,regDestino;
+    int imediato;
+	char *regDestino, *reg1, *reg2;
     struct exeQueue *prox;
 };
 
@@ -18,18 +20,60 @@ fila* create (){
 	return F;
 }
 
+/*
 fila *alocar(char *nome,int dado1, int dado2, int dest){
 	fila *novo = (fila *) malloc(sizeof(fila));
 	if(novo != NULL){
 		strcpy(novo->instructionName,nome);
-		novo->valor1 = dado1;
-		novo->valor2 = dado2;
+		novo->reg1 = dado1;
+		novo->imediato = dado2;
 		novo->regDestino = dest;
 		novo->prox = NULL;
 	}
 	return novo;
 }
+*/
+fila* alocarInst(char *nome){
+	fila *novo = (fila *) malloc(sizeof(fila));
+	if(novo != NULL){
+		strcpy(novo->instructionName,nome);
+		novo->prox = NULL;
+	}
+	return novo;
+}
 
+void alocarRegDest(fila *F, char *registrador){
+
+	if(F != NULL){
+		strcpy(F->regDestino, registrador);
+	}
+
+}
+
+void alocarReg1(fila *F, char *registrador){
+
+	if(F != NULL){
+		strcpy(F->reg1, registrador);
+	}
+
+}
+
+void alocarReg2(fila *F, char *registrador){
+
+	if(F != NULL){
+		strcpy(F->reg2, registrador);
+	}
+
+}
+
+void alocarDado(fila *F, int dado){
+
+	if(F != NULL){
+		F->imediato = dado;
+	}
+
+}
+/*
 void queueIn(fila *F,char *nome,int dado1, int dado2, int dest){
 	fila *novo = alocar(nome,dado1,dado2,dest);
 	fila *aux;
@@ -38,6 +82,50 @@ void queueIn(fila *F,char *nome,int dado1, int dado2, int dest){
 		aux = aux->prox;
 	}
 	aux->prox = novo;
+}
+*/
+fila* queueInInst(fila *F,char *nome,int dado1, int dado2, int dest){
+	fila *novo = alocarInst(nome);
+	fila *aux;
+	aux = F;
+	while (aux->prox != NULL){
+		aux = aux->prox;
+	}
+	aux->prox = novo;
+
+	return novo;
+}
+
+fila* queueInRegDest(fila *F, fila *novo, char* reg){
+	alocarRegDest(novo, reg);
+	fila *aux;
+	aux = F;
+
+	return novo;
+}
+
+fila* queueInReg1(fila *F, fila *novo, char* reg){
+	alocarReg1(novo, reg);
+	fila *aux;
+	aux = F;
+
+	return novo;
+}
+
+fila* queueInReg2(fila *F, fila *novo, char* reg){
+	alocarReg2(novo, reg);
+	fila *aux;
+	aux = F;
+
+	return novo;
+}
+
+fila* queueInImediato(fila *F, fila *novo, int imediato){
+	alocarDado(novo, imediato);
+	fila *aux;
+	aux = F;
+
+	return novo;
 }
 
 fila queueOut (fila* F){
@@ -74,7 +162,7 @@ void printQueue(fila *F){
 	else{
 		printf("Inicio --> ");
 		while(aux != NULL){
-			printf("Posição da fila: %d => Nome: %s , Valor1: %d , Valor2: %d , ValorDestino: %d \n",k,aux->instructionName,aux->valor1,aux->valor2,aux->regDestino);
+			printf("Posição da fila: %d => Nome: %s , reg1: %s , reg2: %s , ValorDestino: %s, imediato: %d \n",k,aux->instructionName,aux->reg1,aux->reg2,aux->regDestino, aux->imediato);
 			aux = aux->prox;
 			k++;
 		}			
@@ -128,6 +216,7 @@ void ler(){
 
     saida = fopen("saida.txt", "r");
     char str[6];
+	fila* fi = create();
 
     while(!feof(saida)){
 
@@ -136,12 +225,20 @@ void ler(){
         if(str[0] == '$'){
 			//é um registrador destino ou operando
 			//inserir str em fila->valor ou fila->regDestino
+			alocarRegDest(fi, str);
 		}
 		
-		else{
-			//str é uma instrução
-			//inserir str em fila->instructionName
+		else if(isdigit(str[0])){
+			int valor = atoi(str);
+			alocarDado(fi, valor);
 		}
+
+		else{
+
+			fi = alocarInst(str);
+
+		}
+		
 
     }
 
