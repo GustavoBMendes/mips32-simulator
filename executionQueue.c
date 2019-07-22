@@ -80,3 +80,70 @@ void printQueue(fila *F){
 		}			
 	}
 }
+
+void ler(){
+
+    FILE* arq_asm = fopen("arq.asm", "r");
+    FILE* saida = fopen("saida.txt", "w");
+
+    char atual;
+
+    atual = fgetc(arq_asm);
+
+    while(atual != EOF){
+            
+        if(atual == ' ' || atual == ',' || atual == '\n')
+            atual = fgetc(arq_asm);
+
+        else if(atual == '$'){
+
+            while((atual != ',') && (atual != '\n') && (atual != EOF)){
+
+                fprintf(saida, "%c",atual);
+                atual = fgetc(arq_asm);
+
+            }
+
+            fputs("\n", saida);
+
+        }
+
+        else{
+
+            while(atual != ' '){
+
+                fprintf(saida, "%c", atual);
+                atual = fgetc(arq_asm);
+
+            }
+
+            fputs("\n", saida);
+            atual = fgetc(arq_asm);
+
+        }
+    }
+
+    fclose(saida);
+    fclose(arq_asm);
+
+    saida = fopen("saida.txt", "r");
+    char str[6];
+
+    while(!feof(saida)){
+
+        fgets(str, 6, saida);
+
+        if(str[0] == '$'){
+			//é um registrador destino ou operando
+			//inserir str em fila->valor ou fila->regDestino
+		}
+		
+		else{
+			//str é uma instrução
+			//inserir str em fila->instructionName
+		}
+
+    }
+
+    fclose(saida);
+}

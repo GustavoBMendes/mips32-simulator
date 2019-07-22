@@ -7,5 +7,6 @@ void clear();
 void queueIn(fila* F,char *nome,int dado1, int dado2, int dest);
 fila queueOut(fila* F);
 void printQueue (fila *F);
+void ler();
 
 #endif
