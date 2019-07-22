@@ -42,13 +42,13 @@ void queueIn(fila *F,char *nome,int dado1, int dado2, int dest){
 
 fila queueOut (fila* F){
 	fila *excluir;
-	fila saida;
+	fila *saida;
 	excluir = F->prox;
 	if(excluir != NULL){
 		F->prox = F->prox->prox;
 		saida = excluir;
 		free(excluir);
-		return saida;
+		return *saida;
 	}
 }
 
