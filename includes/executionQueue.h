@@ -1,8 +1,8 @@
 #ifndef EXECQUEUE_HEADER_H
 #define EXECQUEUE_HEADER_H
 
-typedef struct exeQueue;
-typedef struct FILA;
+typedef struct exeQueue NO;
+typedef struct fila FILA;
 
 void create();
 void clear();

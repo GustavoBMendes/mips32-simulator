@@ -2,18 +2,18 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "executionQueue.h"
+#include "includes/executionQueue.h"
 
 typedef struct exeQueue{
     char *instructionName;
     int imediato;
 	char *regDestino, *reg1, *reg2;
     struct exeQueue *prox;
-}NO;
+};
 
-typedef struct{
+typedef struct fila{
 	NO *inicio, *fim;
-}FILA;
+};
 
 void create(FILA *F){
 	F->inicio = NULL;
@@ -247,9 +247,4 @@ void inserirElementos(){
     }
 
     fclose(saida);
-}
-
-void main(){
-	ler();
-	inserirElementos;
 }
