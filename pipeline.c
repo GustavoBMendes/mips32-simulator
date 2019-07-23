@@ -9,7 +9,9 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "includes/pipeline.h"
+#include "includes/executionQueue.h"
 
 
 /* 
@@ -17,7 +19,7 @@
  * @abstract ESTÁGIO DE BUSCA
  * REALIZA A BUSCA DA INSTRUÇÃO NA FILA
  */
-char* Istage(){
+char* Istage(fila *execQueue){
 
     //A PRIMEIRA POSIÇÃO DA FILA SEMPRE SERÁ A INSTRUÇÃO A SER EXECUTADA
     //NÃO REMOVER O NÓ DA POSIÇÃO INICIAL DA FILA NESTE ESTÁGIO
@@ -31,7 +33,10 @@ char* Istage(){
     strcpy(instrucao, fila->instructionName);
     return instrucao;
      */
-
+    fila *F = execQueue;
+    char *nomeSaida;
+    strcpy(nomeSaida,F->instructionName);
+    return nomeSaida;
 }
 
 /* 
@@ -41,7 +46,7 @@ char* Istage(){
  * BUSCA OS REGISTRADORES, IMEDIATOS OU ENDEREÇOS CONTIDOS NA MESMA 
  * POSIÇÃO DA FILA EM QUE A INSTRUÇÃO FOI BUSCADA
  */
-void Estage(char* instrucao){
+void Estage(char* instrucao, fila *exeQueue){
 
     //A PARTIR DA POSIÇÃO INICIAL DA FILA,
     //BUSCAR OS OPERANDOS NAQUELA POSIÇÃO DA FILA
@@ -50,6 +55,11 @@ void Estage(char* instrucao){
     //ACESSAR VALOR DO REGISTRADOR CASO ALGUMA IGUALDADE FOR VERDADEIRA
     //EXECUTAR A OPERAÇÃO
     //SALVAR RESULTADO NA MEMÓRIA PRINCIPAL(AINDA PRECISAMOS REVISAR A MEMÓRIA)
+    int operando1, operando2, destino;
+    
+    if(exeQueue->imediato != NULL){
+
+    }
 
     /*
     int operando1, operando2, destino;
