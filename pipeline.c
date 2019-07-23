@@ -13,7 +13,7 @@
 #include "includes/pipeline.h"
 #include "includes/executionQueue.h"
 
-
+int HI,LO;
 /* 
  * @function void Istage()
  * @abstract ESTÁGIO DE BUSCA
@@ -165,19 +165,19 @@ void Estage(char* instrucao, fila *exeQueue){
         case "blez": ; break;
         case "bltz": ; break;
         case "bne": ;  break;
-        case "DivHI": ; break;
-        case "DivLO": ; break;
+        case "DivHI": DivHI(operando1,operando2,HI,LO); break;
+        case "DivLO": DivLO(operando1,operando2,HI,LO); break;
         case "j": ; break; 
         case "jr": ; break;
         case "lui": ; break; 
         case "madd": madd(operando1,operando2,destino); break;
-        case "mfhi": ; break;
-        case "mflo": ; break;
+        case "mfhi": mfhi(HI,operando1); break;
+        case "mflo": mflo(LO,operando1); break;
         case "movn": movn(destino,operando1,operando2); break;
         case "movz": movz(destino,operando1,operando2); break;
         case "msub": msub(operando1,operando2,destino); break;
-        case "mthi": ; break;
-        case "mtlo": ; break;
+        case "mthi": mthi(operando1,HI); break;
+        case "mtlo": mtlo(operando1,LO); break;
         case "mul": mul(destino,operando1,operando2); break;
         case "mult": mult(operando1,operando2,destino); break;
         case "nop": nop(); break;
@@ -193,7 +193,7 @@ void Estage(char* instrucao, fila *exeQueue){
 }
 
 void Mstage(){
-    
+
 } 
 
 
