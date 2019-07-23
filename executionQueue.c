@@ -2,22 +2,22 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "includes/executionQueue.h"
+#include "executionQueue.h"
 
-struct exeQueue{
+typedef struct exeQueue{
     char *instructionName;
     int imediato;
 	char *regDestino, *reg1, *reg2;
     struct exeQueue *prox;
-};
+}NO;
 
-fila* create (){
-	fila *F;
-	F = (fila*) calloc(1,sizeof(fila));
-	if(F != NULL){
-		F->prox = NULL;
-	}
-	return F;
+typedef struct{
+	NO *inicio, *fim;
+}FILA;
+
+void create(FILA *F){
+	F->inicio = NULL;
+	F->fim = NULL;
 }
 
 /*
@@ -32,8 +32,8 @@ fila *alocar(char *nome,int dado1, int dado2, int dest){
 	}
 	return novo;
 }
-*/
-fila* alocarInst(char *nome){
+
+void alocarInst(char *nome){
 	fila *novo = (fila *) malloc(sizeof(fila));
 	if(novo != NULL){
 		strcpy(novo->instructionName,nome);
@@ -73,7 +73,7 @@ void alocarDado(fila *F, int dado){
 	}
 
 }
-/*
+
 void queueIn(fila *F,char *nome,int dado1, int dado2, int dest){
 	fila *novo = alocar(nome,dado1,dado2,dest);
 	fila *aux;
@@ -84,75 +84,59 @@ void queueIn(fila *F,char *nome,int dado1, int dado2, int dest){
 	aux->prox = novo;
 }
 */
-fila* queueInInst(fila *F,char *nome){
+void queueInInst(FILA *F,char *nome){
 
-	fila *novo = alocarInst(nome);
-	fila *aux;
-	aux = F;
-	while (aux->prox != NULL){
-		aux = aux->prox;
-	}
-	aux->prox = novo;
-
-	return novo;
-
-}
-
-fila* queueInRegDest(fila *novo, char* reg){
-
-	alocarRegDest(novo, reg);
-	return novo;
-
-}
-
-fila* queueInReg1(fila *novo, char* reg){
+	NO *novo;
+	novo = (NO*) malloc(sizeof(NO));
+	strcpy(novo->instructionName, nome);
+	novo->prox = NULL;
+	if(!F->inicio)
+		F->inicio = novo;
+	else
+		F->fim->prox = novo;
+	F->fim = novo;
 	
-	alocarReg1(novo, reg);
-	return novo;
+}
+
+void queueInRegDest(FILA *F, char* reg){
+
+	strcpy(F->fim->regDestino, reg);
 
 }
 
-fila* queueInReg2(fila *novo, char* reg){
-
-	alocarReg2(novo, reg);
-	return novo;
-
-}
-
-fila* queueInImediato(fila *novo, int imediato){
-
-	alocarDado(novo, imediato);
-	return novo;
+void queueInReg1(FILA *F, char* reg){
+	
+	strcpy(F->fim->reg1, reg);
 
 }
 
-fila queueOut (fila* F){
-	fila *excluir;
-	fila *saida;
-	excluir = F->prox;
-	if(excluir != NULL){
-		F->prox = F->prox->prox;
-		saida = excluir;
-		free(excluir);
-		return *saida;
-	}
+void queueInReg2(FILA *F, char* reg){
+
+	strcpy(F->fim->reg2, reg);
+
 }
 
-void clear(fila* F){
-	fila *aux; 							
-	aux = F;
-	while(aux->prox != NULL){
-		queueOut(F);
-		aux->prox = aux->prox->prox;
-	}
-	free(F);
-	F = NULL; 
+void queueInImediato(FILA *F, int imediato){
+
+	F->fim->imediato = imediato;
+
 }
 
+int queueOut (FILA *F){
 
-void printQueue(fila *F){
-	fila *aux;
-	aux = F->prox;
+	NO* alvo = F->inicio;
+	if(!alvo)
+		return 0;
+	if(F->inicio == F->fim)
+		F->fim = NULL;
+	F->inicio = alvo->prox;
+	alvo->prox = NULL;
+	free(alvo);
+	return 1;
+}
+
+void printQueue(FILA *F){
+	NO *aux = F->inicio;
 	int k = 1;
 	if(aux == NULL){
 		printf("FIla vazia!\n");
@@ -221,8 +205,8 @@ void inserirElementos(){
 	int i;
     char str[6];
 
-	fila *fi = create();
-	fila *novo;
+	FILA F;
+	create(&F);
 
     while(!feof(saida)){
 
@@ -235,27 +219,27 @@ void inserirElementos(){
 			i++;
 
 			if(i == 1)
-				queueInRegDest(novo, str);
+				queueInRegDest(&F, str);
 
 			else if(i == 2)
-				queueInReg1(novo, str);
+				queueInReg1(&F, str);
 			
 			else
-				queueInReg2(novo, str);	
+				queueInReg2(&F, str);	
 
 		}
 		
 		else if(isdigit(str[0])){
 
 			int valor = atoi(str);
-			queueInImediato(novo, valor);
+			queueInImediato(&F, valor);
 
 		}
 
 		else{
 
 			i = 0;
-			novo = queueInInst(fi, str);
+			queueInInst(&F, str);
 
 		}
 		
@@ -263,4 +247,9 @@ void inserirElementos(){
     }
 
     fclose(saida);
+}
+
+void main(){
+	ler();
+	inserirElementos;
 }
