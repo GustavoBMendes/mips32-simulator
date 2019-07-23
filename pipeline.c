@@ -55,11 +55,6 @@ void Estage(char* instrucao, fila *exeQueue){
     //ACESSAR VALOR DO REGISTRADOR CASO ALGUMA IGUALDADE FOR VERDADEIRA
     //EXECUTAR A OPERAÇÃO
     //SALVAR RESULTADO NA MEMÓRIA PRINCIPAL(AINDA PRECISAMOS REVISAR A MEMÓRIA)
-    int operando1, operando2, destino;
-    
-    if(exeQueue->imediato != NULL){
-
-    }
 
     /*
     int operando1, operando2, destino;
@@ -95,7 +90,50 @@ void Estage(char* instrucao, fila *exeQueue){
             operando2 = registrador 
         }
     }
+    */
+    int operando1, operando2, destino;
+    
 
+    if(exeQueue->imediato != NULL){
+        int k = 0;
+        while(k < 31){
+            if(exeQueue->imediato == reg[k]){
+                operando2 = reg[k];
+            }
+            k++;
+        }
+    }
+
+    if(exeQueue->regDestino != NULL){
+        int k = 0;
+        while(k < 31){
+            if(exeQueue->regDestino == reg[k]){
+                destino = reg[k];
+            }
+            k++;
+        }
+    }
+
+    if(exeQueue->reg1 != NULL){
+        int k = 0;
+        while(k < 31){
+            if(exeQueue->reg1 == reg[k]){
+                operando1 = reg[k];
+            }
+            k++;
+        }
+    }
+
+    if(exeQueue->reg2 != NULL){
+        int k = 0;
+        while(k < 31){
+            if(exeQueue->reg2 == reg[k]){
+                operando2 = reg[k];
+            }
+            k++;
+        }
+    }
+    /* 
     executar operacao
     comparar o parametro recebido char* instrucao com as instruções de "intrucoes.h"
     de acordo com a instrução verificada, passar os parametros para a instrução encontrada
@@ -111,4 +149,60 @@ void Estage(char* instrucao, fila *exeQueue){
     apontar o registrador PC na posicao de memória salva
 
      */
+
+    
+
+    switch(instrucao){
+        case "add": add(destino,operando1,operando2); break;
+        case "addi": addi(destino,operando1,imediato); break;
+        case "And": And(destino,operando1,operando2); break;
+        case "andi": andi(destino,operando1,imediato); break;
+        case "b": ; break;
+        case "beq":  ; break;
+        case "beql": ; break;
+        case "bgez": ; break;
+        case "bgtz": ; break;
+        case "blez": ; break;
+        case "bltz": ; break;
+        case "bne": ;  break;
+        case "DivHI": ; break;
+        case "DivLO": ; break;
+        case "j": ; break; 
+        case "jr": ; break;
+        case "lui": ; break; 
+        case "madd": madd(operando1,operando2,destino); break;
+        case "mfhi": ; break;
+        case "mflo": ; break;
+        case "movn": movn(destino,operando1,operando2); break;
+        case "movz": movz(destino,operando1,operando2); break;
+        case "msub": msub(operando1,operando2,destino); break;
+        case "mthi": ; break;
+        case "mtlo": ; break;
+        case "mul": mul(destino,operando1,operando2); break;
+        case "mult": mult(operando1,operando2,destino); break;
+        case "nop": nop(); break;
+        case "nor": nor(destino,operando1,operando2); break; 
+        case "Or": Or(destino,operando1,operando2); break;
+        case "Ori": Ori(destino,operando1,imediato); break;
+        case "Xor": Xor(destino,operando1,operando2); break;
+        case "Xori": Xori(destino,operando1,imediato); break;
+    }
+
+    queueOut(exeQueue);
+
+}
+
+void Mstage(){
+    
+} 
+
+
+void Astage(){
+
+} 
+
+
+
+void Wstage(){
+
 }
