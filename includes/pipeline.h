@@ -2,8 +2,9 @@
 #define PIPELINE_H
 #include "registradores.h"
 #include "executionQueue.h"
+#include "instrucoes.h"
 
-void Istage();
-void Estage();
+char* Istage();
+void Estage(char* instrucao);
 
 #endif
