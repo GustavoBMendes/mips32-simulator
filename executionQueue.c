@@ -101,7 +101,7 @@ void printQueue(FILA *F){
 			if(aux->reg2 != NULL)
 				printf("Registrador 2: %s", aux->reg2);
 
-			if(aux->imediato != NULL)
+			if(aux->imediato != 0)
 				printf("Imediato: %d", aux->imediato);
 
 			aux = aux->prox;
@@ -169,12 +169,12 @@ int inserirElementos(){
 	}
 
 	int i;
-    char str[6];
+    char str[7];
 
 	FILA F;
 	create(&F);
 
-    while(fgets(str, 6, saida) != NULL){
+    while(fgets(str, 7, saida) != NULL){
 
         if(str[0] == '$'){
 			
@@ -209,6 +209,8 @@ int inserirElementos(){
 		
 
     }
+
+	printQueue(&F);
 
     fclose(saida);
 	return 1;
