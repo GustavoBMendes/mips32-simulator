@@ -20,74 +20,11 @@ void create(FILA *F){
 	F->fim = NULL;
 }
 
-/*
-fila *alocar(char *nome,int dado1, int dado2, int dest){
-	fila *novo = (fila *) malloc(sizeof(fila));
-	if(novo != NULL){
-		strcpy(novo->instructionName,nome);
-		novo->reg1 = dado1;
-		novo->imediato = dado2;
-		novo->regDestino = dest;
-		novo->prox = NULL;
-	}
-	return novo;
-}
-
-void alocarInst(char *nome){
-	fila *novo = (fila *) malloc(sizeof(fila));
-	if(novo != NULL){
-		strcpy(novo->instructionName,nome);
-		novo->prox = NULL;
-	}
-	return novo;
-}
-
-void alocarRegDest(fila *F, char *registrador){
-
-	if(F != NULL){
-		strcpy(F->regDestino, registrador);
-	}
-
-}
-
-void alocarReg1(fila *F, char *registrador){
-
-	if(F != NULL){
-		strcpy(F->reg1, registrador);
-	}
-
-}
-
-void alocarReg2(fila *F, char *registrador){
-
-	if(F != NULL){
-		strcpy(F->reg2, registrador);
-	}
-
-}
-
-void alocarDado(fila *F, int dado){
-
-	if(F != NULL){
-		F->imediato = dado;
-	}
-
-}
-
-void queueIn(fila *F,char *nome,int dado1, int dado2, int dest){
-	fila *novo = alocar(nome,dado1,dado2,dest);
-	fila *aux;
-	aux = F;
-	while (aux->prox != NULL){
-		aux = aux->prox;
-	}
-	aux->prox = novo;
-}
-*/
 void queueInInst(FILA *F,char *nome){
 
 	NO *novo;
 	novo = (NO*) malloc(sizeof(NO));
+	novo->instructionName = (char*) malloc(sizeof(*nome));
 	strcpy(novo->instructionName, nome);
 	novo->prox = NULL;
 	if(!F->inicio)
@@ -98,20 +35,23 @@ void queueInInst(FILA *F,char *nome){
 	
 }
 
-void queueInRegDest(FILA *F, char* reg){
+void queueInRegDest(FILA *F, char *reg){
 
+	F->fim->regDestino = (char*) malloc(sizeof(*reg));
 	strcpy(F->fim->regDestino, reg);
 
 }
 
 void queueInReg1(FILA *F, char* reg){
 	
+	F->fim->reg1 = (char*) malloc(sizeof(*reg));
 	strcpy(F->fim->reg1, reg);
 
 }
 
 void queueInReg2(FILA *F, char* reg){
 
+	F->fim->reg2 = (char*) malloc(sizeof(*reg));
 	strcpy(F->fim->reg2, reg);
 
 }
@@ -136,19 +76,40 @@ int queueOut (FILA *F){
 }
 
 void printQueue(FILA *F){
+
 	NO *aux = F->inicio;
 	int k = 1;
+
 	if(aux == NULL){
 		printf("FIla vazia!\n");
 	}
+
 	else{
 		printf("Inicio --> ");
 		while(aux != NULL){
-			printf("Posição da fila: %d => Nome: %s , reg1: %s , reg2: %s , ValorDestino: %s, imediato: %d \n",k,aux->instructionName,aux->reg1,aux->reg2,aux->regDestino, aux->imediato);
+
+			printf("Posição da fila: %d => ", k);
+			if(aux->instructionName != NULL)
+				printf("Instrucao: %s", aux->instructionName);
+
+			if(aux->regDestino != NULL)
+				printf("Registrador Destino: %s", aux->regDestino);
+			
+			if(aux->reg1 != NULL)
+				printf("Registrador 1: %s", aux->reg1);
+
+			if(aux->reg2 != NULL)
+				printf("Registrador 2: %s", aux->reg2);
+
+			if(aux->imediato != NULL)
+				printf("Imediato: %d", aux->imediato);
+
 			aux = aux->prox;
 			k++;
+
 		}			
 	}
+
 }
 
 void ler(){
@@ -198,9 +159,14 @@ void ler(){
 
 }
 
-void inserirElementos(){
+int inserirElementos(){
 
-	FILE *saida = fopen("saida.txt", "r");
+	FILE* saida = fopen("saida.txt", "r");
+
+	if(saida == NULL){
+		printf("Não foi possível abrir o arquivo");
+		return 0;
+	}
 
 	int i;
     char str[6];
@@ -208,9 +174,7 @@ void inserirElementos(){
 	FILA F;
 	create(&F);
 
-    while(!feof(saida)){
-
-        fgets(str, 6, saida);
+    while(fgets(str, 6, saida) != NULL){
 
         if(str[0] == '$'){
 			
@@ -247,4 +211,6 @@ void inserirElementos(){
     }
 
     fclose(saida);
+	return 1;
+
 }
