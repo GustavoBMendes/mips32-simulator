@@ -6,5 +6,9 @@
 
 char* Istage(FILA *execQueue);
 void Estage(char* instrucao, FILA *exeQueue);
+void Mstage();
+void Astage();
+void Wstage();
+int getReg(char* reg);
 
 #endif
