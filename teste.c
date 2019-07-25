@@ -38,11 +38,13 @@ int main(){
     printf("Teste MFLO, MTLO, MTHI E MTHI:\n\n");
     printf("MTHI: %d\nMFHI: %d",mduMthi(T0,HI),mduMfhi(HI,T0));
     */
-   FILA *F;
+
+    FILA F;
+    create(&F);
     ler();
-    inserirElementos(F);
-    char *a;
-    strcpy(a,Istage(F));
+    inserirElementos(&F);
+    char *a = (char*) malloc(7 * sizeof(char));
+    strcpy(a, Istage(&F));
     printf("%s ",a);
    
 }

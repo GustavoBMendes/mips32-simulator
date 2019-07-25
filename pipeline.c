@@ -19,7 +19,7 @@ extern unsigned int HI,LO;
  * @abstract ESTÁGIO DE BUSCA
  * REALIZA A BUSCA DA INSTRUÇÃO NA FILA
  */
-char *Istage(FILA *execQueue){
+char* Istage(FILA *execQueue){
 
     //A PRIMEIRA POSIÇÃO DA FILA SEMPRE SERÁ A INSTRUÇÃO A SER EXECUTADA
     //NÃO REMOVER O NÓ DA POSIÇÃO INICIAL DA FILA NESTE ESTÁGIO
@@ -33,9 +33,8 @@ char *Istage(FILA *execQueue){
     strcpy(instrucao, fila->instructionName);
     return instrucao;
      */
-    FILA *F = execQueue;
-    NO *aux = F->inicio;
-    char *nomeSaida;
+    NO *aux = execQueue->inicio;
+    char* nomeSaida = (char*) malloc(sizeof(aux->instructionName));
     strcpy(nomeSaida,aux->instructionName);
     return nomeSaida;
 }

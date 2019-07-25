@@ -11,70 +11,6 @@ void create(FILA *F){
 	F->fim = NULL;
 }
 
-/*
-fila *alocar(char *nome,int dado1, int dado2, int dest){
-	fila *novo = (fila *) malloc(sizeof(fila));
-	if(novo != NULL){
-		strcpy(novo->instructionName,nome);
-		novo->reg1 = dado1;
-		novo->imediato = dado2;
-		novo->regDestino = dest;
-		novo->prox = NULL;
-	}
-	return novo;
-}
-
-void alocarInst(char *nome){
-	fila *novo = (fila *) malloc(sizeof(fila));
-	if(novo != NULL){
-		strcpy(novo->instructionName,nome);
-		novo->prox = NULL;
-	}
-	return novo;
-}
-
-void alocarRegDest(fila *F, char *registrador){
-
-	if(F != NULL){
-		strcpy(F->regDestino, registrador);
-	}
-
-}
-
-void alocarReg1(fila *F, char *registrador){
-
-	if(F != NULL){
-		strcpy(F->reg1, registrador);
-	}
-
-}
-
-void alocarReg2(fila *F, char *registrador){
-
-	if(F != NULL){
-		strcpy(F->reg2, registrador);
-	}
-
-}
-
-void alocarDado(fila *F, int dado){
-
-	if(F != NULL){
-		F->imediato = dado;
-	}
-
-}
-
-void queueIn(fila *F,char *nome,int dado1, int dado2, int dest){
-	fila *novo = alocar(nome,dado1,dado2,dest);
-	fila *aux;
-	aux = F;
-	while (aux->prox != NULL){
-		aux = aux->prox;
-	}
-	aux->prox = novo;
-}
-*/
 void queueInInst(FILA *F,char *nome){
 
 	NO *novo;
@@ -260,7 +196,6 @@ void inserirElementos(FILA *F){
 
     }
 
-	//printQueue(F);
-
     fclose(saida);
+	
 }
