@@ -13,13 +13,13 @@
 #include "includes/pipeline.h"
 #include "includes/executionQueue.h"
 
-int HI,LO;
+extern unsigned int HI,LO;
 /* 
  * @function void Istage()
  * @abstract ESTÁGIO DE BUSCA
  * REALIZA A BUSCA DA INSTRUÇÃO NA FILA
  */
-char* Istage(fila *execQueue){
+char *Istage(FILA *execQueue){
 
     //A PRIMEIRA POSIÇÃO DA FILA SEMPRE SERÁ A INSTRUÇÃO A SER EXECUTADA
     //NÃO REMOVER O NÓ DA POSIÇÃO INICIAL DA FILA NESTE ESTÁGIO
@@ -33,9 +33,10 @@ char* Istage(fila *execQueue){
     strcpy(instrucao, fila->instructionName);
     return instrucao;
      */
-    fila *F = execQueue;
+    FILA *F = execQueue;
+    NO *aux = F->inicio;
     char *nomeSaida;
-    strcpy(nomeSaida,F->instructionName);
+    strcpy(nomeSaida,aux->instructionName);
     return nomeSaida;
 }
 
@@ -46,7 +47,8 @@ char* Istage(fila *execQueue){
  * BUSCA OS REGISTRADORES, IMEDIATOS OU ENDEREÇOS CONTIDOS NA MESMA 
  * POSIÇÃO DA FILA EM QUE A INSTRUÇÃO FOI BUSCADA
  */
-void Estage(char* instrucao, fila *exeQueue){
+/*
+void Estage(char* instrucao, FILA *exeQueue){
 
     //A PARTIR DA POSIÇÃO INICIAL DA FILA,
     //BUSCAR OS OPERANDOS NAQUELA POSIÇÃO DA FILA
@@ -90,7 +92,7 @@ void Estage(char* instrucao, fila *exeQueue){
             operando2 = registrador 
         }
     }
-    */
+    
     int operando1, operando2, destino;
     
 
@@ -148,7 +150,7 @@ void Estage(char* instrucao, fila *exeQueue){
     salvar o retorno da função de intrução na memória (revisar memória)
     apontar o registrador PC na posicao de memória salva
 
-     */
+     
 
     
 
@@ -191,7 +193,7 @@ void Estage(char* instrucao, fila *exeQueue){
     queueOut(exeQueue);
 
 }
-
+ */
 void Mstage(){
 
 } 

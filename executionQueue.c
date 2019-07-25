@@ -4,16 +4,7 @@
 #include <ctype.h>
 #include "includes/executionQueue.h"
 
-typedef struct exeQueue{
-    char *instructionName;
-    int imediato;
-	char *regDestino, *reg1, *reg2;
-    struct exeQueue *prox;
-};
 
-typedef struct fila{
-	NO *inicio, *fim;
-};
 
 void create(FILA *F){
 	F->inicio = NULL;

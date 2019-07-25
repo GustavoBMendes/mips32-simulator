@@ -4,7 +4,7 @@
 #include "executionQueue.h"
 #include "instrucoes.h"
 
-char* Istage(fila *execQueue);
-void Estage(char* instrucao, fila *exeQueue);
+char* Istage(FILA *execQueue);
+void Estage(char* instrucao, FILA *exeQueue);
 
 #endif

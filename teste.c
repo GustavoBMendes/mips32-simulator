@@ -1,10 +1,13 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "includes/memoria.h"
 #include "includes/barramento.h"
 #include "includes/registradores.h"
 #include "includes/ula.h"
 #include "includes/mdu.h"
 #include "includes/executionQueue.h"
+#include "includes/pipeline.h"
 
 int main(){
     unsigned int reg[32];
@@ -35,7 +38,11 @@ int main(){
     printf("Teste MFLO, MTLO, MTHI E MTHI:\n\n");
     printf("MTHI: %d\nMFHI: %d",mduMthi(T0,HI),mduMfhi(HI,T0));
     */
-
+   FILA *F;
     ler();
-    inserirElementos();
+    inserirElementos(F);
+    char *a;
+    strcpy(a,Istage(F));
+    printf("%s ",a);
+   
 }

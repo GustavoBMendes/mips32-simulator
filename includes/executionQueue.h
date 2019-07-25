@@ -4,6 +4,17 @@
 typedef struct exeQueue NO;
 typedef struct fila FILA;
 
+struct exeQueue{
+    char *instructionName;
+    int imediato;
+	char *regDestino, *reg1, *reg2;
+    struct exeQueue *prox;
+};
+
+struct fila{
+	NO *inicio, *fim;
+};
+
 void create();
 void clear();
 //void queueIn(FILA* F,char *nome,int dado1, int dado2, int dest);
