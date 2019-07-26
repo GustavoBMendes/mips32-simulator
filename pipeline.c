@@ -63,7 +63,7 @@ int compara(char* string1, char* string2){
     char aux1[4],aux2[4];
     printf("STRING1 DEPOIS: \n");
     for(i = 0; i <= strlen(string1); i++){
-        if(alfabetica(i) == 1){
+        if(alfabetica(string1[i]) == 1){
             aux1[i] = string1[i];
         }
     }
@@ -83,48 +83,27 @@ void Estage(char* instrucao, FILA *exeQueue){
     //EXECUTAR A OPERAÇÃO
     //SALVAR RESULTADO NA MEMÓRIA PRINCIPAL(AINDA PRECISAMOS REVISAR A MEMÓRIA)
 
+    NO* linha = exeQueue->inicio;
+
     unsigned int reg[32];
     int operando1, operando2, destino;
 
-    if(exeQueue->inicio->imediato != NULL){
-        int k = 0;
-        while(k < 31){
-            if(exeQueue->inicio->imediato == reg[k]){
-                operando2 = reg[k];
-            }
-            k++;
-        }
+    if(linha->imediato != 0)
+        operando2 = linha->imediato;
+
+    if(linha->regDestino != NULL)
+        destino = getReg(linha->regDestino);
+
+    if(linha->reg1 != NULL){
+        int k = getReg(linha->reg1);
+        operando1 = reg[k];
     }
 
-    if(exeQueue->inicio->regDestino != NULL){
-        int k = 0;
-        while(k < 31){
-            if(exeQueue->inicio->regDestino == reg[k]){
-                destino = reg[k];
-            }
-            k++;
-        }
+    if(linha->reg2 != NULL){
+        int k = getReg(linha->reg2);
+        operando2 = reg[k];
     }
-
-    if(exeQueue->inicio->reg1 != NULL){
-        int k = 0;
-        while(k < 31){
-            if(exeQueue->inicio->reg1 == reg[k]){
-                operando1 = reg[k];
-            }
-            k++;
-        }
-    }
-
-    if(exeQueue->inicio->reg2 != NULL){
-        int k = 0;
-        while(k < 31){
-            if(exeQueue->inicio->reg2 == reg[k]){
-                operando2 = reg[k];
-            }
-            k++;
-        }
-    }
+    
     /* 
     executar operacao
     comparar o parametro recebido char* instrucao com as instruções de "intrucoes.h"
@@ -147,7 +126,13 @@ void Estage(char* instrucao, FILA *exeQueue){
    //strcpy(aux,"add");
    //printf("Tamanho de instrucao: %ld\nTamanho de aux: %ld",sizeof(instrucao),sizeof(aux));
    //printf("aux: %s \ninstrucao: %s",aux,instrucao);
+   
    compara(instrucao,"add");
+
+   if(strcmp(instrucao, "add\n") == 0){
+        printf("\nExecutou\n");
+        add(destino, operando1, operando2);
+   }
 
    /*
    if(strcmp(instrucao,"add") == 0){
@@ -213,5 +198,112 @@ void Astage(){
 
 
 void Wstage(){
+
+}
+
+int getReg(char* reg){
+
+    if(strcmp(reg, "$zero"))
+        return 0;
+
+    else if(strcmp(reg, "$at"))
+        return 1;
+
+    else if(strcmp(reg, "$v0"))
+        return 2;
+
+    else if(strcmp(reg, "$v1"))
+        return 3;
+
+    else if(strcmp(reg, "$a0"))
+        return 4;
+
+    else if(strcmp(reg, "$a1"))
+        return 5;
+
+    else if(strcmp(reg, "$a2"))
+        return 6;
+
+    else if(strcmp(reg, "$a3"))
+        return 7;
+
+    else if(strcmp(reg, "$t0"))
+        return 8;
+
+    else if(strcmp(reg, "$t1"))
+        return 9;
+
+    else if(strcmp(reg, "$t2"))
+        return 10;
+
+    else if(strcmp(reg, "$t3"))
+        return 11;
+
+    else if(strcmp(reg, "$t4"))
+        return 12;
+
+    else if(strcmp(reg, "$t5"))
+        return 13;
+
+    else if(strcmp(reg, "$t6"))
+        return 14;
+
+    else if(strcmp(reg, "$t7"))
+        return 15;
+
+    else if(strcmp(reg, "$s0"))
+        return 16;
+
+    else if(strcmp(reg, "$s1"))
+        return 17;
+
+    else if(strcmp(reg, "$s2"))
+        return 18;
+
+    else if(strcmp(reg, "$s3"))
+        return 19;
+
+    else if(strcmp(reg, "$s4"))
+        return 20;
+
+    else if(strcmp(reg, "$s5"))
+        return 21;
+
+    else if(strcmp(reg, "$s6"))
+        return 22;
+
+    else if(strcmp(reg, "$s7"))
+        return 23;
+
+    else if(strcmp(reg, "$t8"))
+        return 24;
+
+    else if(strcmp(reg, "$t9"))
+        return 25;
+
+    else if(strcmp(reg, "$k0"))
+        return 26;
+
+    else if(strcmp(reg, "$k1"))
+        return 27;
+
+    else if(strcmp(reg, "$gp"))
+        return 28;
+
+    else if(strcmp(reg, "$sp"))
+        return 29;
+
+    else if(strcmp(reg, "$fp"))
+        return 30;
+
+    else if(strcmp(reg, "$ra"))
+        return 31;
+
+    else{
+
+        printf("\nRegistrador não encontrado na busca de operandos!");
+        return -1;
+
+    }
 
 }
