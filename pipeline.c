@@ -34,6 +34,45 @@ char* Istage(FILA *execQueue){
  * POSIÇÃO DA FILA EM QUE A INSTRUÇÃO FOI BUSCADA
  */
 
+int alfabetica(char c){
+    if(c == 'a' ||c == 'b' ||c == 'c' ||c == 'd' ||c == 'e' ||c == 'f' ||c == 'g' ||c == 'h' ||c == 'i' ||c == 'j'
+        ||c == 'k' ||c == 'l' ||c == 'm' ||c == 'n' ||c == 'o' ||c == 'p' ||c == 'q' ||c == 'r' 
+        ||c == 's' ||c == 't' ||c == 'u' ||c == 'v' ||c == 'w' ||c == 'x' ||c == 'y' ||c == 'z'
+        || c == 'A' || c == 'B' || c == 'C' || c == 'D' || c == 'E' || c == 'F' || c == 'G' || c == 'H' || c == 'I' ||
+         c == 'J' || c == 'K' || c == 'L' || c == 'M' || c == 'N' || c == 'O' || c == 'P' || c == 'Q' || c == 'R' ||
+          c == 'S' || c == 'T' || c == 'U' || c == 'V' || c == 'W' || c == 'X' || c == 'Y' || c == 'Z'){
+              return 1;
+          }
+    else{
+        return 0;
+    }
+}
+
+int compara(char* string1, char* string2){
+    int i;
+    printf("STRING1 ANTES: \n");
+    for( i = 0; i <= strlen(string1); i++){
+        printf("[%d] : %c\n",i,string1[i]);
+    }
+    /*
+    printf("STRING2: \n");
+    for( i = 0; i <= strlen(string2); i++){
+        printf("[%d] : %c\n",i,string2[i]);
+    }
+    */
+    char aux1[4],aux2[4];
+    printf("STRING1 DEPOIS: \n");
+    for(i = 0; i <= strlen(string1); i++){
+        if(alfabetica(i) == 1){
+            aux1[i] = string1[i];
+        }
+    }
+    for( i = 0; i <= strlen(aux1); i++){
+        printf("[%d] : %c\n",i,aux1[i]);
+    }
+
+}
+
 void Estage(char* instrucao, FILA *exeQueue){
 
     //A PARTIR DA POSIÇÃO INICIAL DA FILA,
@@ -47,41 +86,6 @@ void Estage(char* instrucao, FILA *exeQueue){
     unsigned int reg[32];
     int operando1, operando2, destino;
 
-    //verificar os campos da fila
-    /* os que forem difenentes de NULL serão utilizados na execução
-
-    se fila->imediato != NULL{
-        while(tenham registradores a serem percorridos){
-            compara fila->imediato com todos os 32 registradores de "registradores.h" um a um
-            atribuir valor ao operando2
-            operando2 = registrador 
-        }
-    }
-    se fila->regDestino != NULL {
-        while(tenham registradores a serem percorridos){
-            compara fila->regDestino com todos os 32 registradores de "registradores.h" um a um
-            atribuir valor ao destino
-            destino = registrador 
-        }
-    }
-    se fila->reg1 != NULL{
-        while(tenham registradores a serem percorridos){
-            compara fila->reg1 com todos os 32 registradores de "registradores.h" um a um
-            atribuir valor ao operando1
-            operando1 = registrador 
-        }
-    }
-    se fila->reg2 != NULL{
-        while(tenham registradores a serem percorridos){
-            compara fila->reg2 com todos os 32 registradores de "registradores.h" um a um
-            atribuir valor ao operando2
-            operando2 = registrador 
-        }
-    }
-    
-    int operando1, operando2, destino;
-    
-*/
     if(exeQueue->inicio->imediato != NULL){
         int k = 0;
         while(k < 31){
@@ -138,11 +142,24 @@ void Estage(char* instrucao, FILA *exeQueue){
 
      
     */
-    
+   //char *aux;
+   //aux = (char*)malloc(sizeof(exeQueue->inicio->instructionName));
+   //strcpy(aux,"add");
+   //printf("Tamanho de instrucao: %ld\nTamanho de aux: %ld",sizeof(instrucao),sizeof(aux));
+   //printf("aux: %s \ninstrucao: %s",aux,instrucao);
+   compara(instrucao,"add");
 
+   /*
    if(strcmp(instrucao,"add") == 0){
        printf("HAHA");
    }
+   else if(!strcmp(instrucao,"sub") == 0){
+       printf("kk");
+   }
+   else{
+
+   }
+    */
 /* 
     switch(instrucao){
         case "add": add(destino,operando1,operando2); break;
