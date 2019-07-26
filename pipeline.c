@@ -20,19 +20,6 @@ extern unsigned int HI,LO;
  * REALIZA A BUSCA DA INSTRUÇÃO NA FILA
  */
 char* Istage(FILA *execQueue){
-
-    //A PRIMEIRA POSIÇÃO DA FILA SEMPRE SERÁ A INSTRUÇÃO A SER EXECUTADA
-    //NÃO REMOVER O NÓ DA POSIÇÃO INICIAL DA FILA NESTE ESTÁGIO
-    //POIS ESTA É NECESSAŔIA PARA PEGAR OS REGISTRADORES NO ESTÁGIO DE EXECUÇÃO
-    //NO ESTÁGIO DE EXECUÇÃO ESTA POSIÇÃO MARCADA SERÁ REMOVIDA DA FILA
-
-    /*
-    char* instrucao;
-    transferir string do campo instructionName para outra string auxiliar
-    que será retornada e utilizada no estágio de execução
-    strcpy(instrucao, fila->instructionName);
-    return instrucao;
-     */
     NO *aux = execQueue->inicio;
     char* nomeSaida = (char*) malloc(sizeof(aux->instructionName));
     strcpy(nomeSaida,aux->instructionName);
@@ -46,7 +33,7 @@ char* Istage(FILA *execQueue){
  * BUSCA OS REGISTRADORES, IMEDIATOS OU ENDEREÇOS CONTIDOS NA MESMA 
  * POSIÇÃO DA FILA EM QUE A INSTRUÇÃO FOI BUSCADA
  */
-/*
+
 void Estage(char* instrucao, FILA *exeQueue){
 
     //A PARTIR DA POSIÇÃO INICIAL DA FILA,
@@ -57,11 +44,11 @@ void Estage(char* instrucao, FILA *exeQueue){
     //EXECUTAR A OPERAÇÃO
     //SALVAR RESULTADO NA MEMÓRIA PRINCIPAL(AINDA PRECISAMOS REVISAR A MEMÓRIA)
 
-    /*
+    unsigned int reg[32];
     int operando1, operando2, destino;
 
-    verificar os campos da fila
-    os que forem difenentes de NULL serão utilizados na execução
+    //verificar os campos da fila
+    /* os que forem difenentes de NULL serão utilizados na execução
 
     se fila->imediato != NULL{
         while(tenham registradores a serem percorridos){
@@ -94,41 +81,41 @@ void Estage(char* instrucao, FILA *exeQueue){
     
     int operando1, operando2, destino;
     
-
-    if(exeQueue->imediato != NULL){
+*/
+    if(exeQueue->inicio->imediato != NULL){
         int k = 0;
         while(k < 31){
-            if(exeQueue->imediato == reg[k]){
+            if(exeQueue->inicio->imediato == reg[k]){
                 operando2 = reg[k];
             }
             k++;
         }
     }
 
-    if(exeQueue->regDestino != NULL){
+    if(exeQueue->inicio->regDestino != NULL){
         int k = 0;
         while(k < 31){
-            if(exeQueue->regDestino == reg[k]){
+            if(exeQueue->inicio->regDestino == reg[k]){
                 destino = reg[k];
             }
             k++;
         }
     }
 
-    if(exeQueue->reg1 != NULL){
+    if(exeQueue->inicio->reg1 != NULL){
         int k = 0;
         while(k < 31){
-            if(exeQueue->reg1 == reg[k]){
+            if(exeQueue->inicio->reg1 == reg[k]){
                 operando1 = reg[k];
             }
             k++;
         }
     }
 
-    if(exeQueue->reg2 != NULL){
+    if(exeQueue->inicio->reg2 != NULL){
         int k = 0;
         while(k < 31){
-            if(exeQueue->reg2 == reg[k]){
+            if(exeQueue->inicio->reg2 == reg[k]){
                 operando2 = reg[k];
             }
             k++;
@@ -150,9 +137,13 @@ void Estage(char* instrucao, FILA *exeQueue){
     apontar o registrador PC na posicao de memória salva
 
      
-
+    */
     
 
+   if(strcmp(instrucao,"add") == 0){
+       printf("HAHA");
+   }
+/* 
     switch(instrucao){
         case "add": add(destino,operando1,operando2); break;
         case "addi": addi(destino,operando1,imediato); break;
@@ -190,9 +181,9 @@ void Estage(char* instrucao, FILA *exeQueue){
     }
 
     queueOut(exeQueue);
-
+*/
 }
- */
+ 
 void Mstage(){
 
 } 

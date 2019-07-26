@@ -46,5 +46,5 @@ int main(){
     char *a = (char*) malloc(7 * sizeof(char));
     strcpy(a, Istage(&F));
     printf("%s ",a);
-   
+    Estage(a,&F);
 }
