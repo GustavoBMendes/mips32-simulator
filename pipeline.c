@@ -187,17 +187,41 @@ void Estage(char* instrucao, FILA *exeQueue){
 }
  
 void Mstage(){
+/*
+* Durante o estágio de busca de memória, a operação aritmética ou lógica da ALU é concluída, a busca 
+* do cache de dados e a conversão de endereços virtuais para dados são executadas para instruções 
+* de carga e armazenamento. 
+*/
+//Aqui serão recebidos do barramento os resultados das instruções
+// Nesse estagio os dados serão armazenados na memória
+
 
 } 
 
 
 void Astage(){
+/*
+* Durante o estágio Alinhar / Acumular, um alinhador separado alinha os dados carregados com seu limite de palavras, uma 
+* operação MUL disponibiliza o resultado para write-back. O writeback real do registrador é executado no 
+* estágio W (todos os núcleos 4K), uma operação MULT / MADD / MSUB executa o carry-propagate-add. 
+* Isso inclui o passo acumulado para as operações MADD / MSUB. 
+* O writeback de registro real para HI e LO é realizado no estágio W (4Kc e 4Km núcleos),uma operação de divisão executa 
+* o ajuste de sinal final. O writeback real do registrador para HI e LO é executado no W estágio (núcleos de 4Kc e 4Km), 
+* uma operação de multiplicação / divisão grava em registradores HI / LO (apenas no core 4Kp).
+*/
+
 
 } 
 
 
 
 void Wstage(){
+/*
+* Para registrador-para-registrador ou carregar instruções,o resultado é gravado de volta no arquivo de registro
+* durante o estágio W.
+*/
+
+
 
 }
 
