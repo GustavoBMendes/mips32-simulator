@@ -19,11 +19,23 @@ extern unsigned int HI,LO;
  * @abstract ESTÁGIO DE BUSCA
  * REALIZA A BUSCA DA INSTRUÇÃO NA FILA
  */
-char* Istage(FILA *execQueue){
+char* Istage(FILA *execQueue, int PC){
+
     NO *aux = execQueue->inicio;
+    int posicao = PC/4;
+
+    while(posicao > 0){
+
+        aux = aux->prox;
+        posicao--;
+
+    }
+
     char* nomeSaida = (char*) malloc(sizeof(aux->instructionName));
     strcpy(nomeSaida,aux->instructionName);
+
     return nomeSaida;
+
 }
 
 /* 
@@ -73,7 +85,7 @@ int compara(char* string1, char* string2){
 
 }
 
-void Estage(char* instrucao, FILA *exeQueue){
+void Estage(char* instrucao, FILA *exeQueue, int PC){
 
     //A PARTIR DA POSIÇÃO INICIAL DA FILA,
     //BUSCAR OS OPERANDOS NAQUELA POSIÇÃO DA FILA
@@ -84,6 +96,14 @@ void Estage(char* instrucao, FILA *exeQueue){
     //SALVAR RESULTADO NA MEMÓRIA PRINCIPAL(AINDA PRECISAMOS REVISAR A MEMÓRIA)
 
     NO* linha = exeQueue->inicio;
+    int posicao = PC/4;
+
+    while(posicao > 0){
+
+        linha = linha->prox;
+        posicao--;
+
+    }
 
     unsigned int reg[32];
     int operando1, operando2, operando3, imediato;
@@ -230,57 +250,8 @@ void Estage(char* instrucao, FILA *exeQueue){
     else if(strcmp(instrucao, "xori\n") == 0)
         xori(operando1, operando2, imediato);
         
+    //chamar o somador, ou aqui ou antes da chamada do próximo estágio
 
-   /*
-   if(strcmp(instrucao,"add") == 0){
-       printf("HAHA");
-   }
-   else if(!strcmp(instrucao,"sub") == 0){
-       printf("kk");
-   }
-   else{
-
-   }
-    */
-/* 
-    switch(instrucao){
-        case "add": add(operando1,operando1,operando2); break;
-        case "addi": addi(operando1,operando1,operando3); break;
-        case "And": And(operando1,operando1,operando2); break;
-        case "andi": andi(operando1,operando1,operando3); break;
-        case "b": ; break;
-        case "beq":  ; break;
-        case "beql": ; break;
-        case "bgez": ; break;
-        case "bgtz": ; break;
-        case "blez": ; break;
-        case "bltz": ; break;
-        case "bne": ;  break;
-        case "DivHI": DivHI(operando1,operando2,HI,LO); break;
-        case "DivLO": DivLO(operando1,operando2,HI,LO); break;
-        case "j": ; break; 
-        case "jr": ; break;
-        case "lui": ; break; 
-        case "madd": madd(operando1,operando2,operando1); break;
-        case "mfhi": mfhi(HI,operando1); break;
-        case "mflo": mflo(LO,operando1); break;
-        case "movn": movn(operando1,operando1,operando2); break;
-        case "movz": movz(operando1,operando1,operando2); break;
-        case "msub": msub(operando1,operando2,operando1); break;
-        case "mthi": mthi(operando1,HI); break;
-        case "mtlo": mtlo(operando1,LO); break;
-        case "mul": mul(operando1,operando1,operando2); break;
-        case "mult": mult(operando1,operando2,operando1); break;
-        case "nop": nop(); break;
-        case "nor": nor(operando1,operando1,operando2); break; 
-        case "Or": Or(operando1,operando1,operando2); break;
-        case "Ori": Ori(operando1,operando1,operando3); break;
-        case "Xor": Xor(operando1,operando1,operando2); break;
-        case "Xori": Xori(operando1,operando1,operando3); break;
-    }
-
-    queueOut(exeQueue);
-*/
 }
  
 void Mstage(){
