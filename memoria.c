@@ -18,6 +18,28 @@
 unsigned char *memory;
 unsigned char *palavra;
 
+
+int conta_digitos(int valor){
+    int contaDigitos = 0;
+    if (valor == 0) contaDigitos = 1;
+    else
+        while (valor != 0)
+        {
+            contaDigitos = contaDigitos + 1;
+            valor = valor / 10;
+        }
+    return contaDigitos;
+}
+
+char* converter(int num){
+    
+}
+
+
+
+
+
+
 /*
  * @function inicializeMemory()
  * @abstract FUNÇÃO QUE ALOCA ESPAÇO PARA A MEMÓRIA PRINCIPAL
