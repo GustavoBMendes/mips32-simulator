@@ -19,7 +19,7 @@ void inicializeMemory();
 void readFromMemory(int);
 void writeInMemory(int);
 void printMemory();
-int converter(int num);
+
 
 
 #endif

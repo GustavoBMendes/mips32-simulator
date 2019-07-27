@@ -8,19 +8,20 @@
  */
 
 #include "includes/barramento.h"
+#include "includes/memoria.h"
 
-unsigned char biu[4];
-
+unsigned char biu[5];
 
 /*
 * @function inserirNoBarramento(unsigned char *dado)
 * @abstract Insere a palavra a ser transportada pelo barramento do processador
 */
-void inserirNoBarramento(unsigned char *dado){
-    biu[0] = dado[0];
-    biu[1] = dado[1];
-    biu[2] = dado[2];
-    biu[3] = dado[3];
+void inserirNoBarramento(unsigned int dado){
+    char* sdado;
+    strcpy(sdado,toStr(dado));
+    for(int i = 0; i <= strlen(sdado); i++){
+        biu[i] = sdado[i];
+    }
 }
 
 
@@ -28,6 +29,9 @@ void inserirNoBarramento(unsigned char *dado){
 * @function recuperarNoBarramento()
 * @abstract Retorna a palavra transportada pelo barramento do processador
 */
-unsigned char* recuperarNoBarramento(){
-    return (biu);
+int recuperarNoBarramento(){
+    char *aux;
+    strcpy(aux,biu);
+    int k = toInt(aux);
+    return k;
 }

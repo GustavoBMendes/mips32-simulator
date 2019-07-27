@@ -31,11 +31,16 @@ int conta_digitos(int valor){
     return contaDigitos;
 }
 
-char* converter(int num){
+char* toStr(int num){
     int num_digitos = conta_digitos(num);
     char *aux = (char*)malloc(sizeof(num_digitos));
     sprintf(aux, "%d", num);
     return aux;
+}
+
+int toInt(char *num){
+    int numero = atoi(num);
+    return numero;
 }
 
 
@@ -84,7 +89,7 @@ void readFromMemory(int endereco){
  * ESCRITA 4 BYTES EM UM ENDEREÇO PASSADO COMO PARÂMETRO
  */
 void writeInMemory(int endereco){
-
+    //pegar do barramento
     if(endereco % 4 == 0){
 
         int i;
