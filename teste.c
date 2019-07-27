@@ -38,7 +38,7 @@ int main(){
     printf("Teste MFLO, MTLO, MTHI E MTHI:\n\n");
     printf("MTHI: %d\nMFHI: %d",mduMthi(T0,HI),mduMfhi(HI,T0));
     */
-
+   /* 
     FILA F;
     create(&F);
     ler();
@@ -47,4 +47,8 @@ int main(){
     strcpy(a, Istage(&F));
     printf("%s ",a);
     Estage(a,&F);
+    */
+
+    int a = 111;
+    inserirNoBarramento(a);
 }

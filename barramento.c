@@ -18,10 +18,12 @@ unsigned char biu[5];
 */
 void inserirNoBarramento(unsigned int dado){
     char* sdado;
+    sdado = (char*)malloc(sizeof(char ));
     strcpy(sdado,toStr(dado));
     for(int i = 0; i <= strlen(sdado); i++){
         biu[i] = sdado[i];
     }
+    printf("Inserido no barramento");
 }
 
 
