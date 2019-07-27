@@ -52,4 +52,5 @@ int main(){
     int a = 111;
     inserirNoBarramento(a);
     printf("%s \n",biu);
+    printf("Recuperado do barramento o valor: %d",recuperarNoBarramento());
 }

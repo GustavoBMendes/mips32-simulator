@@ -33,6 +33,7 @@ void inserirNoBarramento(unsigned int dado){
 */
 int recuperarNoBarramento(){
     char *aux;
+    aux = (char*)malloc(sizeof(biu));
     strcpy(aux,biu);
     int k = toInt(aux);
     return k;
