@@ -86,22 +86,22 @@ void Estage(char* instrucao, FILA *exeQueue){
     NO* linha = exeQueue->inicio;
 
     unsigned int reg[32];
-    int operando1, operando2, destino;
+    int operando1, operando2, operando3, imediato;
 
     if(linha->imediato != 0)
-        operando2 = linha->imediato;
+        imediato = linha->imediato;
 
     if(linha->regDestino != NULL)
-        destino = getReg(linha->regDestino);
+        operando1 = getReg(linha->regDestino);
 
     if(linha->reg1 != NULL){
         int k = getReg(linha->reg1);
-        operando1 = reg[k];
+        operando2 = reg[k];
     }
 
     if(linha->reg2 != NULL){
         int k = getReg(linha->reg2);
-        operando2 = reg[k];
+        operando3 = reg[k];
     }
     
     /* 
@@ -111,7 +111,7 @@ void Estage(char* instrucao, FILA *exeQueue){
     conjunto de if else, caso verdadeiro chamar a função respectiva de instrucoes.h
     ex: 
     if(strcmp(intrucao, add)){
-        add(destino, operando1, operando2);
+        add(operando1, operando1, operando2);
     }
 
     excluir a posição inicial da fila
@@ -121,18 +121,115 @@ void Estage(char* instrucao, FILA *exeQueue){
 
      
     */
-   //char *aux;
-   //aux = (char*)malloc(sizeof(exeQueue->inicio->instructionName));
-   //strcpy(aux,"add");
-   //printf("Tamanho de instrucao: %ld\nTamanho de aux: %ld",sizeof(instrucao),sizeof(aux));
-   //printf("aux: %s \ninstrucao: %s",aux,instrucao);
+    //char *aux;
+    //aux = (char*)malloc(sizeof(exeQueue->inicio->instructionName));
+    //strcpy(aux,"add");
+    //printf("Tamanho de instrucao: %ld\nTamanho de aux: %ld",sizeof(instrucao),sizeof(aux));
+    //printf("aux: %s \ninstrucao: %s",aux,instrucao);
    
-   compara(instrucao,"add");
+    compara(instrucao,"add");
 
-   if(strcmp(instrucao, "add\n") == 0){
-        printf("\nExecutou\n");
-        add(destino, operando1, operando2);
-   }
+    if(strcmp(instrucao, "add\n") == 0)
+        add(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "addi\n") == 0)
+        addi(operando1, operando2, imediato);
+
+    else if(strcmp(instrucao, "and\n") == 0)
+        And(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "andi\n") == 0)
+        andi(operando1, operando2, imediato);
+
+    else if(strcmp(instrucao, "b\n") == 0)
+        b(PC, imediato);
+
+    else if(strcmp(instrucao, "beq\n") == 0)
+        beq(operando1, operando2, PC, imediato);
+
+    else if(strcmp(instrucao, "beql\n") == 0)
+        beql(operando1, operando2, PC, imediato);
+
+    else if(strcmp(instrucao, "bgez\n") == 0)
+        bgez(operando1, PC, imediato);
+
+    else if(strcmp(instrucao, "bgtz\n") == 0)
+        bgtz(operando1, PC, imediato);
+
+    else if(strcmp(instrucao, "blez\n") == 0)
+        blez(operando1, PC, imediato);
+
+    else if(strcmp(instrucao, "bltz\n") == 0)
+        bltz(operando1, PC, imediato);
+
+    else if(strcmp(instrucao, "bne\n") == 0)
+        bne(operando1, operando2, PC, imediato);
+
+    else if(strcmp(instrucao, "div\n") == 0){
+        DivHI(operando1, operando2, HI, LO);
+        DivLO(operando1, operando2, HI, LO);
+    }
+
+    else if(strcmp(instrucao, "j\n") == 0)
+        j(PC, imediato);
+
+    else if(strcmp(instrucao, "jr\n") == 0)
+        jr(PC, operando1);
+
+    else if(strcmp(instrucao, "lui\n") == 0)
+        lui(operando1, imediato);
+
+    else if(strcmp(instrucao, "madd\n") == 0)
+        madd(operando1, operando2, HI);    //registrador acumulador, HI e LO são deste tipo
+
+    else if(strcmp(instrucao, "mfhi\n") == 0)
+        mfhi(operando1, HI);
+    
+    else if(strcmp(instrucao, "mflo\n") == 0)
+        mflo(operando1, LO);
+
+    else if(strcmp(instrucao, "movn\n") == 0)
+        movn(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "movz\n") == 0)
+        movz(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "msub\n") == 0)
+        msub(operando1, operando2, HI);
+
+    else if(strcmp(instrucao, "mthi\n") == 0)
+        mthi(operando1, HI);
+
+    else if(strcmp(instrucao, "mtlo\n") == 0)
+        mtlo(operando1, LO);
+
+    else if(strcmp(instrucao, "mul\n") == 0)
+        mul(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "mult\n") == 0)
+        mult(operando1, operando2, HI);
+
+    else if(strcmp(instrucao, "nop\n") == 0)
+        nop();
+
+    else if(strcmp(instrucao, "nor\n") == 0)
+        nor(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "or\n") == 0)
+        or(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "ori\n") == 0)
+        ori(operando1, operando2, imediato);
+
+    else if(strcmp(instrucao, "sub\n") == 0)
+        sub(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "xor\n") == 0)
+        xor(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "xori\n") == 0)
+        xori(operando1, operando2, imediato);
+        
 
    /*
    if(strcmp(instrucao,"add") == 0){
@@ -147,10 +244,10 @@ void Estage(char* instrucao, FILA *exeQueue){
     */
 /* 
     switch(instrucao){
-        case "add": add(destino,operando1,operando2); break;
-        case "addi": addi(destino,operando1,imediato); break;
-        case "And": And(destino,operando1,operando2); break;
-        case "andi": andi(destino,operando1,imediato); break;
+        case "add": add(operando1,operando1,operando2); break;
+        case "addi": addi(operando1,operando1,operando3); break;
+        case "And": And(operando1,operando1,operando2); break;
+        case "andi": andi(operando1,operando1,operando3); break;
         case "b": ; break;
         case "beq":  ; break;
         case "beql": ; break;
@@ -164,22 +261,22 @@ void Estage(char* instrucao, FILA *exeQueue){
         case "j": ; break; 
         case "jr": ; break;
         case "lui": ; break; 
-        case "madd": madd(operando1,operando2,destino); break;
+        case "madd": madd(operando1,operando2,operando1); break;
         case "mfhi": mfhi(HI,operando1); break;
         case "mflo": mflo(LO,operando1); break;
-        case "movn": movn(destino,operando1,operando2); break;
-        case "movz": movz(destino,operando1,operando2); break;
-        case "msub": msub(operando1,operando2,destino); break;
+        case "movn": movn(operando1,operando1,operando2); break;
+        case "movz": movz(operando1,operando1,operando2); break;
+        case "msub": msub(operando1,operando2,operando1); break;
         case "mthi": mthi(operando1,HI); break;
         case "mtlo": mtlo(operando1,LO); break;
-        case "mul": mul(destino,operando1,operando2); break;
-        case "mult": mult(operando1,operando2,destino); break;
+        case "mul": mul(operando1,operando1,operando2); break;
+        case "mult": mult(operando1,operando2,operando1); break;
         case "nop": nop(); break;
-        case "nor": nor(destino,operando1,operando2); break; 
-        case "Or": Or(destino,operando1,operando2); break;
-        case "Ori": Ori(destino,operando1,imediato); break;
-        case "Xor": Xor(destino,operando1,operando2); break;
-        case "Xori": Xori(destino,operando1,imediato); break;
+        case "nor": nor(operando1,operando1,operando2); break; 
+        case "Or": Or(operando1,operando1,operando2); break;
+        case "Ori": Ori(operando1,operando1,operando3); break;
+        case "Xor": Xor(operando1,operando1,operando2); break;
+        case "Xori": Xori(operando1,operando1,operando3); break;
     }
 
     queueOut(exeQueue);
