@@ -51,4 +51,5 @@ int main(){
 
     int a = 111;
     inserirNoBarramento(a);
+    printf("%s \n",biu);
 }

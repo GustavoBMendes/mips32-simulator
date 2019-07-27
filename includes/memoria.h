@@ -19,7 +19,7 @@ void inicializeMemory();
 void readFromMemory(int);
 void writeInMemory(int);
 void printMemory();
-
-
+char* toStr(int num);
+int toInt(char *aux);
 
 #endif

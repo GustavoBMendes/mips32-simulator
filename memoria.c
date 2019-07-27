@@ -74,7 +74,7 @@ void readFromMemory(int endereco){
             palavra[i] = memory[endereco + i];
         }
 
-        inserirNoBarramento(palavra);
+       // inserirNoBarramento(palavra);
     }
 
     else
@@ -94,7 +94,7 @@ void writeInMemory(int endereco){
 
         int i;
 
-        palavra = recuperarNoBarramento();
+      //  palavra = recuperarNoBarramento();
         
         for(i = 0; i < 4; i++){
             memory[endereco + i] = palavra[i];
