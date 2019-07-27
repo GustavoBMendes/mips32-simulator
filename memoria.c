@@ -32,9 +32,11 @@ int conta_digitos(int valor){
 }
 
 char* converter(int num){
-    
+    int num_digitos = conta_digitos(num);
+    char *aux = (char*)malloc(sizeof(num_digitos));
+    sprintf(aux, "%d", num);
+    return aux;
 }
-
 
 
 
