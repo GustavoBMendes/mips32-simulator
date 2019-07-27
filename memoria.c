@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "includes/memoria.h"
+#include "includes/barramento.h"
 
 unsigned char *memory;
 unsigned char *palavra;
@@ -42,10 +43,6 @@ int toInt(char *num){
     int numero = atoi(num);
     return numero;
 }
-
-
-
-
 
 /*
  * @function inicializeMemory()
@@ -88,8 +85,15 @@ void readFromMemory(int endereco){
  * PALAVRAS DE 32 BITS (4 BYTES)
  * ESCRITA 4 BYTES EM UM ENDEREÇO PASSADO COMO PARÂMETRO
  */
-void writeInMemory(int endereco){
+void writeInMemory(){
     //pegar do barramento
+    //converter o dado oriundo do barramento para string
+    int palavra = recuperarNoBarramento();
+    char* aux = (char*)malloc(sizeof(biu));
+    strcpy(aux,toStr(palavra));
+    //inserir na memória a string ...
+    //não sei como tratar esse endereçamento da implementação anterior
+    /* 
     if(endereco % 4 == 0){
 
         int i;
@@ -103,6 +107,7 @@ void writeInMemory(int endereco){
 
     else
         printf("Não foi possível acessar este endereço de memória");
+    */
 }
 
 /*
