@@ -251,6 +251,7 @@ void Estage(char* instrucao, FILA *exeQueue, int PC){
         xori(operando1, operando2, imediato);
         
     //chamar o somador, ou aqui ou antes da chamada do próximo estágio
+    //retorna registrador destino para ser escrito no estagio W
 
 }
  
@@ -261,13 +262,13 @@ void Mstage(){
 * de carga e armazenamento. 
 */
 //Aqui serão recebidos do barramento os resultados das instruções
-// Nesse estagio os dados serão armazenados na memória
-
+//Nesse estagio os dados serão armazenados na memória
+//Retornar endereço da posicao PC
 
 } 
 
 
-void Astage(){
+int Astage(int PC){
 /*
 * Durante o estágio Alinhar / Acumular, um alinhador separado alinha os dados carregados com seu limite de palavras, uma 
 * operação MUL disponibiliza o resultado para write-back. O writeback real do registrador é executado no 
@@ -278,6 +279,11 @@ void Astage(){
 * uma operação de multiplicação / divisão grava em registradores HI / LO (apenas no core 4Kp).
 */
 
+if(PC % 4 != 0)
+    return 0;
+
+else
+    return 1;
 
 } 
 
@@ -289,7 +295,9 @@ void Wstage(){
 * durante o estágio W.
 */
 
-
+//A partir do endereço da memória obtido no estágio M
+//Através do barramento, receber os dados de memória[PC]
+//Escrever os dados no registrador retornado pelo estágio E
 
 }
 
