@@ -62,21 +62,11 @@ void inicializeMemory(){
  * RETORNA OS 4 BYTES CONSECUTIVOS A PARTIR DO ENDEREÇO PASSADO COMO PARÂMETRO
  */
 void readFromMemory(int endereco){
-
-    if(endereco % 4 == 0){
-
-        int i;
-        for(i = 0; i < 4; i++){
-
-            palavra[i] = memory[endereco + i];
-        }
-
-        inserirNoBarramento(palavra);
+    int i;        
+    for(i = 0; i < 4; i++){
+        palavra[i] = memory[endereco + i];
     }
-
-    else
-        printf("Não foi possível acessar este endereço de memória");    
-    
+    inserirNoBarramento(palavra);    
 }
 
 /*
@@ -95,19 +85,10 @@ void writeInMemory(int endereco){
     strcpy(palavra,toStr(aux));
     //inserir na memória a string ...
     //não sei como tratar esse endereçamento da implementação anterior
-
-    if(endereco % 4 == 0){
-
-        int i;
-        for(i = 0; i < 4; i++){
-            memory[endereco + i] = palavra[i];
-        }
-
+    int i;
+    for(i = 0; i < 4; i++){
+        memory[endereco + i] = palavra[i];
     }
-
-    else
-        printf("Não foi possível acessar este endereço de memória");
-
 }
 
 /*
