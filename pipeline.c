@@ -12,6 +12,8 @@
 #include <string.h>
 #include "includes/pipeline.h"
 #include "includes/executionQueue.h"
+#include "includes/memoria.h"
+#include "includes/memoria.h"
 
 extern unsigned int HI,LO;
 /* 
@@ -97,6 +99,7 @@ void Estage(char* instrucao, FILA *exeQueue, int PC){
 
     NO* linha = exeQueue->inicio;
     int posicao = PC/4;
+    int iOp2, iOp3, iDest;
 
     while(posicao > 0){
 
@@ -111,17 +114,19 @@ void Estage(char* instrucao, FILA *exeQueue, int PC){
     if(linha->imediato != 0)
         imediato = linha->imediato;
 
-    if(linha->regDestino != NULL)
-        operando1 = getReg(linha->regDestino);
+    if(linha->regDestino != NULL){
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+    }
 
     if(linha->reg1 != NULL){
-        int k = getReg(linha->reg1);
-        operando2 = reg[k];
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
     }
 
     if(linha->reg2 != NULL){
-        int k = getReg(linha->reg2);
-        operando3 = reg[k];
+        iOp3 = getReg(linha->reg2);
+        operando3 = reg[iOp3];
     }
     
     /* 
@@ -250,20 +255,29 @@ void Estage(char* instrucao, FILA *exeQueue, int PC){
     else if(strcmp(instrucao, "xori\n") == 0)
         xori(operando1, operando2, imediato);
         
-    //chamar o somador, ou aqui ou antes da chamada do próximo estágio
-    //retorna registrador destino para ser escrito no estagio W
+
+    inserirNoBarramento(operando1); //operando1 é o que sempre vai armazenar os resultados
+
+    //retorna o índice do registrador destino para ser escrito no estagio W
+    return iDest;
 
 }
  
-void Mstage(){
-/*
-* Durante o estágio de busca de memória, a operação aritmética ou lógica da ALU é concluída, a busca 
-* do cache de dados e a conversão de endereços virtuais para dados são executadas para instruções 
-* de carga e armazenamento. 
-*/
-//Aqui serão recebidos do barramento os resultados das instruções
-//Nesse estagio os dados serão armazenados na memória
-//Retornar endereço da posicao PC
+void Mstage(int PC){
+
+    /*
+    * Durante o estágio de busca de memória, a operação aritmética ou lógica da ALU é concluída, a busca 
+    * do cache de dados e a conversão de endereços virtuais para dados são executadas para instruções 
+    * de carga e armazenamento. 
+    */
+
+    //Aqui serão recebidos do barramento os resultados das instruções
+    int dado = recuperarNoBarramento();
+
+    //Nesse estagio os dados serão armazenados na memória
+    writeInMemory(dado);
+    
+    //Retornar endereço da posicao PC
 
 } 
 
@@ -289,15 +303,23 @@ else
 
 
 
-void Wstage(){
-/*
-* Para registrador-para-registrador ou carregar instruções,o resultado é gravado de volta no arquivo de registro
-* durante o estágio W.
-*/
+int Wstage(int PC, int indice){
 
-//A partir do endereço da memória obtido no estágio M
-//Através do barramento, receber os dados de memória[PC]
-//Escrever os dados no registrador retornado pelo estágio E
+    /*
+    * Para registrador-para-registrador ou carregar instruções,o resultado é gravado de volta no arquivo de registro
+    * durante o estágio W.
+    */
+    
+    //Escrever os dados no registrador com índice retornado pelo estágio E
+
+    //A partir do endereço da memória obtido no estágio M, mandar dado para o barramento
+    readFromMemory(PC);
+
+    //Através do barramento, receber os dados de memória[PC]
+    int dado = recuperarNoBarramento();
+    reg[indice] = dado;
+
+    return reg[indice];
 
 }
 

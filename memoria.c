@@ -71,7 +71,7 @@ void readFromMemory(int endereco){
             palavra[i] = memory[endereco + i];
         }
 
-       // inserirNoBarramento(palavra);
+        inserirNoBarramento(palavra);
     }
 
     else
@@ -85,29 +85,29 @@ void readFromMemory(int endereco){
  * PALAVRAS DE 32 BITS (4 BYTES)
  * ESCRITA 4 BYTES EM UM ENDEREÇO PASSADO COMO PARÂMETRO
  */
-void writeInMemory(){
+void writeInMemory(int endereco){
+
     //pegar do barramento
     //converter o dado oriundo do barramento para string
-    int palavra = recuperarNoBarramento();
-    char* aux = (char*)malloc(sizeof(biu));
-    strcpy(aux,toStr(palavra));
+    int aux = recuperarNoBarramento();
+    char* palavra = (char*)malloc(sizeof(biu));
+
+    strcpy(palavra,toStr(aux));
     //inserir na memória a string ...
     //não sei como tratar esse endereçamento da implementação anterior
-    /* 
+
     if(endereco % 4 == 0){
 
         int i;
-
-      //  palavra = recuperarNoBarramento();
-        
         for(i = 0; i < 4; i++){
             memory[endereco + i] = palavra[i];
         }
+
     }
 
     else
         printf("Não foi possível acessar este endereço de memória");
-    */
+
 }
 
 /*
