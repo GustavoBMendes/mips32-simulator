@@ -17,13 +17,16 @@ unsigned char biu[5];
 * @abstract Insere a palavra a ser transportada pelo barramento do processador
 */
 void inserirNoBarramento(unsigned int dado){
+
     char* sdado;
     sdado = (char*)malloc(sizeof(biu));
     strcpy(sdado,toStr(dado));
-    for(int i = 0; i <= strlen(sdado); i++){
+
+    for(int i = 0; i <= strlen(sdado); i++)
         biu[i] = sdado[i];
-    }
+    
     printf("Inserido no barramento\n");
+
 }
 
 
@@ -32,9 +35,12 @@ void inserirNoBarramento(unsigned int dado){
 * @abstract Retorna a palavra transportada pelo barramento do processador
 */
 int recuperarNoBarramento(){
+
     char *aux;
     aux = (char*)malloc(sizeof(biu));
     strcpy(aux,biu);
     int k = toInt(aux);
+    
     return k;
+
 }

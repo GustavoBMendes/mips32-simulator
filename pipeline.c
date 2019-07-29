@@ -15,7 +15,9 @@
 #include "includes/memoria.h"
 #include "includes/memoria.h"
 
+unsigned int reg[32];
 extern unsigned int HI,LO;
+
 /* 
  * @function void Istage()
  * @abstract ESTÁGIO DE BUSCA
@@ -48,46 +50,7 @@ char* Istage(FILA *execQueue, int PC){
  * POSIÇÃO DA FILA EM QUE A INSTRUÇÃO FOI BUSCADA
  */
 
-int alfabetica(char c){
-    if(c == 'a' ||c == 'b' ||c == 'c' ||c == 'd' ||c == 'e' ||c == 'f' ||c == 'g' ||c == 'h' ||c == 'i' ||c == 'j'
-        ||c == 'k' ||c == 'l' ||c == 'm' ||c == 'n' ||c == 'o' ||c == 'p' ||c == 'q' ||c == 'r' 
-        ||c == 's' ||c == 't' ||c == 'u' ||c == 'v' ||c == 'w' ||c == 'x' ||c == 'y' ||c == 'z'
-        || c == 'A' || c == 'B' || c == 'C' || c == 'D' || c == 'E' || c == 'F' || c == 'G' || c == 'H' || c == 'I' ||
-         c == 'J' || c == 'K' || c == 'L' || c == 'M' || c == 'N' || c == 'O' || c == 'P' || c == 'Q' || c == 'R' ||
-          c == 'S' || c == 'T' || c == 'U' || c == 'V' || c == 'W' || c == 'X' || c == 'Y' || c == 'Z'){
-              return 1;
-          }
-    else{
-        return 0;
-    }
-}
-
-int compara(char* string1, char* string2){
-    int i;
-    printf("STRING1 ANTES: \n");
-    for( i = 0; i <= strlen(string1); i++){
-        printf("[%d] : %c\n",i,string1[i]);
-    }
-    /*
-    printf("STRING2: \n");
-    for( i = 0; i <= strlen(string2); i++){
-        printf("[%d] : %c\n",i,string2[i]);
-    }
-    */
-    char aux1[4],aux2[4];
-    printf("STRING1 DEPOIS: \n");
-    for(i = 0; i <= strlen(string1); i++){
-        if(alfabetica(string1[i]) == 1){
-            aux1[i] = string1[i];
-        }
-    }
-    for( i = 0; i <= strlen(aux1); i++){
-        printf("[%d] : %c\n",i,aux1[i]);
-    }
-
-}
-
-void Estage(char* instrucao, FILA *exeQueue, int PC){
+int Estage(char* instrucao, FILA *exeQueue, int PC){
 
     //A PARTIR DA POSIÇÃO INICIAL DA FILA,
     //BUSCAR OS OPERANDOS NAQUELA POSIÇÃO DA FILA
@@ -108,7 +71,6 @@ void Estage(char* instrucao, FILA *exeQueue, int PC){
 
     }
 
-    unsigned int reg[32];
     int operando1, operando2, operando3, imediato;
 
     if(linha->imediato != 0)
@@ -152,10 +114,9 @@ void Estage(char* instrucao, FILA *exeQueue, int PC){
     //printf("Tamanho de instrucao: %ld\nTamanho de aux: %ld",sizeof(instrucao),sizeof(aux));
     //printf("aux: %s \ninstrucao: %s",aux,instrucao);
    
-    compara(instrucao,"add");
 
     if(strcmp(instrucao, "add\n") == 0)
-        add(operando1, operando2, operando3);
+        operando1 = add(operando1, operando2, operando3);
 
     else if(strcmp(instrucao, "addi\n") == 0)
         addi(operando1, operando2, imediato);
@@ -241,29 +202,28 @@ void Estage(char* instrucao, FILA *exeQueue, int PC){
         nor(operando1, operando2, operando3);
 
     else if(strcmp(instrucao, "or\n") == 0)
-        or(operando1, operando2, operando3);
+        Or(operando1, operando2, operando3);
 
     else if(strcmp(instrucao, "ori\n") == 0)
-        ori(operando1, operando2, imediato);
+        Ori(operando1, operando2, imediato);
 
     else if(strcmp(instrucao, "sub\n") == 0)
         sub(operando1, operando2, operando3);
 
     else if(strcmp(instrucao, "xor\n") == 0)
-        xor(operando1, operando2, operando3);
+        Xor(operando1, operando2, operando3);
 
     else if(strcmp(instrucao, "xori\n") == 0)
-        xori(operando1, operando2, imediato);
+        Xori(operando1, operando2, imediato);
         
+    inserirNoBarramento(operando1);
+    writeInMemory(PC);
 
-    inserirNoBarramento(operando1); //operando1 é o que sempre vai armazenar os resultados
-
-    //retorna o índice do registrador destino para ser escrito no estagio W
     return iDest;
 
 }
  
-void Mstage(int PC){
+int Mstage(int PC){
 
     /*
     * Durante o estágio de busca de memória, a operação aritmética ou lógica da ALU é concluída, a busca 
@@ -271,13 +231,14 @@ void Mstage(int PC){
     * de carga e armazenamento. 
     */
 
-    //Aqui serão recebidos do barramento os resultados das instruções
+    //Nesse estagio, será realizada a busca na memória do dado escrito no estágio de execução
+    readFromMemory(PC);
+    
+    //pega o dado do barramento
     int dado = recuperarNoBarramento();
 
-    //Nesse estagio os dados serão armazenados na memória
-    writeInMemory(dado);
-    
-    //Retornar endereço da posicao PC
+    //Retornar o dado buscado
+    return dado;
 
 } 
 
@@ -303,7 +264,7 @@ else
 
 
 
-int Wstage(int PC, int indice){
+int Wstage(int PC, int dado, int indice){
 
     /*
     * Para registrador-para-registrador ou carregar instruções,o resultado é gravado de volta no arquivo de registro
@@ -311,12 +272,7 @@ int Wstage(int PC, int indice){
     */
     
     //Escrever os dados no registrador com índice retornado pelo estágio E
-
-    //A partir do endereço da memória obtido no estágio M, mandar dado para o barramento
-    readFromMemory(PC);
-
-    //Através do barramento, receber os dados de memória[PC]
-    int dado = recuperarNoBarramento();
+    //O parametro dado vem do estágio M
     reg[indice] = dado;
 
     return reg[indice];

@@ -11,7 +11,7 @@
 
 int main(){
     unsigned int reg[32];
-    unsigned int HI = 11,LO = 0;
+    unsigned int HI = 11,LO = 0, PC = 0;
     //inicializeMemory(); //Ok está alocando
     
     /* 
@@ -38,19 +38,26 @@ int main(){
     printf("Teste MFLO, MTLO, MTHI E MTHI:\n\n");
     printf("MTHI: %d\nMFHI: %d",mduMthi(T0,HI),mduMfhi(HI,T0));
     */
-   /* 
+    
     FILA F;
+
     create(&F);
     ler();
     inserirElementos(&F);
-    char *a = (char*) malloc(7 * sizeof(char));
-    strcpy(a, Istage(&F));
-    printf("%s ",a);
-    Estage(a,&F);
-    */
 
+    char *a = (char*) malloc(7 * sizeof(char));
+    strcpy(a, Istage(&F, PC));
+    printf("%s ",a);
+
+    int indiceReg = Estage(a,&F, PC);
+    printf("\nIndice registrador destino: %d", indiceReg);
+    
+
+    /*
     int a = 111;
     inserirNoBarramento(a);
     printf("%s \n",biu);
     printf("Recuperado do barramento o valor: %d",recuperarNoBarramento());
+    */
+    
 }

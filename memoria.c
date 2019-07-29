@@ -21,27 +21,39 @@ unsigned char *palavra;
 
 
 int conta_digitos(int valor){
+
     int contaDigitos = 0;
-    if (valor == 0) contaDigitos = 1;
+    if (valor == 0) 
+        contaDigitos = 1;
+
     else
-        while (valor != 0)
-        {
+
+        while (valor != 0){
+
             contaDigitos = contaDigitos + 1;
             valor = valor / 10;
+
         }
+
     return contaDigitos;
+
 }
 
 char* toStr(int num){
+
     int num_digitos = conta_digitos(num);
     char *aux = (char*)malloc(sizeof(num_digitos));
     sprintf(aux, "%d", num);
+
     return aux;
+
 }
 
 int toInt(char *num){
+
     int numero = atoi(num);
     return numero;
+
 }
 
 /*
@@ -50,9 +62,11 @@ int toInt(char *num){
  * E PARA A PALAVRA AUXILIAR
  */
 void inicializeMemory(){
+
     memory = malloc(memCapacity * sizeof(char));
     palavra = malloc(4 * sizeof(char));
     printf("Memoria inicializada");
+
 }
 
 /*
@@ -62,11 +76,14 @@ void inicializeMemory(){
  * RETORNA OS 4 BYTES CONSECUTIVOS A PARTIR DO ENDEREÇO PASSADO COMO PARÂMETRO
  */
 void readFromMemory(int endereco){
+
     int i;        
-    for(i = 0; i < 4; i++){
+    for(i = 0; i < 4; i++)
         palavra[i] = memory[endereco + i];
-    }
-    inserirNoBarramento(palavra);    
+
+    int dado = toInt(palavra);
+    inserirNoBarramento(dado);    
+
 }
 
 /*
@@ -83,12 +100,11 @@ void writeInMemory(int endereco){
     char* palavra = (char*)malloc(sizeof(biu));
 
     strcpy(palavra,toStr(aux));
-    //inserir na memória a string ...
-    //não sei como tratar esse endereçamento da implementação anterior
+
     int i;
-    for(i = 0; i < 4; i++){
+    for(i = 0; i < 4; i++)
         memory[endereco + i] = palavra[i];
-    }
+
 }
 
 /*
@@ -105,5 +121,7 @@ void printMemory(){
         if(i % 4 == 0)
             printf("\n");
         printf("\n[%d] : %x", i, *(memory + i));
+
     }
+
 }

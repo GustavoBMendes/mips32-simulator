@@ -5,10 +5,10 @@
 #include "instrucoes.h"
 
 char* Istage(FILA *execQueue, int PC);
-void Estage(char* instrucao, FILA *exeQueue, int PC);
-void Mstage(int PC);
+int Estage(char* instrucao, FILA *exeQueue, int PC);
+int Mstage(int PC);
 int Astage(int PC);
-int Wstage(int PC, int indice);
+int Wstage(int PC, int indice, int dado);
 int getReg(char* reg);
 
 #endif
