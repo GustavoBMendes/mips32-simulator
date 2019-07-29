@@ -281,100 +281,100 @@ int Wstage(int PC, int dado, int indice){
 
 int getReg(char* reg){
 
-    if(strcmp(reg, "$zero"))
+    if(strcmp(reg, "$zero\n") == 0)
         return 0;
 
-    else if(strcmp(reg, "$at"))
+    else if(strcmp(reg, "$at\n") == 0)
         return 1;
 
-    else if(strcmp(reg, "$v0"))
+    else if(strcmp(reg, "$v0\n") == 0)
         return 2;
 
-    else if(strcmp(reg, "$v1"))
+    else if(strcmp(reg, "$v1\n") == 0)
         return 3;
 
-    else if(strcmp(reg, "$a0"))
+    else if(strcmp(reg, "$a0\n") == 0)
         return 4;
 
-    else if(strcmp(reg, "$a1"))
+    else if(strcmp(reg, "$a1\n") == 0)
         return 5;
 
-    else if(strcmp(reg, "$a2"))
+    else if(strcmp(reg, "$a2\n") == 0)
         return 6;
 
-    else if(strcmp(reg, "$a3"))
+    else if(strcmp(reg, "$a3\n") == 0)
         return 7;
 
-    else if(strcmp(reg, "$t0"))
+    else if(strcmp(reg, "$t0\n") == 0)
         return 8;
 
-    else if(strcmp(reg, "$t1"))
+    else if(strcmp(reg, "$t1\n") == 0)
         return 9;
 
-    else if(strcmp(reg, "$t2"))
+    else if(strcmp(reg, "$t2\n") == 0)
         return 10;
 
-    else if(strcmp(reg, "$t3"))
+    else if(strcmp(reg, "$t3\n") == 0)
         return 11;
 
-    else if(strcmp(reg, "$t4"))
+    else if(strcmp(reg, "$t4\n") == 0)
         return 12;
 
-    else if(strcmp(reg, "$t5"))
+    else if(strcmp(reg, "$t5\n") == 0)
         return 13;
 
-    else if(strcmp(reg, "$t6"))
+    else if(strcmp(reg, "$t6\n") == 0)
         return 14;
 
-    else if(strcmp(reg, "$t7"))
+    else if(strcmp(reg, "$t7\n") == 0)
         return 15;
 
-    else if(strcmp(reg, "$s0"))
+    else if(strcmp(reg, "$s0\n") == 0)
         return 16;
 
-    else if(strcmp(reg, "$s1"))
+    else if(strcmp(reg, "$s1\n") == 0)
         return 17;
 
-    else if(strcmp(reg, "$s2"))
+    else if(strcmp(reg, "$s2\n") == 0)
         return 18;
 
-    else if(strcmp(reg, "$s3"))
+    else if(strcmp(reg, "$s3\n") == 0)
         return 19;
 
-    else if(strcmp(reg, "$s4"))
+    else if(strcmp(reg, "$s4\n") == 0)
         return 20;
 
-    else if(strcmp(reg, "$s5"))
+    else if(strcmp(reg, "$s5\n") == 0)
         return 21;
 
-    else if(strcmp(reg, "$s6"))
+    else if(strcmp(reg, "$s6\n") == 0)
         return 22;
 
-    else if(strcmp(reg, "$s7"))
+    else if(strcmp(reg, "$s7\n") == 0)
         return 23;
 
-    else if(strcmp(reg, "$t8"))
+    else if(strcmp(reg, "$t8\n") == 0)
         return 24;
 
-    else if(strcmp(reg, "$t9"))
+    else if(strcmp(reg, "$t9\n") == 0)
         return 25;
 
-    else if(strcmp(reg, "$k0"))
+    else if(strcmp(reg, "$k0\n") == 0)
         return 26;
 
-    else if(strcmp(reg, "$k1"))
+    else if(strcmp(reg, "$k1\n") == 0)
         return 27;
 
-    else if(strcmp(reg, "$gp"))
+    else if(strcmp(reg, "$gp\n") == 0)
         return 28;
 
-    else if(strcmp(reg, "$sp"))
+    else if(strcmp(reg, "$sp\n") == 0)
         return 29;
 
-    else if(strcmp(reg, "$fp"))
+    else if(strcmp(reg, "$fp\n") == 0)
         return 30;
 
-    else if(strcmp(reg, "$ra"))
+    else if(strcmp(reg, "$ra\n") == 0)
         return 31;
 
     else{

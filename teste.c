@@ -12,7 +12,7 @@
 int main(){
     unsigned int reg[32];
     unsigned int HI = 11,LO = 0, PC = 0;
-    //inicializeMemory(); //Ok está alocando
+    inicializeMemory(); //Ok está alocando
     
     /* 
     unsigned char *dado = "15";
@@ -50,7 +50,7 @@ int main(){
     printf("%s ",a);
 
     int indiceReg = Estage(a,&F, PC);
-    printf("\nIndice registrador destino: %d", indiceReg);
+    printf("\nIndice registrador destino: %d\n", indiceReg);
     
 
     /*
