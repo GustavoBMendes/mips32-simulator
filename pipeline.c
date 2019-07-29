@@ -62,7 +62,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
 
     NO* linha = exeQueue->inicio;
     int posicao = PC/4;
-    int iOp2, iOp3, iDest;
+    int iOp2 = 0, iOp3 = 0, iDest = 0;
 
     while(posicao > 0){
 
@@ -73,8 +73,10 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
 
     int operando1, operando2, operando3, imediato;
 
-    if(linha->imediato != 0)
+    /*
+    if(linha->imediato != 0){
         imediato = linha->imediato;
+    }
 
     if(linha->regDestino != NULL){
         iDest = getReg(linha->regDestino);
@@ -90,7 +92,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         iOp3 = getReg(linha->reg2);
         operando3 = reg[iOp3];
     }
-    
+    */
     /* 
     executar operacao
     comparar o parametro recebido char* instrucao com as instruções de "intrucoes.h"
@@ -115,106 +117,409 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
     //printf("aux: %s \ninstrucao: %s",aux,instrucao);
    
 
-    if(strcmp(instrucao, "add\n") == 0)
+    if(strcmp(instrucao, "add\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
+        iOp3 = getReg(linha->reg2);
+        operando3 = reg[iOp3];
+
         operando1 = add(operando1, operando2, operando3);
 
-    else if(strcmp(instrucao, "addi\n") == 0)
-        addi(operando1, operando2, imediato);
-
-    else if(strcmp(instrucao, "and\n") == 0)
-        And(operando1, operando2, operando3);
-
-    else if(strcmp(instrucao, "andi\n") == 0)
-        andi(operando1, operando2, imediato);
-
-    else if(strcmp(instrucao, "b\n") == 0)
-        b(PC, imediato);
-
-    else if(strcmp(instrucao, "beq\n") == 0)
-        beq(operando1, operando2, PC, imediato);
-
-    else if(strcmp(instrucao, "beql\n") == 0)
-        beql(operando1, operando2, PC, imediato);
-
-    else if(strcmp(instrucao, "bgez\n") == 0)
-        bgez(operando1, PC, imediato);
-
-    else if(strcmp(instrucao, "bgtz\n") == 0)
-        bgtz(operando1, PC, imediato);
-
-    else if(strcmp(instrucao, "blez\n") == 0)
-        blez(operando1, PC, imediato);
-
-    else if(strcmp(instrucao, "bltz\n") == 0)
-        bltz(operando1, PC, imediato);
-
-    else if(strcmp(instrucao, "bne\n") == 0)
-        bne(operando1, operando2, PC, imediato);
-
-    else if(strcmp(instrucao, "div\n") == 0){
-        DivHI(operando1, operando2, HI, LO);
-        DivLO(operando1, operando2, HI, LO);
     }
 
-    else if(strcmp(instrucao, "j\n") == 0)
+    else if(strcmp(instrucao, "addi\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
+        imediato = linha->imediato;
+
+        operando1 = addi(operando1, operando2, imediato);
+
+    }
+
+    else if(strcmp(instrucao, "and\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
+        iOp3 = getReg(linha->reg2);
+        operando3 = reg[iOp3];
+
+        And(operando1, operando2, operando3);
+
+    }
+
+    else if(strcmp(instrucao, "andi\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
+        imediato = linha->imediato;
+
+        andi(operando1, operando2, imediato);
+
+    }
+
+    else if(strcmp(instrucao, "b\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        imediato = linha->imediato;
+
+        b(PC, imediato);
+
+    }
+
+    else if(strcmp(instrucao, "beq\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
+        imediato = linha->imediato;
+
+        beq(operando1, operando2, PC, imediato);
+
+    }
+
+    else if(strcmp(instrucao, "beql\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
+        imediato = linha->imediato;
+        
+        beql(operando1, operando2, PC, imediato);
+
+    }
+
+    else if(strcmp(instrucao, "bgez\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        imediato = linha->imediato;
+        
+        bgez(operando1, PC, imediato);
+
+    }
+
+    else if(strcmp(instrucao, "bgtz\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        imediato = linha->imediato;
+        
+        bgtz(operando1, PC, imediato);
+
+    }
+
+    else if(strcmp(instrucao, "blez\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        imediato = linha->imediato;
+
+        blez(operando1, PC, imediato);
+
+    }
+
+    else if(strcmp(instrucao, "bltz\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        imediato = linha->imediato;
+        
+        bltz(operando1, PC, imediato);
+
+    }
+
+    else if(strcmp(instrucao, "bne\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
+        imediato = linha->imediato;
+        
+        bne(operando1, operando2, PC, imediato);
+
+    }
+
+    else if(strcmp(instrucao, "div\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+        
+        DivHI(operando1, operando2, HI, LO);
+        DivLO(operando1, operando2, HI, LO);
+
+    }
+
+    else if(strcmp(instrucao, "j\n") == 0){
+
+        imediato = linha->imediato;
+        
         j(PC, imediato);
 
-    else if(strcmp(instrucao, "jr\n") == 0)
+    }
+
+    else if(strcmp(instrucao, "jr\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
         jr(PC, operando1);
 
-    else if(strcmp(instrucao, "lui\n") == 0)
+    }
+
+    else if(strcmp(instrucao, "lui\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        imediato = linha->imediato;
+        
         lui(operando1, imediato);
 
-    else if(strcmp(instrucao, "madd\n") == 0)
+    }
+
+    else if(strcmp(instrucao, "madd\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
         madd(operando1, operando2, HI);    //registrador acumulador, HI e LO são deste tipo
 
-    else if(strcmp(instrucao, "mfhi\n") == 0)
+    }
+
+    else if(strcmp(instrucao, "mfhi\n") == 0){
+        
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
         mfhi(operando1, HI);
+
+    }
     
-    else if(strcmp(instrucao, "mflo\n") == 0)
+    else if(strcmp(instrucao, "mflo\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
         mflo(operando1, LO);
 
-    else if(strcmp(instrucao, "movn\n") == 0)
+    }
+
+    else if(strcmp(instrucao, "movn\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
+        iOp3 = getReg(linha->reg2);
+        operando3 = reg[iOp3];
+        
         movn(operando1, operando2, operando3);
 
-    else if(strcmp(instrucao, "movz\n") == 0)
+    }
+
+    else if(strcmp(instrucao, "movz\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
+        iOp3 = getReg(linha->reg2);
+        operando3 = reg[iOp3];
+
         movz(operando1, operando2, operando3);
 
-    else if(strcmp(instrucao, "msub\n") == 0)
+    }
+
+    else if(strcmp(instrucao, "msub\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
         msub(operando1, operando2, HI);
 
-    else if(strcmp(instrucao, "mthi\n") == 0)
+    }
+
+    else if(strcmp(instrucao, "mthi\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
         mthi(operando1, HI);
 
-    else if(strcmp(instrucao, "mtlo\n") == 0)
+    }
+
+    else if(strcmp(instrucao, "mtlo\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
         mtlo(operando1, LO);
 
-    else if(strcmp(instrucao, "mul\n") == 0)
+    }
+
+    else if(strcmp(instrucao, "mul\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
+        iOp3 = getReg(linha->reg2);
+        operando3 = reg[iOp3];
+
         mul(operando1, operando2, operando3);
 
-    else if(strcmp(instrucao, "mult\n") == 0)
+    }
+
+    else if(strcmp(instrucao, "mult\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
         mult(operando1, operando2, HI);
 
-    else if(strcmp(instrucao, "nop\n") == 0)
-        nop();
+    }
 
-    else if(strcmp(instrucao, "nor\n") == 0)
+    else if(strcmp(instrucao, "nor\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
+        iOp3 = getReg(linha->reg2);
+        operando3 = reg[iOp3];
+
         nor(operando1, operando2, operando3);
 
-    else if(strcmp(instrucao, "or\n") == 0)
+    }
+
+    else if(strcmp(instrucao, "or\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
+        iOp3 = getReg(linha->reg2);
+        operando3 = reg[iOp3];
+
         Or(operando1, operando2, operando3);
 
-    else if(strcmp(instrucao, "ori\n") == 0)
+    }
+
+    else if(strcmp(instrucao, "ori\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
+        imediato = linha->imediato;
+
         Ori(operando1, operando2, imediato);
 
-    else if(strcmp(instrucao, "sub\n") == 0)
+    }
+
+    else if(strcmp(instrucao, "sub\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
+        iOp3 = getReg(linha->reg2);
+        operando3 = reg[iOp3];
+
         sub(operando1, operando2, operando3);
 
-    else if(strcmp(instrucao, "xor\n") == 0)
+    }
+
+    else if(strcmp(instrucao, "xor\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
+        iOp3 = getReg(linha->reg2);
+        operando3 = reg[iOp3];
+
         Xor(operando1, operando2, operando3);
 
-    else if(strcmp(instrucao, "xori\n") == 0)
+    }
+
+    else if(strcmp(instrucao, "xori\n") == 0){
+
+        iDest = getReg(linha->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(linha->reg1);
+        operando2 = reg[iOp2];
+
+        imediato = linha->imediato;
+        
         Xori(operando1, operando2, imediato);
+
+    }
+
+    else
+        nop();
         
     inserirNoBarramento(operando1);
     writeInMemory(PC);

@@ -51,6 +51,9 @@ int main(){
 
     int indiceReg = Estage(a,&F, PC);
     printf("\nIndice registrador destino: %d\n", indiceReg);
+
+    int dado = Mstage(PC);
+    printf("\nResultado: %d", dado);
     
 
     /*

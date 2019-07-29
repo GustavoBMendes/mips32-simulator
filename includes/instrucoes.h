@@ -9,7 +9,7 @@ extern unsigned int imediato;
 
 
 int add(int regDestino,int regOrigem1, int regOrigem2); //adicionado a ula
-void addi(int regDestino,int regOrigem1, int imediato);
+int addi(int regDestino,int regOrigem1, int imediato);
 int And(int regDestino,int regOrigem1, int regOrigem2); //adicionado a ula
 void andi(int regDestino,int regOrigem1, int imediato);
 void b(int PC, int offset); //adicionado a OPU
