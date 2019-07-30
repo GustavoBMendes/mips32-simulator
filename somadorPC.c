@@ -9,11 +9,15 @@
 #include <stdio.h>
 #include "includes/somadorPC.h"
 
+
 /* 
 * @function void somarPC()
 * @abstract acumula mais 4 bytes no registrador PC, avançando à próxima intrução
 */
-void somarPC(){
+int somarPC(int PC){
+
     PC += 4;
+    return PC;
+    
 }
 

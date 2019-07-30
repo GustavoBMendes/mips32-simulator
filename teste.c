@@ -8,6 +8,7 @@
 #include "includes/mdu.h"
 #include "includes/executionQueue.h"
 #include "includes/pipeline.h"
+#include "includes/somadorPC.h"
 
 int main(){
     unsigned int reg[32];
@@ -55,6 +56,16 @@ int main(){
     int dado = Mstage(PC);
     printf("\nResultado: %d", dado);
     
+    if(Astage(PC) == 1)
+        printf("\nEndereço Correto!\n");
+    else
+        printf("\nEndereço incorreto!\n");
+
+    reg[indiceReg] = Wstage(PC, dado, indiceReg);
+    printf("\nEscrita no Registrador[%d] = %d\n", indiceReg, reg[indiceReg]);
+
+    PC = somarPC(PC);
+    printf("\nPC = %d\n", PC);
 
     /*
     int a = 111;

@@ -3,6 +3,6 @@
 
 #include "registradores.h"
 
-void somarPC();
+int somarPC(int PC);
 
 #endif

@@ -11,7 +11,7 @@ extern unsigned int imediato;
 int add(int regDestino,int regOrigem1, int regOrigem2); //adicionado a ula
 int addi(int regDestino,int regOrigem1, int imediato);
 int And(int regDestino,int regOrigem1, int regOrigem2); //adicionado a ula
-void andi(int regDestino,int regOrigem1, int imediato);
+unsigned int andi(int regDestino,int regOrigem1, int imediato);
 void b(int PC, int offset); //adicionado a OPU
 void beq(int regOrigem1,int regOrigem2,int PC, int offset); //adicionado a ula
 void beql(int regOrigem1,int regOrigem2,int PC, int offset); //adicionado a OPU

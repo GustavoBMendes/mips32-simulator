@@ -1,12 +1,17 @@
+/*!
+ * @header instrucoes.c
+ * @author Luiz Joaquim Aderaldo Amichi <ra90568@uem.br>
+ * @author Gustavo Belançon Mendes <ra99037@uem.br>
+ * @author Fernando Silva Silvério <ra98936@uem.br>
+ * @discussion NESTE MÓDULO ESTÁ IMPLEMENTADO 
+ * TODAS AS INSTRUÇÕES REQUISITADAS PARA ESTE PROCESSADOR
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "includes/instrucoes.h"
 #include "includes/registradores.h"
-
-
-//Acredito que com certeza não serão do tipo void mas isso vamos ver ainda, por enquanto meti um void
-
 
 /*
 * @function int add(int regDestino,int regOrigem1, int regOrigem2)
@@ -38,8 +43,9 @@ int And(int regDestino,int regOrigem1, int regOrigem2){
 * @abstract Faz a operação lógica AND entre os valores contidos em um registrador de origem e um imediato
 *  e a insere em um registrador de destino.
 */
-void andi(int regDestino,int regOrigem1, int imediato){
+unsigned int andi(int regDestino,int regOrigem1, int imediato){
     regDestino = regOrigem1 & imediato;
+    return regDestino;
 }
 /* 
 * @function b(int PC, int offset)

@@ -22,6 +22,8 @@ extern unsigned int HI,LO;
  * @function void Istage()
  * @abstract ESTÁGIO DE BUSCA
  * REALIZA A BUSCA DA INSTRUÇÃO NA FILA
+ * REALIZA O CÁLCULA DA POSIÇÃO CORRETA E PERCORRE DESDE O INÍCIO
+ * ATÉ ONDE SE ENCONTRA O ÍNDICE CERTO
  */
 char* Istage(FILA *execQueue, int PC){
 
@@ -48,17 +50,10 @@ char* Istage(FILA *execQueue, int PC){
  * REALIZA A EXECUÇÃO DE ACORDO COM A INSTRUÇÃO ENCONTRADA EM Istage()
  * BUSCA OS REGISTRADORES, IMEDIATOS OU ENDEREÇOS CONTIDOS NA MESMA 
  * POSIÇÃO DA FILA EM QUE A INSTRUÇÃO FOI BUSCADA
+ * REALIZA O CÁLCULA DA POSIÇÃO CORRETA E PERCORRE DESDE O INÍCIO
+ * ATÉ ONDE SE ENCONTRA O ÍNDICE CERTO
  */
-
 int Estage(char* instrucao, FILA *exeQueue, int PC){
-
-    //A PARTIR DA POSIÇÃO INICIAL DA FILA,
-    //BUSCAR OS OPERANDOS NAQUELA POSIÇÃO DA FILA
-    //CASO FOREM REGISTRADORES 
-    //COMPARAR COM OS NOMES("strcmp()") DOS REGISTRADORES DE "registradores.h"
-    //ACESSAR VALOR DO REGISTRADOR CASO ALGUMA IGUALDADE FOR VERDADEIRA
-    //EXECUTAR A OPERAÇÃO
-    //SALVAR RESULTADO NA MEMÓRIA PRINCIPAL(AINDA PRECISAMOS REVISAR A MEMÓRIA)
 
     NO* linha = exeQueue->inicio;
     int posicao = PC/4;
@@ -71,7 +66,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
 
     }
 
-    int operando1, operando2, operando3, imediato;
+    unsigned int operando1, operando2, operando3, imediato;
 
     /*
     if(linha->imediato != 0){
@@ -93,29 +88,6 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         operando3 = reg[iOp3];
     }
     */
-    /* 
-    executar operacao
-    comparar o parametro recebido char* instrucao com as instruções de "intrucoes.h"
-    de acordo com a instrução verificada, passar os parametros para a instrução encontrada
-    conjunto de if else, caso verdadeiro chamar a função respectiva de instrucoes.h
-    ex: 
-    if(strcmp(intrucao, add)){
-        add(operando1, operando1, operando2);
-    }
-
-    excluir a posição inicial da fila
-
-    salvar o retorno da função de intrução na memória (revisar memória)
-    apontar o registrador PC na posicao de memória salva
-
-     
-    */
-    //char *aux;
-    //aux = (char*)malloc(sizeof(exeQueue->inicio->instructionName));
-    //strcpy(aux,"add");
-    //printf("Tamanho de instrucao: %ld\nTamanho de aux: %ld",sizeof(instrucao),sizeof(aux));
-    //printf("aux: %s \ninstrucao: %s",aux,instrucao);
-   
 
     if(strcmp(instrucao, "add\n") == 0){
 
@@ -162,16 +134,16 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
     }
 
     else if(strcmp(instrucao, "andi\n") == 0){
-
+        
         iDest = getReg(linha->regDestino);
         operando1 = reg[iDest];
 
         iOp2 = getReg(linha->reg1);
-        operando2 = reg[iOp2];
+        operando2 &= reg[iOp2];
 
-        imediato = linha->imediato;
+        imediato &= linha->imediato;
 
-        andi(operando1, operando2, imediato);
+        operando1 &= andi(operando1, operando2, imediato);
 
     }
 
@@ -527,37 +499,27 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
     return iDest;
 
 }
- 
+
+/*
+ * @function int Mstage(int PC)
+ * @abstract NESTE ESTÁGIO É FEITA NA MEMÓRIA,
+ * A BUSCA DO DADO RESULTANTE DO ESTÁGIO DE EXECUÇÃO
+ */
 int Mstage(int PC){
 
-    /*
-    * Durante o estágio de busca de memória, a operação aritmética ou lógica da ALU é concluída, a busca 
-    * do cache de dados e a conversão de endereços virtuais para dados são executadas para instruções 
-    * de carga e armazenamento. 
-    */
-
-    //Nesse estagio, será realizada a busca na memória do dado escrito no estágio de execução
     readFromMemory(PC);
-    
-    //pega o dado do barramento
     int dado = recuperarNoBarramento();
 
-    //Retornar o dado buscado
     return dado;
 
 } 
 
-
-int Astage(int PC){
 /*
-* Durante o estágio Alinhar / Acumular, um alinhador separado alinha os dados carregados com seu limite de palavras, uma 
-* operação MUL disponibiliza o resultado para write-back. O writeback real do registrador é executado no 
-* estágio W (todos os núcleos 4K), uma operação MULT / MADD / MSUB executa o carry-propagate-add. 
-* Isso inclui o passo acumulado para as operações MADD / MSUB. 
-* O writeback de registro real para HI e LO é realizado no estágio W (4Kc e 4Km núcleos),uma operação de divisão executa 
-* o ajuste de sinal final. O writeback real do registrador para HI e LO é executado no W estágio (núcleos de 4Kc e 4Km), 
-* uma operação de multiplicação / divisão grava em registradores HI / LO (apenas no core 4Kp).
-*/
+ * @function int Astage(int PC)
+ * @abstract NESTE ESTÁGIO É FEITO O ALINHAMENTO
+ * QUE VERIFICA SE O ENDEREÇO É MÚLTIPLO DE 4 BYTES
+ */
+int Astage(int PC){
 
 if(PC % 4 != 0)
     return 0;
@@ -568,22 +530,23 @@ else
 } 
 
 
-
+/*
+ * @function int Wstage(int PC)
+ * @abstract NESTE ESTÁGIO É FEITA A ESCRITA DO RESULTADO NO REGISTRADOR
+ */
 int Wstage(int PC, int dado, int indice){
 
-    /*
-    * Para registrador-para-registrador ou carregar instruções,o resultado é gravado de volta no arquivo de registro
-    * durante o estágio W.
-    */
-    
-    //Escrever os dados no registrador com índice retornado pelo estágio E
-    //O parametro dado vem do estágio M
     reg[indice] = dado;
 
     return reg[indice];
 
 }
 
+/*
+ * @function int getReg(char* reg)
+ * @abstract ESTA FUNÇÃO É RESPONSÁVEL POR RETORNAR O ÍNDICE CORRETO 
+ * DO REGISTRADOR A SER UTILIZADO NAS OPERAÇÕES DO ESTÁGIO DE EXECUÇÃO
+ */
 int getReg(char* reg){
 
     if(strcmp(reg, "$zero\n") == 0)

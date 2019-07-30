@@ -12,6 +12,6 @@
 extern unsigned char biu[5];
 
 void inserirNoBarramento(unsigned int dado);
-int recuperarNoBarramento();
+unsigned int recuperarNoBarramento();
 
 #endif

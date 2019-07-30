@@ -1,16 +1,33 @@
+/*!
+ * @header executionQueue.c
+ * @author Luiz Joaquim Aderaldo Amichi <ra90568@uem.br>
+ * @author Gustavo Belançon Mendes <ra99037@uem.br>
+ * @author Fernando Silva Silvério <ra98936@uem.br>
+ * @discussion NESTE MÓDULO ESTÁ IMPLEMENTADO A FILA DE EXECUÇÃO DO PIPELINE
+ * SENDO AQUI REALIZADAS AS OPERAÇÕES DO ARQUIVO .asm 
+ * APÓS SUA LEITURA, AS INSTRUÇÕES, OPERADORES OU VALORES IMEDIATOS SÃO INSERIDOS NA FILA
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include "includes/executionQueue.h"
 
-
-
+/* 
+ * @function void create()
+ * @abstract INICIALIZA A FILA
+ * PONTEIROS PARA O INÍCIO E FIM DA FILA SÃO CRIADOS
+ */
 void create(FILA *F){
 	F->inicio = NULL;
 	F->fim = NULL;
 }
 
+/* 
+ * @function void queueInInst()
+ * @abstract CRIA UM NOVO NÓ À PARTIR DA INSERÇÃO DE UMA INSTRUÇÃO OU LABEL
+ */
 void queueInInst(FILA *F,char *nome){
 
 	NO *novo;
@@ -26,6 +43,11 @@ void queueInInst(FILA *F,char *nome){
 	
 }
 
+/* 
+ * @function void queueInRegDest()
+ * @abstract INSERE UM REGISTRADOR DESTINO NA FILA
+ * INSERIDO NO MESMO NÓ DE UMA INSTRUÇÃO ANTERIORMENTE CRIADO
+ */
 void queueInRegDest(FILA *F, char *reg){
 
 	F->fim->regDestino = (char*) malloc(sizeof(*reg));
@@ -33,6 +55,11 @@ void queueInRegDest(FILA *F, char *reg){
 
 }
 
+/* 
+ * @function void queueInReg1()
+ * @abstract INSERE UM REGISTRADOR OPERANDO NA FILA
+ * INSERIDO NO MESMO NÓ DE UMA INSTRUÇÃO ANTERIORMENTE CRIADO
+ */
 void queueInReg1(FILA *F, char* reg){
 	
 	F->fim->reg1 = (char*) malloc(sizeof(*reg));
@@ -40,6 +67,11 @@ void queueInReg1(FILA *F, char* reg){
 
 }
 
+/* 
+ * @function void queueInReg2()
+ * @abstract INSERE UM SEGUNDO REGISTRADOR OPERANDO NA FILA
+ * INSERIDO NO MESMO NÓ DE UMA INSTRUÇÃO ANTERIORMENTE CRIADO
+ */
 void queueInReg2(FILA *F, char* reg){
 
 	F->fim->reg2 = (char*) malloc(sizeof(*reg));
@@ -47,12 +79,21 @@ void queueInReg2(FILA *F, char* reg){
 
 }
 
-void queueInImediato(FILA *F, int imediato){
+/* 
+ * @function void queueInImediato()
+ * @abstract INSERE UM VALOR IMEDIATO NA FILA
+ * INSERIDO NO MESMO NÓ DE UMA INSTRUÇÃO ANTERIORMENTE CRIADO
+ */
+void queueInImediato(FILA *F, unsigned int imediato){
 
 	F->fim->imediato = imediato;
 
 }
 
+/* 
+ * @function int queueOut()
+ * @abstract REMOVE UM NÓ DA FILA
+ */
 int queueOut (FILA *F){
 
 	NO* alvo = F->inicio;
@@ -66,6 +107,10 @@ int queueOut (FILA *F){
 	return 1;
 }
 
+/* 
+ * @function void printQueue()
+ * @abstract EXIBE A FILA 
+ */
 void printQueue(FILA F){
 
 	NO *aux = F.inicio;
@@ -103,6 +148,12 @@ void printQueue(FILA F){
 
 }
 
+/* 
+ * @function void ler()
+ * @abstract REALIZA A LEITURA DO ARQUIVO ASM DE ENTRADA
+ * SEPARA TODAS AS INSTRUÇÕES, OPERANDOS, IMEDIATOS 
+ * INSERINDO TODOS EM UM NOVO ARQUIVO "saida.txt"
+ */
 void ler(){
 
     FILE* arq_asm = fopen("arq.asm", "r");
@@ -150,6 +201,12 @@ void ler(){
 
 }
 
+/* 
+ * @function void inserirElementos()
+ * @abstract À PARTIR DO ARQUIVO GERADO EM ler()
+ * PEGA TODAS AS INSTRUÇÕES, OPERADORES, IMEDIATOS
+ * E OS INSERE NA FILA DE ACORDO COM SEU RESPECTIVO CAMPO
+ */
 void inserirElementos(FILA *F){
 
 	FILE* saida = fopen("saida.txt", "r");
@@ -181,7 +238,7 @@ void inserirElementos(FILA *F){
 		
 		else if(isdigit(str[0])){
 
-			int valor = atoi(str);
+			unsigned int valor = atoi(str);
 			queueInImediato(F, valor);
 
 		}

@@ -39,7 +39,7 @@ int conta_digitos(int valor){
 
 }
 
-char* toStr(int num){
+char* toStr(unsigned int num){
 
     int num_digitos = conta_digitos(num);
     char *aux = (char*)malloc(sizeof(num_digitos));
@@ -49,9 +49,9 @@ char* toStr(int num){
 
 }
 
-int toInt(char *num){
+unsigned int toInt(char *num){
 
-    int numero = atoi(num);
+    unsigned int numero = atoi(num);
     return numero;
 
 }
@@ -81,7 +81,7 @@ void readFromMemory(int endereco){
     for(i = 0; i < 4; i++)
         palavra[i] = memory[endereco + i];
 
-    int dado = toInt(palavra);
+    unsigned int dado = toInt(palavra);
     inserirNoBarramento(dado);    
 
 }
@@ -96,7 +96,7 @@ void writeInMemory(int endereco){
 
     //pegar do barramento
     //converter o dado oriundo do barramento para string
-    int aux = recuperarNoBarramento();
+    unsigned int aux = recuperarNoBarramento();
     char* palavra = (char*)malloc(sizeof(biu));
 
     strcpy(palavra,toStr(aux));

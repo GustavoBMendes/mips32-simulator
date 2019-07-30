@@ -34,12 +34,12 @@ void inserirNoBarramento(unsigned int dado){
 * @function recuperarNoBarramento()
 * @abstract Retorna a palavra transportada pelo barramento do processador
 */
-int recuperarNoBarramento(){
+unsigned int recuperarNoBarramento(){
 
     char *aux;
     aux = (char*)malloc(sizeof(biu));
     strcpy(aux,biu);
-    int k = toInt(aux);
+    unsigned int k = toInt(aux);
     
     return k;
 
