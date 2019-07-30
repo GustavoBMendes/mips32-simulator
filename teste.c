@@ -42,6 +42,8 @@ int main(){
     
     FILA F;
 
+    $T1 = 10;
+
     create(&F);
     ler();
     inserirElementos(&F);

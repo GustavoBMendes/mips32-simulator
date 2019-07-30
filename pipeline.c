@@ -139,11 +139,11 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         operando1 = reg[iDest];
 
         iOp2 = getReg(linha->reg1);
-        operando2 &= reg[iOp2];
+        operando2 = reg[iOp2];
 
-        imediato &= linha->imediato;
+        imediato = linha->imediato;
 
-        operando1 &= andi(operando1, operando2, imediato);
+        operando1 = andi(operando1, operando2, imediato);
 
     }
 
