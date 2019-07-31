@@ -1,7 +1,7 @@
 andi
 $t0
 $t1
-15
+0x0F
 be
 $t0
 $zero
