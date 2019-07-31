@@ -15,7 +15,6 @@
 #include "includes/memoria.h"
 #include "includes/memoria.h"
 
-unsigned int reg[32];
 extern unsigned int HI,LO;
 
 /* 
@@ -53,7 +52,7 @@ char* Istage(FILA *execQueue, int PC){
  * REALIZA O CÁLCULA DA POSIÇÃO CORRETA E PERCORRE DESDE O INÍCIO
  * ATÉ ONDE SE ENCONTRA O ÍNDICE CERTO
  */
-int Estage(char* instrucao, FILA *exeQueue, int PC){
+int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
 
     NO* linha = exeQueue->inicio;
     int posicao = PC/4;
@@ -129,7 +128,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         iOp3 = getReg(linha->reg2);
         operando3 = reg[iOp3];
 
-        And(operando1, operando2, operando3);
+        operando1 = And(operando1, operando2, operando3);
 
     }
 
@@ -154,7 +153,12 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
 
         imediato = linha->imediato;
 
-        b(PC, imediato);
+        PC = b(PC, imediato);
+
+        inserirNoBarramento(PC);
+        writeInMemory(PC);
+
+        return 32;
 
     }
 
@@ -168,7 +172,12 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
 
         imediato = linha->imediato;
 
-        beq(operando1, operando2, PC, imediato);
+        PC = beq(operando1, operando2, PC, imediato);
+
+        inserirNoBarramento(PC);
+        writeInMemory(PC);
+
+        return 32;
 
     }
 
@@ -182,7 +191,12 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
 
         imediato = linha->imediato;
         
-        beql(operando1, operando2, PC, imediato);
+        PC = beql(operando1, operando2, PC, imediato);
+
+        inserirNoBarramento(PC);
+        writeInMemory(PC);
+
+        return 32;
 
     }
 
@@ -193,7 +207,12 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
 
         imediato = linha->imediato;
         
-        bgez(operando1, PC, imediato);
+        PC = bgez(operando1, PC, imediato);
+
+        inserirNoBarramento(PC);
+        writeInMemory(PC);
+
+        return 32;
 
     }
 
@@ -204,7 +223,12 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
 
         imediato = linha->imediato;
         
-        bgtz(operando1, PC, imediato);
+        PC = bgtz(operando1, PC, imediato);
+
+        inserirNoBarramento(PC);
+        writeInMemory(PC);
+
+        return 32;
 
     }
 
@@ -215,7 +239,12 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
 
         imediato = linha->imediato;
 
-        blez(operando1, PC, imediato);
+        PC = blez(operando1, PC, imediato);
+
+        inserirNoBarramento(PC);
+        writeInMemory(PC);
+
+        return 32;
 
     }
 
@@ -226,7 +255,12 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
 
         imediato = linha->imediato;
         
-        bltz(operando1, PC, imediato);
+        PC = bltz(operando1, PC, imediato);
+
+        inserirNoBarramento(PC);
+        writeInMemory(PC);
+
+        return 32;
 
     }
 
@@ -240,7 +274,12 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
 
         imediato = linha->imediato;
         
-        bne(operando1, operando2, PC, imediato);
+        PC = bne(operando1, operando2, PC, imediato);
+
+        inserirNoBarramento(PC);
+        writeInMemory(PC);
+
+        return 32;
 
     }
 
@@ -252,8 +291,8 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         iOp2 = getReg(linha->reg1);
         operando2 = reg[iOp2];
         
-        DivHI(operando1, operando2, HI, LO);
-        DivLO(operando1, operando2, HI, LO);
+        HI = DivHI(operando1, operando2, HI, LO);
+        LO = DivLO(operando1, operando2, HI, LO);
 
     }
 
@@ -261,7 +300,12 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
 
         imediato = linha->imediato;
         
-        j(PC, imediato);
+        PC = j(PC, imediato);
+
+        inserirNoBarramento(PC);
+        writeInMemory(PC);
+
+        return 32;
 
     }
 
@@ -270,7 +314,12 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         iDest = getReg(linha->regDestino);
         operando1 = reg[iDest];
 
-        jr(PC, operando1);
+        PC = jr(PC, operando1);
+
+        inserirNoBarramento(PC);
+        writeInMemory(PC);
+
+        return 32;
 
     }
 
@@ -281,7 +330,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
 
         imediato = linha->imediato;
         
-        lui(operando1, imediato);
+        operando1 = lui(operando1, imediato);
 
     }
 
@@ -292,8 +341,8 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
 
         iOp2 = getReg(linha->reg1);
         operando2 = reg[iOp2];
-
-        madd(operando1, operando2, HI);    //registrador acumulador, HI e LO são deste tipo
+        HI += LO;
+        HI = madd(operando1, operando2, HI);    //registrador acumulador, HI e LO são deste tipo
 
     }
 
@@ -302,7 +351,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         iDest = getReg(linha->regDestino);
         operando1 = reg[iDest];
 
-        mfhi(operando1, HI);
+        operando1 = mfhi(operando1, HI);
 
     }
     
@@ -311,7 +360,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         iDest = getReg(linha->regDestino);
         operando1 = reg[iDest];
 
-        mflo(operando1, LO);
+        operando1 = mflo(operando1, LO);
 
     }
 
@@ -326,7 +375,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         iOp3 = getReg(linha->reg2);
         operando3 = reg[iOp3];
         
-        movn(operando1, operando2, operando3);
+        operando1 = movn(operando1, operando2, operando3);
 
     }
 
@@ -341,7 +390,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         iOp3 = getReg(linha->reg2);
         operando3 = reg[iOp3];
 
-        movz(operando1, operando2, operando3);
+        operando1 = movz(operando1, operando2, operando3);
 
     }
 
@@ -353,7 +402,9 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         iOp2 = getReg(linha->reg1);
         operando2 = reg[iOp2];
 
-        msub(operando1, operando2, HI);
+        HI += LO;
+
+        HI = msub(operando1, operando2, HI);
 
     }
 
@@ -362,7 +413,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         iDest = getReg(linha->regDestino);
         operando1 = reg[iDest];
 
-        mthi(operando1, HI);
+        HI = mthi(operando1, HI);
 
     }
 
@@ -371,7 +422,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         iDest = getReg(linha->regDestino);
         operando1 = reg[iDest];
 
-        mtlo(operando1, LO);
+        LO = mtlo(operando1, LO);
 
     }
 
@@ -386,7 +437,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         iOp3 = getReg(linha->reg2);
         operando3 = reg[iOp3];
 
-        mul(operando1, operando2, operando3);
+        operando1 = mul(operando1, operando2, operando3);
 
     }
 
@@ -398,7 +449,9 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         iOp2 = getReg(linha->reg1);
         operando2 = reg[iOp2];
 
-        mult(operando1, operando2, HI);
+        HI += LO;
+        
+        HI = mult(operando1, operando2, HI);
 
     }
 
@@ -413,7 +466,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         iOp3 = getReg(linha->reg2);
         operando3 = reg[iOp3];
 
-        nor(operando1, operando2, operando3);
+        operando1 = nor(operando1, operando2, operando3);
 
     }
 
@@ -428,7 +481,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         iOp3 = getReg(linha->reg2);
         operando3 = reg[iOp3];
 
-        Or(operando1, operando2, operando3);
+        operando1 = Or(operando1, operando2, operando3);
 
     }
 
@@ -442,7 +495,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
 
         imediato = linha->imediato;
 
-        Ori(operando1, operando2, imediato);
+        operando1 = Ori(operando1, operando2, imediato);
 
     }
 
@@ -457,7 +510,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         iOp3 = getReg(linha->reg2);
         operando3 = reg[iOp3];
 
-        sub(operando1, operando2, operando3);
+        operando1 = sub(operando1, operando2, operando3);
 
     }
 
@@ -472,7 +525,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
         iOp3 = getReg(linha->reg2);
         operando3 = reg[iOp3];
 
-        Xor(operando1, operando2, operando3);
+        operando1 = Xor(operando1, operando2, operando3);
 
     }
 
@@ -486,7 +539,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC){
 
         imediato = linha->imediato;
         
-        Xori(operando1, operando2, imediato);
+        operando1 = Xori(operando1, operando2, imediato);
 
     }
 
@@ -534,11 +587,21 @@ else
  * @function int Wstage(int PC)
  * @abstract NESTE ESTÁGIO É FEITA A ESCRITA DO RESULTADO NO REGISTRADOR
  */
-int Wstage(int PC, int dado, int indice){
+int Wstage(int PC, int dado, int indice, int *reg){
 
-    reg[indice] = dado;
+    if(indice == 32){
 
-    return reg[indice];
+        PC = dado;
+        return PC;
+
+    }
+
+    else{
+
+        reg[indice] = dado;
+        return reg[indice];
+
+    }
 
 }
 

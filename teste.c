@@ -12,6 +12,7 @@
 
 int main(){
     unsigned int reg[32];
+    reg[0] = 0;
     unsigned int HI = 11,LO = 0, PC = 0;
     inicializeMemory(); //Ok está alocando
     
@@ -42,8 +43,6 @@ int main(){
     
     FILA F;
 
-    $T1 = 10;
-
     create(&F);
     ler();
     inserirElementos(&F);
@@ -52,7 +51,7 @@ int main(){
     strcpy(a, Istage(&F, PC));
     printf("%s ",a);
 
-    int indiceReg = Estage(a,&F, PC);
+    int indiceReg = Estage(a, &F, PC, reg);
     printf("\nIndice registrador destino: %d\n", indiceReg);
 
     int dado = Mstage(PC);
@@ -63,7 +62,7 @@ int main(){
     else
         printf("\nEndereço incorreto!\n");
 
-    reg[indiceReg] = Wstage(PC, dado, indiceReg);
+    reg[indiceReg] = Wstage(PC, dado, indiceReg, reg);
     printf("\nEscrita no Registrador[%d] = %d\n", indiceReg, reg[indiceReg]);
 
     PC = somarPC(PC);
