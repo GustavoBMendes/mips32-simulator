@@ -41,11 +41,14 @@ int main(){
     printf("MTHI: %d\nMFHI: %d",mduMthi(T0,HI),mduMfhi(HI,T0));
     */
     
+    /*
     FILA F;
 
     create(&F);
     ler();
-    inserirElementos(&F);
+    int instrucoes = inserirElementos(&F);
+
+    printf("\n%d instrucoes\n", instrucoes);
 
     char *a = (char*) malloc(7 * sizeof(char));
     strcpy(a, Istage(&F, PC));
@@ -67,6 +70,74 @@ int main(){
 
     PC = somarPC(PC);
     printf("\nPC = %d\n", PC);
+    */
+
+    struct instrucoes{
+        int estagio,
+            indRegistrador,
+            dado;
+        char *nome;
+    };
+    
+
+    FILA F;
+
+    create(&F);
+    ler();
+    int total_instrucoes = inserirElementos(&F);
+    int total_ciclos = (total_instrucoes - 1) + 5;
+    struct instrucoes instrucao[total_instrucoes];
+    int ciclo = 1;
+
+    int i;
+    for (i = 0; i < total_instrucoes; i++){
+        instrucao[i].estagio = 0;
+    }
+    
+
+    while(total_ciclos > 0){
+        
+        for (i = 0; i < ciclo; i++){
+
+            if(instrucao[i].estagio >= 5){
+                continue;
+            }
+
+            else if(instrucao[i].estagio == 0){
+                instrucao[i].nome = (char*) malloc(7 * sizeof(char));
+                strcpy(instrucao[i].nome, Istage(&F, PC));
+                instrucao[i].estagio++;
+            }
+
+            else if(instrucao[i].estagio == 1){
+                instrucao[i].indRegistrador = Estage(instrucao[i].nome, &F, PC, reg);
+                instrucao[i].estagio++;
+            }
+
+            else if(instrucao[i].estagio == 2){
+                instrucao[i].dado = Mstage(PC);
+                instrucao[i].estagio++;
+            }
+
+            else if(instrucao[i].estagio == 3){
+                Astage(PC);
+                instrucao[i].estagio++;
+            }
+
+            else if(instrucao[i].estagio == 4){
+                reg[instrucao[i].indRegistrador] = 
+                Wstage(PC, instrucao[i].dado, instrucao[i].indRegistrador, reg);
+                instrucao[i].estagio++;
+            }
+
+            ciclo++;
+
+        }
+        
+
+        total_ciclos--;
+    }
+    
 
     /*
     int a = 111;       

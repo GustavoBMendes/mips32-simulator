@@ -207,9 +207,10 @@ void ler(){
  * PEGA TODAS AS INSTRUÇÕES, OPERADORES, IMEDIATOS
  * E OS INSERE NA FILA DE ACORDO COM SEU RESPECTIVO CAMPO
  */
-void inserirElementos(FILA *F){
+int inserirElementos(FILA *F){
 
 	FILE* saida = fopen("saida.txt", "r");
+	int instrucoes = 0;
 
 	if(saida == NULL)
 		printf("Não foi possível abrir o arquivo");
@@ -247,6 +248,7 @@ void inserirElementos(FILA *F){
 
 			i = 0;
 			queueInInst(F, str);
+			instrucoes++;
 
 		}
 		
@@ -254,5 +256,6 @@ void inserirElementos(FILA *F){
     }
 
     fclose(saida);
+	return instrucoes;
 	
 }
