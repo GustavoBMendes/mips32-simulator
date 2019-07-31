@@ -173,7 +173,7 @@ int DivLO(int regOrigem1, int regOrigem2, int HI, int LO){
 */
 int j(int PC, int offset){
     PC += offset;
-    return PC
+    return PC;
 }
 /* 
 * @function
