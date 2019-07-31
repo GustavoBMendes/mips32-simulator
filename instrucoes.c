@@ -1,12 +1,17 @@
+/*!
+ * @header instrucoes.c
+ * @author Luiz Joaquim Aderaldo Amichi <ra90568@uem.br>
+ * @author Gustavo Belançon Mendes <ra99037@uem.br>
+ * @author Fernando Silva Silvério <ra98936@uem.br>
+ * @discussion NESTE MÓDULO ESTÁ IMPLEMENTADO 
+ * TODAS AS INSTRUÇÕES REQUISITADAS PARA ESTE PROCESSADOR
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "includes/instrucoes.h"
 #include "includes/registradores.h"
-
-
-//Acredito que com certeza não serão do tipo void mas isso vamos ver ainda, por enquanto meti um void
-
 
 /*
 * @function int add(int regDestino,int regOrigem1, int regOrigem2)
@@ -21,14 +26,15 @@ int add(int regDestino,int regOrigem1, int regOrigem2){
 * @abstract Faz a operação de soma entre os valores contidos em um registrador de origem e um imediato
 *  e a insere em um registrador de destino.
 */
-void addi(int regDestino,int regOrigem1, int imediato){
+int addi(int regDestino,int regOrigem1, int imediato){
     regDestino = regOrigem1 + imediato;
+    return regDestino;
 }
 /*
 * @function int And(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a operação lógica AND entre os valores contidos em dois registradores de origem e a insere em um registrador de destino.
 */
-int And(int regDestino,int regOrigem1, int regOrigem2){
+unsigned int And(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = regOrigem1 & regOrigem2;
     return regDestino;
 }
@@ -37,87 +43,105 @@ int And(int regDestino,int regOrigem1, int regOrigem2){
 * @abstract Faz a operação lógica AND entre os valores contidos em um registrador de origem e um imediato
 *  e a insere em um registrador de destino.
 */
-void andi(int regDestino,int regOrigem1, int imediato){
+unsigned int andi(int regDestino,int regOrigem1, int imediato){
     regDestino = regOrigem1 & imediato;
+    return regDestino;
 }
 /* 
 * @function b(int PC, int offset)
 * @abstract Realiza o desvio incondicional incrementando o registrador especial PC com o valor de um offset.
 */
-void b(int PC, int offset){
+int b(int PC, int offset){
     PC += offset;
+    return PC;
 }
 /* 
 * @function beq(int regOrigem1,int regOrigem2, int offset)
 * @abstract Realiza o desvio, incrementando o registrador especial PC em um valor de offset,
 * desde que os dois registradores de origem sejam iguais.
 */
-void beq(int regOrigem1,int regOrigem2,int PC, int offset){
+int beq(int regOrigem1,int regOrigem2,int PC, int offset){
     if(regOrigem1 == regOrigem2){
         PC += offset;
     }
+    return PC;
 }
 /* 
 * @function beql(int regOrigem1,int regOrigem2,int PC, int offset)
 * @abstract Realiza o desvio se os valores dos registradores de origem forem iguais e caso contrário a próxima instrução é ignorada.
 */
-void beql(int regOrigem1,int regOrigem2,int PC, int offset){
+int beql(int regOrigem1,int regOrigem2,int PC, int offset){
     if(regOrigem1 == regOrigem2){
         PC += offset;
     }
     else
         PC += 8;    //avançando 4 posições na memória -> pŕoxima instrução
                   //avançando mais 4 posições -> ignora a próxima instrução
+
+    return PC;
 }
 /* 
 * @function bgez(int regOrigem1, int PC, int offset)
 * @abstract Realiza o desvio incrementando o registrador especial PC com um offset desde que o valor 
 * armazenado no registrador de origem seja maior ou igual a 0.
 */
-void bgez(int regOrigem1, int PC, int offset){
+int bgez(int regOrigem1, int PC, int offset){
     if(regOrigem1 >= 0){
         PC += offset;
     }
+
+    return PC;
 }
 /* 
 * @function bgtz(int regOrigem1, int PC, int offset)
 * @abstract  Realiza o desvio incrementando o registrador especial PC com um offset desde que o valor armazenado no
 * registrador de origem seja maior que 0.
 */
-void bgtz(int regOrigem1, int PC, int offset){
+int bgtz(int regOrigem1, int PC, int offset){
     if(regOrigem1 > 0){
         PC += offset;
     }
+
+    return PC;
+
 }
 /* 
 * @function blez(int regOrigem1, int PC, int offset)
 * @abstract  Realiza o desvio incrementando o registrador especial PC com um offset desde que o valor 
 * armazenado no registrador de origem seja menor ou igual a 0 .
 */
-void blez(int regOrigem1, int PC, int offset){
+int blez(int regOrigem1, int PC, int offset){
     if(regOrigem1 <= 0){
         PC += offset;
     }
+
+    return PC;
+
 }
 /* 
 * @function bltz(int regOrigem1, int PC, int offset)
 * @abstract Realiza o desvio incrementando o registrador especial PC com um offset desde que o valor armazenado no
 * registrador de origem seja menor que 0.
 */
-void bltz(int regOrigem1, int PC, int offset){
+int bltz(int regOrigem1, int PC, int offset){
     if(regOrigem1 < 0){
         PC += offset;
     }
+
+    return PC;
+
 }
 /* 
 * @function bne(int regOrigem1,int regOrigem2,int PC, int offset)
 * @abstract Realiza o desvio, incrementando o registrador especial PC em um valor de offset,
 * desde que os dois registradores de origem sejam diferentes.
 */
-void bne(int regOrigem1,int regOrigem2,int PC, int offset){
+int bne(int regOrigem1,int regOrigem2,int PC, int offset){
     if(regOrigem1 != regOrigem2){
         PC += offset;
     }
+
+    return PC;
 }
 /* 
 * @function divHI(int regOrigem1, int regOrigem2, int HI, int LO)
@@ -147,23 +171,25 @@ int DivLO(int regOrigem1, int regOrigem2, int HI, int LO){
 * Altera o program counter (PC) 
 * Acumulando com o endereco desejado para a próxima instrução.
 */
-void j(int PC, int offset){
+int j(int PC, int offset){
     PC += offset;
+    return PC;
 }
 /* 
 * @function
 * @abstract Realiza um salto para o endereco contido no registrador especificado
 */
-void jr(int PC, int regOrigem1){
+int jr(int PC, int regOrigem1){
     PC += regOrigem1;
+    return PC;
 }
 /* 
 * @function
 * @abstract Executa um shift em 16 bits no imediato e concatena com outros 16 bits de zero.
 */
-void lui(int regDestino, int imediato){
+int lui(int regDestino, int imediato){
     regDestino = imediato << 16;
-    
+    return regDestino;
 }
 /* 
 * @function madd(int regOrigem1, int regOrigem2, int regAcumulador)
@@ -240,6 +266,7 @@ int mtlo(int regOrigem1, int LO){
 */
 int mul(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = regOrigem1 * regOrigem2;
+    return regDestino;
 }
 /* 
 * @function mult(int regOrigem1, int regOrigem2, int regAcumulador)
@@ -247,6 +274,7 @@ int mul(int regDestino,int regOrigem1, int regOrigem2){
 */
 int mult(int regOrigem1, int regOrigem2, int regAcumulador){
     regAcumulador = regOrigem1 * regOrigem2;
+    return regAcumulador;
 }
 /* 
 * @function void nop()
@@ -259,8 +287,9 @@ void nop(){
 * @function void nor(int regDestino,int regOrigem1, int regOrigem2)
 * @abstract Faz a operação lógica NOR entre os valores contidos em dois registradores de origem e a insere em um registrador de destino.
 */
-void nor(int regDestino,int regOrigem1, int regOrigem2){
+int nor(int regDestino,int regOrigem1, int regOrigem2){
     regDestino = ~(regOrigem1 | regOrigem2);
+    return regDestino;
 }
 /*
 * @function int Or(int regDestino,int regOrigem1, int regOrigem2)
@@ -275,8 +304,9 @@ int Or(int regDestino,int regOrigem1, int regOrigem2){
 * @abstract Faz a operação lógica OR entre os valores contidos em um registrador de origem e um imediato
 *  e a insere em um registrador de destino.
 */
-void Ori(int regDestino,int regOrigem1, int imediato){
+int Ori(int regDestino,int regOrigem1, int imediato){
     regDestino = (regOrigem1 | imediato);
+    return regDestino;
 }
 /*
 * @function int sub(int regDestino,int regOrigem1, int regOrigem2)
@@ -300,6 +330,7 @@ int Xor(int regDestino,int regOrigem1, int regOrigem2){
 * @abstract Faz a operação lógica XOR entre os valores contidos em um registrador de origem e um imediato
 *  e a insere em um registrador de destino.
 */
-void Xori(int regDestino,int regOrigem1, int imediato){
+int Xori(int regDestino,int regOrigem1, int imediato){
     regDestino = regOrigem1 ^ imediato;
+    return regDestino;
 }

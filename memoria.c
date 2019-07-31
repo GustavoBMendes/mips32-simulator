@@ -14,9 +14,47 @@
 #include <stdlib.h>
 #include <string.h>
 #include "includes/memoria.h"
+#include "includes/barramento.h"
 
 unsigned char *memory;
 unsigned char *palavra;
+
+
+int conta_digitos(int valor){
+
+    int contaDigitos = 0;
+    if (valor == 0) 
+        contaDigitos = 1;
+
+    else
+
+        while (valor != 0){
+
+            contaDigitos = contaDigitos + 1;
+            valor = valor / 10;
+
+        }
+
+    return contaDigitos;
+
+}
+
+char* toStr(unsigned int num){
+
+    int num_digitos = conta_digitos(num);
+    char *aux = (char*)malloc(sizeof(num_digitos));
+    sprintf(aux, "%d", num);
+
+    return aux;
+
+}
+
+unsigned int toInt(char *num){
+
+    unsigned int numero = atoi(num);
+    return numero;
+
+}
 
 /*
  * @function inicializeMemory()
@@ -24,9 +62,11 @@ unsigned char *palavra;
  * E PARA A PALAVRA AUXILIAR
  */
 void inicializeMemory(){
+
     memory = malloc(memCapacity * sizeof(char));
     palavra = malloc(4 * sizeof(char));
-    printf("Memoria inicializada");
+    printf("Memoria inicializada\n");
+
 }
 
 /*
@@ -37,20 +77,13 @@ void inicializeMemory(){
  */
 void readFromMemory(int endereco){
 
-    if(endereco % 4 == 0){
+    int i;        
+    for(i = 0; i < 4; i++)
+        palavra[i] = memory[endereco + i];
 
-        int i;
-        for(i = 0; i < 4; i++){
+    unsigned int dado = toInt(palavra);
+    inserirNoBarramento(dado);    
 
-            palavra[i] = memory[endereco + i];
-        }
-
-        inserirNoBarramento(palavra);
-    }
-
-    else
-        printf("Não foi possível acessar este endereço de memória");    
-    
 }
 
 /*
@@ -61,19 +94,17 @@ void readFromMemory(int endereco){
  */
 void writeInMemory(int endereco){
 
-    if(endereco % 4 == 0){
+    //pegar do barramento
+    //converter o dado oriundo do barramento para string
+    unsigned int aux = recuperarNoBarramento();
+    char* palavra = (char*)malloc(sizeof(biu));
 
-        int i;
+    strcpy(palavra,toStr(aux));
 
-        palavra = recuperarNoBarramento();
-        
-        for(i = 0; i < 4; i++){
-            memory[endereco + i] = palavra[i];
-        }
-    }
+    int i;
+    for(i = 0; i < 4; i++)
+        memory[endereco + i] = palavra[i];
 
-    else
-        printf("Não foi possível acessar este endereço de memória");
 }
 
 /*
@@ -90,5 +121,7 @@ void printMemory(){
         if(i % 4 == 0)
             printf("\n");
         printf("\n[%d] : %x", i, *(memory + i));
+
     }
+
 }

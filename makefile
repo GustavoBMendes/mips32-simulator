@@ -1,2 +1,2 @@
-mips32: barramento.c memoria.c teste.c ula.c mdu.c operationsUnit.c instrucoes.c executionQueue.c pipeline.c
-		gcc barramento.c memoria.c teste.c ula.c mdu.c operationsUnit.c instrucoes.c executionQueue.c pipeline.c -o simulador 
+mips32: barramento.c memoria.c teste.c ula.c mdu.c operationsUnit.c instrucoes.c executionQueue.c pipeline.c somadorPC.c
+		gcc barramento.c memoria.c teste.c ula.c mdu.c operationsUnit.c instrucoes.c executionQueue.c pipeline.c somadorPC.c -o simulador 

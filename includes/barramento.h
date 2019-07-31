@@ -9,9 +9,9 @@
 /*
  * BARRAMENTO QUE FAZ A CONEXÃO ENTRE O PROCESSADOR E A MEMÓRIA
  */
-extern unsigned char biu[4];
+extern unsigned char biu[5];
 
-void inserirNoBarramento(unsigned char*);
-unsigned char* recuperarNoBarramento();
+void inserirNoBarramento(unsigned int dado);
+unsigned int recuperarNoBarramento();
 
 #endif

@@ -1,4 +1,4 @@
-add $t0, $zero, $zero
-addi $t0, $t0, 10
-b 20
+addi $t0, $t1, 15
+be $t0, $zero, $zero
+b $pc, 4
 addi $t1, $t1, $t0

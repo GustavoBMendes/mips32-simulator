@@ -8,11 +8,13 @@
 #include "includes/mdu.h"
 #include "includes/executionQueue.h"
 #include "includes/pipeline.h"
+#include "includes/somadorPC.h"
 
 int main(){
     unsigned int reg[32];
-    unsigned int HI = 11,LO = 0;
-    //inicializeMemory(); //Ok está alocando
+    reg[0] = 0;
+    unsigned int HI = 11,LO = 0, PC = 0;
+    inicializeMemory(); //Ok está alocando
     
     /* 
     unsigned char *dado = "15";
@@ -38,13 +40,39 @@ int main(){
     printf("Teste MFLO, MTLO, MTHI E MTHI:\n\n");
     printf("MTHI: %d\nMFHI: %d",mduMthi(T0,HI),mduMfhi(HI,T0));
     */
-
+    
     FILA F;
+
     create(&F);
     ler();
     inserirElementos(&F);
+
     char *a = (char*) malloc(7 * sizeof(char));
-    strcpy(a, Istage(&F));
+    strcpy(a, Istage(&F, PC));
     printf("%s ",a);
-   
+
+    int indiceReg = Estage(a, &F, PC, reg);
+    printf("\nIndice registrador destino: %d\n", indiceReg);
+
+    int dado = Mstage(PC);
+    printf("\nResultado: %d", dado);
+    
+    if(Astage(PC) == 1)
+        printf("\nEndereço Correto!\n");
+    else
+        printf("\nEndereço incorreto!\n");
+
+    reg[indiceReg] = Wstage(PC, dado, indiceReg, reg);
+    printf("\nEscrita no Registrador[%d] = %d\n", indiceReg, reg[indiceReg]);
+
+    PC = somarPC(PC);
+    printf("\nPC = %d\n", PC);
+
+    /*
+    int a = 111;       
+    inserirNoBarramento(a);
+    printf("%s \n",biu);
+    printf("Recuperado do barramento o valor: %d",recuperarNoBarramento());
+    */
+    
 }
