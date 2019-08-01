@@ -1,7 +1,6 @@
 #ifndef REGISTERS_H
 #define REGISTERS_H
 
-//Mudar para o tipo adequado para o vetor
 //Registradores de uso geral 
 extern unsigned int reg[32];
 
@@ -40,5 +39,7 @@ extern unsigned int reg[32];
 
 //Registradores especiais
 extern unsigned int HI, LO, PC; 
+
+void printRegistradores();
 
 #endif

@@ -116,11 +116,11 @@ void writeInMemory(int endereco){
 void printMemory(){
 
     int i;
-    for(i = 0; i < memCapacity; i++){
+    for(i = 0; i < 100; i++){
 
         if(i % 4 == 0)
             printf("\n");
-        printf("\n[%d] : %x", i, *(memory + i));
+        printf("\n[%d] : %c", i, *(memory + i));
 
     }
 

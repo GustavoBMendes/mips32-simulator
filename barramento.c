@@ -25,7 +25,7 @@ void inserirNoBarramento(unsigned int dado){
     for(int i = 0; i <= strlen(sdado); i++)
         biu[i] = sdado[i];
     
-    printf("Inserido no barramento\n");
+    printf("\nInserido no barramento\n");
 
 }
 
@@ -42,5 +42,17 @@ unsigned int recuperarNoBarramento(){
     unsigned int k = toInt(aux);
     
     return k;
+
+}
+
+void printBarramento(){
+
+    int i;
+
+    printf("\nConteúdo do barramento\n> | ");
+    for(i = 0; i < 4; i++){
+        printf("%c |", biu[i]);
+    }
+    printf("\n");
 
 }

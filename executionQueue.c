@@ -183,7 +183,7 @@ void ler(){
 
         else{
 
-            while(atual != ' '){
+            while(atual != ' ' && atual != EOF){
 
                 fprintf(saida, "%c", atual);
                 atual = fgetc(arq_asm);
@@ -191,7 +191,6 @@ void ler(){
             }
 
             fputs("\n", saida);
-            atual = fgetc(arq_asm);
 
         }
     }

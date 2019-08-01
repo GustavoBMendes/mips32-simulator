@@ -100,40 +100,57 @@ int main(){
         
         for (i = 0; i < ciclo; i++){
 
-            if(instrucao[i].estagio >= 5){
+            if(instrucao[i].estagio >= 5)
                 continue;
-            }
 
             else if(instrucao[i].estagio == 0){
+
                 instrucao[i].nome = (char*) malloc(7 * sizeof(char));
                 strcpy(instrucao[i].nome, Istage(&F, PC));
                 instrucao[i].endereco = PC;
                 PC = somarPC(PC);
                 instrucao[i].estagio++;
+
             }
 
             else if(instrucao[i].estagio == 1){
+
                 instrucao[i].indRegistrador = Estage(instrucao[i].nome, &F, instrucao[i].endereco, reg);
                 instrucao[i].estagio++;
+
             }
 
             else if(instrucao[i].estagio == 2){
+
                 instrucao[i].dado = Mstage(instrucao[i].endereco);
                 instrucao[i].estagio++;
+
             }
 
             else if(instrucao[i].estagio == 3){
+
                 Astage(instrucao[i].endereco);
                 instrucao[i].estagio++;
+
             }
 
             else if(instrucao[i].estagio == 4){
-                reg[instrucao[i].indRegistrador] = 
-                Wstage(instrucao[i].endereco, instrucao[i].dado, instrucao[i].indRegistrador, reg);
+                
+                if(instrucao[i].indRegistrador == 32){
+                    PC = Wstage(PC, instrucao[i].dado, instrucao[i].indRegistrador, reg);
+                }
+
+                else
+                    reg[instrucao[i].indRegistrador] = 
+                    Wstage(instrucao[i].endereco, instrucao[i].dado, instrucao[i].indRegistrador, reg);
+                
                 instrucao[i].estagio++;
+
             }
 
         }
+
+        printf("\nPC = %d \n", PC);
 
         if(ciclo < total_instrucoes){
             ciclo++;
@@ -142,7 +159,8 @@ int main(){
         total_ciclos--;
     }
     
-    //printMemory();
+    printRegistradores(reg, HI, LO, PC);
+    printMemory();
 
     /*
     int a = 111;       

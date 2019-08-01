@@ -13,5 +13,6 @@ extern unsigned char biu[5];
 
 void inserirNoBarramento(unsigned int dado);
 unsigned int recuperarNoBarramento();
+void printBarramento();
 
 #endif

@@ -181,6 +181,8 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
 
     else if(strcmp(instrucao, "beq\n") == 0){
 
+        int aux = PC;
+
         iDest = getReg(linha->regDestino);
         operando1 = reg[iDest];
 
@@ -192,7 +194,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
         PC = beq(operando1, operando2, PC, imediato);
 
         inserirNoBarramento(PC);
-        writeInMemory(PC);
+        writeInMemory(aux);
 
         return 32;
 
@@ -219,6 +221,8 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
 
     else if(strcmp(instrucao, "bgez\n") == 0){
 
+        int aux = PC;
+
         iDest = getReg(linha->regDestino);
         operando1 = reg[iDest];
 
@@ -227,7 +231,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
         PC = bgez(operando1, PC, imediato);
 
         inserirNoBarramento(PC);
-        writeInMemory(PC);
+        writeInMemory(aux);
 
         return 32;
 
