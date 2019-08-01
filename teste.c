@@ -75,6 +75,7 @@ int main(){
     struct instrucoes{
         int estagio,
             indRegistrador,
+            endereco,
             dado;
         char *nome;
     };
@@ -106,38 +107,42 @@ int main(){
             else if(instrucao[i].estagio == 0){
                 instrucao[i].nome = (char*) malloc(7 * sizeof(char));
                 strcpy(instrucao[i].nome, Istage(&F, PC));
+                instrucao[i].endereco = PC;
+                PC = somarPC(PC);
                 instrucao[i].estagio++;
             }
 
             else if(instrucao[i].estagio == 1){
-                instrucao[i].indRegistrador = Estage(instrucao[i].nome, &F, PC, reg);
+                instrucao[i].indRegistrador = Estage(instrucao[i].nome, &F, instrucao[i].endereco, reg);
                 instrucao[i].estagio++;
             }
 
             else if(instrucao[i].estagio == 2){
-                instrucao[i].dado = Mstage(PC);
+                instrucao[i].dado = Mstage(instrucao[i].endereco);
                 instrucao[i].estagio++;
             }
 
             else if(instrucao[i].estagio == 3){
-                Astage(PC);
+                Astage(instrucao[i].endereco);
                 instrucao[i].estagio++;
             }
 
             else if(instrucao[i].estagio == 4){
                 reg[instrucao[i].indRegistrador] = 
-                Wstage(PC, instrucao[i].dado, instrucao[i].indRegistrador, reg);
+                Wstage(instrucao[i].endereco, instrucao[i].dado, instrucao[i].indRegistrador, reg);
                 instrucao[i].estagio++;
             }
 
-            ciclo++;
-
         }
-        
+
+        if(ciclo < total_instrucoes){
+            ciclo++;
+        }
 
         total_ciclos--;
     }
     
+    //printMemory();
 
     /*
     int a = 111;       
