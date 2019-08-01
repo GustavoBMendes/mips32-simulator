@@ -12,8 +12,12 @@
 
 int main(){
     unsigned int reg[32];
-    reg[0] = 0;
-    unsigned int HI = 11,LO = 0, PC = 0;
+    unsigned int HI = 0,LO = 0, PC = 0;
+
+    int k;
+    for(k = 0; k < 32; k++)
+        reg[k] = 0;
+
     inicializeMemory(); //Ok está alocando
     
     /* 

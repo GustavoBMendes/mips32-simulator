@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "includes/memoria.h"
 #include "includes/barramento.h"
 
@@ -103,7 +104,8 @@ void writeInMemory(int endereco){
 
     int i;
     for(i = 0; i < 4; i++)
-        memory[endereco + i] = palavra[i];
+        if(isdigit(palavra[i]))
+            memory[endereco + i] = palavra[i];
 
 }
 

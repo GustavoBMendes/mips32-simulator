@@ -94,16 +94,6 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
         operando2 = reg[k];
     }
     */
-    /* 
-     * executar operacao
-     * comparar o parametro recebido char* instrucao 
-     * com as instruções de "intrucoes.h"
-     * de acordo com a instrução verificada, 
-     * passar os parametros para a instrução encontrada
-     * conjunto de if else, caso verdadeiro 
-     * chamar a função respectiva de instrucoes.h
-     * ex:
-     */
 
     if(strcmp(instrucao, "add\n") == 0){
 
