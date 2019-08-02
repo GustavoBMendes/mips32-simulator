@@ -41,20 +41,6 @@ char* Istage(FILA *execQueue, int PC){
 
     strcpy(nomeSaida,aux->instructionName);
 
-    //suporte para previsão de desvio
-    int iDest = 0, iOp2 = 0, operando1 = 0, operando2 = 0;
-    if(isBranch(aux->instructionName)){
-
-        iDest = getReg(aux->regDestino);
-        operando1 = reg[iDest];
-
-        iOp2 = getReg(aux->reg1);
-        operando2 = reg[iOp2];
-
-        previsao(aux->instructionName, operando1, operando2);
-
-    }
-
     return nomeSaida;
 
 }

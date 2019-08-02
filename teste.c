@@ -9,6 +9,7 @@
 #include "includes/executionQueue.h"
 #include "includes/pipeline.h"
 #include "includes/somadorPC.h"
+#include "includes/branchPredictor.h"
 #define VAZIO 0
 
 int main(){
@@ -80,7 +81,10 @@ int main(){
             dado;
         char *nome;
     };
-    
+
+    struct numerosPrevisao n;
+    n.acertos = 0;
+    n.erros = 0;
 
     FILA F;
 
@@ -106,11 +110,20 @@ int main(){
             }
 
             else if(instrucao[i].estagio == 0){
+
                 instrucao[i].nome = (char*) malloc(7 * sizeof(char));
                 strcpy(instrucao[i].nome, Istage(&F, PC));
                 instrucao[i].endereco = PC;
+
+                NO* aux = getNoBranch(&F, PC);
+                int indReg1 = getRegBranch(aux, 1);
+                int indReg2 = getRegBranch(aux, 2);
+
+                n = previsao(instrucao[i].nome, reg[indReg1], reg[indReg2]);
+
                 PC = somarPC(PC);
                 instrucao[i].estagio++;
+
             }
 
             else if(instrucao[i].estagio == 1){
