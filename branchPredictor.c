@@ -33,7 +33,7 @@ bool prediction(char *instrucao,char* reg1, char* reg2){
         }
     }
     else if(strcmp(instrucao,"bgez\n") == 0){
-        if(reg1 >= 0){
+        if(a >= 0){
             return true;
         }
         else{
@@ -41,7 +41,7 @@ bool prediction(char *instrucao,char* reg1, char* reg2){
         }
     }
     else if(strcmp(instrucao,"bgtz\n") == 0){
-        if(reg1 > 0){
+        if(a > 0){
             return true;
         }
         else{
@@ -49,7 +49,7 @@ bool prediction(char *instrucao,char* reg1, char* reg2){
         }
     }
     else if(strcmp(instrucao,"blez\n") == 0){
-        if(reg1 <= 0){
+        if(a <= 0){
             return true;
         }
         else{
@@ -57,7 +57,7 @@ bool prediction(char *instrucao,char* reg1, char* reg2){
         }
     }
     else if(strcmp(instrucao,"bltz\n") == 0){
-        if(reg1 < 0){
+        if(a < 0){
             return true;
         }
         else{
