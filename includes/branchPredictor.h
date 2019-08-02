@@ -9,7 +9,8 @@ struct numerosPrevisao{
 };
 
 struct numerosPrevisao previsao();
-
+bool isBranch(char* instrucao);
+bool prediction(char *instrucao,char* reg1, char* reg2);
 
 
 #endif

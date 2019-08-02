@@ -14,6 +14,7 @@
 #include "includes/executionQueue.h"
 #include "includes/memoria.h"
 #include "includes/memoria.h"
+#include "includes/branchPredictor.h"
 
 extern unsigned int HI,LO;
 
@@ -25,14 +26,6 @@ extern unsigned int HI,LO;
  * ATÉ ONDE SE ENCONTRA O ÍNDICE CERTO
  */
 char* Istage(FILA *execQueue, int PC){
-
-    /*
-    char* instrucao;
-    transferir string do campo instructionName para outra string auxiliar
-    que será retornada e utilizada no estágio de execução
-    strcpy(instrucao, fila->instructionName);
-    return instrucao;
-     */
 
     NO *aux = execQueue->inicio;
     int posicao = PC/4;
@@ -47,6 +40,20 @@ char* Istage(FILA *execQueue, int PC){
     char* nomeSaida = (char*) malloc(sizeof(aux->instructionName));
 
     strcpy(nomeSaida,aux->instructionName);
+
+    //suporte para previsão de desvio
+    int iDest = 0, iOp2 = 0, operando1 = 0, operando2 = 0;
+    if(isBranch(aux->instructionName)){
+
+        iDest = getReg(aux->regDestino);
+        operando1 = reg[iDest];
+
+        iOp2 = getReg(aux->reg1);
+        operando2 = reg[iOp2];
+
+        previsao(aux->instructionName, operando1, operando2);
+
+    }
 
     return nomeSaida;
 
