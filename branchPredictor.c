@@ -16,7 +16,7 @@ bool prediction(char *instrucao,char* reg1, char* reg2){
     int a = toInt(reg1);
     int b = toInt(reg2);
 
-    if(strcmp(instrucao,"beq\n") == 0){
+    if(strcmp(instrucao,"beq\n") == 0) || strcmp(instrucao,"beql\n") == 0{
         if(a == b){
             return true;
         }
@@ -32,8 +32,40 @@ bool prediction(char *instrucao,char* reg1, char* reg2){
             return false;
         }
     }
+    else if(strcmp(instrucao,"bgez\n") == 0){
+        if(reg1 >= 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    else if(strcmp(instrucao,"bgtz\n") == 0){
+        if(reg1 > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    else if(strcmp(instrucao,"blez\n") == 0){
+        if(reg1 <= 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    else if(strcmp(instrucao,"bltz\n") == 0){
+        if(reg1 < 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     else{
-
+        printf("No branch instruction");
     }
 }
 
