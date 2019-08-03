@@ -1,22 +1,21 @@
+/*!
+ * @header multiplexador.c
+ * @author Luiz Joaquim Aderaldo Amichi <ra90568@uem.br>
+ * @author Gustavo Belançon Mendes <ra99037@uem.br>
+ * @author Fernando Silva Silvério <ra98936@uem.br>
+ * @discussion NESTE MÓDULO ESTÁ IMPLEMENTADO O SUPORTE À PREVISÃO DE DESVIO
+ * CADA INSTRUÇÃO É VERIFICADA SE SUA NATUREZA É DE DESVIO OU NÃO.
+ * SENDO DE DESVIO, COMO A ESTRATÉGIA É DESVIO SEMPRE TOMADO,
+ * VERIFICAMOS A NÍVEL DE EXECUÇÃO SE HOUVE UM ACERTO OU ERRO NA DECISÃO DE TOMAR O DESVIO
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 #include "includes/branchPredictor.h"
 
-
-/*
-unsigned int toInt(char *num){
-    unsigned int numero = atoi(num);
-    return numero;
-
-}
-*/
-
 bool prediction(char *instrucao, int a, int b){
-
-    //int a = toInt(reg1);
-    //int b = toInt(reg2);
 
     if(strcmp(instrucao,"beq\n") == 0 || strcmp(instrucao,"beql\n") == 0){
 
@@ -125,16 +124,13 @@ bool isBranch(char* instrucao){
 
 numerosPrevisao previsao(char *instrucao, int reg1, int reg2, struct numerosPrevisao n){
 
-    //struct numerosPrevisao n;
-    
     bool previsao = prediction(instrucao, reg1, reg2);
-    if(previsao == true){
+    
+    if(previsao == true)
         n.acertos++;
-    }
 
-    else{
+    else
         n.erros++;
-    }
     
     return n;
 

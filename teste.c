@@ -10,6 +10,7 @@
 #include "includes/pipeline.h"
 #include "includes/somadorPC.h"
 #include "includes/branchPredictor.h"
+#include "includes/bypass.h"
 #define VAZIO 0
 
 int main(){
@@ -105,9 +106,8 @@ int main(){
         
         for (i = 0; i < ciclo; i++){
 
-            if(instrucao[i].estagio >= 5){
+            if(instrucao[i].estagio >= 5)
                 continue;
-            }
 
             else if(instrucao[i].estagio == 0){
 
@@ -115,6 +115,7 @@ int main(){
                 strcpy(instrucao[i].nome, Istage(&F, PC));
                 instrucao[i].endereco = PC;
 
+                //suporte a previsão de desvio
                 if(isBranch(instrucao[i].nome)){
 
                     NO* aux = getNoBranch(&F, PC);
@@ -131,31 +132,41 @@ int main(){
             }
 
             else if(instrucao[i].estagio == 1){
+
                 instrucao[i].indRegistrador = Estage(instrucao[i].nome, &F, instrucao[i].endereco, reg);
                 instrucao[i].estagio++;
+
+                //suporte ao bypass
+                reg[instrucao[i].indRegistrador] = returnMultiplexador();
+
             }
 
             else if(instrucao[i].estagio == 2){
+
                 instrucao[i].dado = Mstage(instrucao[i].endereco);
                 instrucao[i].estagio++;
+
             }
 
             else if(instrucao[i].estagio == 3){
+
                 Astage(instrucao[i].endereco);
                 instrucao[i].estagio++;
+
             }
 
             else if(instrucao[i].estagio == 4){
+
                 reg[instrucao[i].indRegistrador] = 
                 Wstage(instrucao[i].endereco, instrucao[i].dado, instrucao[i].indRegistrador, reg);
                 instrucao[i].estagio++;
+
             }
 
         }
 
-        if(ciclo < total_instrucoes){
+        if(ciclo < total_instrucoes)
             ciclo++;
-        }
 
         total_ciclos--;
     }

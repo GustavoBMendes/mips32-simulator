@@ -15,6 +15,7 @@
 #include "includes/memoria.h"
 #include "includes/memoria.h"
 #include "includes/branchPredictor.h"
+#include "includes/bypass.h"
 
 extern unsigned int HI,LO;
 
@@ -550,6 +551,9 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
     else
         nop();
         
+    //suporte ao bypass
+    inserirMultiplexador(operando1);
+
     inserirNoBarramento(operando1);
     writeInMemory(PC);
 
