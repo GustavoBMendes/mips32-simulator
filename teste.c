@@ -115,11 +115,15 @@ int main(){
                 strcpy(instrucao[i].nome, Istage(&F, PC));
                 instrucao[i].endereco = PC;
 
-                NO* aux = getNoBranch(&F, PC);
-                int indReg1 = getRegBranch(aux, 1);
-                int indReg2 = getRegBranch(aux, 2);
+                if(isBranch(instrucao[i].nome)){
 
-                n = previsao(instrucao[i].nome, reg[indReg1], reg[indReg2]);
+                    NO* aux = getNoBranch(&F, PC);
+                    int indReg1 = getRegBranch(aux, 1);
+                    int indReg2 = getRegBranch(aux, 2);
+
+                    n = previsao(instrucao[i].nome, reg[indReg1], reg[indReg2], n);
+
+                }
 
                 PC = somarPC(PC);
                 instrucao[i].estagio++;
@@ -158,6 +162,10 @@ int main(){
     
     printRegistradores(reg, HI, LO, PC);
     printMemory();
+
+    printf("\nPrevisor de desvio:\n");
+    printf("Total de acertos = %d\n", n.acertos);
+    printf("Total de erros = %d\n", n.erros);
 
     /*
     int a = 111;       

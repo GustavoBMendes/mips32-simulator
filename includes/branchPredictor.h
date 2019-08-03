@@ -5,14 +5,14 @@
 #include "operationsUnit.h"
 #include "pipeline.h"
 
-typedef struct numerosPrevisao;
+//typedef struct numerosPrevisao;
 
-struct numerosPrevisao{
+typedef struct numerosPrevisao{
     int acertos;
     int erros;
-};
+}numerosPrevisao;
 
-struct numerosPrevisao previsao();
+numerosPrevisao previsao();
 bool isBranch(char* instrucao);
 bool prediction(char *instrucao, int a, int b);
 NO* getNoBranch(FILA *F, int PC);

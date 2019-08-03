@@ -73,8 +73,12 @@ bool prediction(char *instrucao, int a, int b){
         
     }
 
-    else
+    else{
+
         printf("No branch instruction");
+        return false;
+
+    }
     
 }
 
@@ -119,9 +123,9 @@ bool isBranch(char* instrucao){
 }
 
 
-struct numerosPrevisao previsao(char *instrucao, int reg1, int reg2){
+numerosPrevisao previsao(char *instrucao, int reg1, int reg2, struct numerosPrevisao n){
 
-    struct numerosPrevisao n;
+    //struct numerosPrevisao n;
     
     bool previsao = prediction(instrucao, reg1, reg2);
     if(previsao == true){
