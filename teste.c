@@ -74,7 +74,7 @@ int main(){
 
     PC = somarPC(PC);
     printf("\nPC = %d\n", PC);
-    */
+    
 
     struct instrucoes{
         int estagio,
@@ -178,13 +178,14 @@ int main(){
     printf("\nPrevisor de desvio:\n");
     printf("Total de acertos = %d\n", n.acertos);
     printf("Total de erros = %d\n", n.erros);
-    
+    */    
 
-    /* TESTE TRADUTOR
+    // TESTE TRADUTOR
+    FILA F;
     ler();
     arquivoBin();
     arquivoHex();
-    */
+    
 
     /*
     int a = 111;       
