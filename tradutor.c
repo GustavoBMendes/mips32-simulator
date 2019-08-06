@@ -15,6 +15,14 @@
 #include <string.h>
 #include "includes/tradutor.h"
 
+
+/*
+ * @function void arquivoBin()
+ * @abstract 32 bits ao todo para cada linha
+ * 16 bits para números inteiros
+ * 6 bits para instruções
+ * 5 bits para registradores
+ */
 void arquivoBin(FILE* arq){
 
     arq = fopen("saida.txt", "r");
@@ -24,7 +32,10 @@ void arquivoBin(FILE* arq){
         printf("\nNão foi possível abri o arquivo.\n");
 
     int i = 0;
+    int num;
     char str[7];
+    char imediato[16];
+
 
     while(fgets(str, 7, arq) != NULL){
 
@@ -32,100 +43,100 @@ void arquivoBin(FILE* arq){
 
             //verificar registrador
             if(strcmp(str, "$zero\n") == 0)
-                fputs("000000", bin);
+                fputs("00000", bin);
             
             else if(strcmp(str, "$at\n") == 0)
-                fputs("000001", bin);
+                fputs("00001", bin);
 
             else if(strcmp(str, "$v0\n") == 0)
-                fputs("000010", bin);
+                fputs("00010", bin);
 
             else if(strcmp(str, "$v1\n") == 0)
-                fputs("000011", bin);
+                fputs("00011", bin);
 
             else if(strcmp(str, "$a0\n") == 0)
-                fputs("000100", bin);
+                fputs("00100", bin);
 
             else if(strcmp(str, "$a1\n") == 0)
-                fputs("000101", bin);
+                fputs("00101", bin);
 
             else if(strcmp(str, "$a2\n") == 0)
-                fputs("000110", bin);
+                fputs("00110", bin);
 
             else if(strcmp(str, "$a3\n") == 0)
-                fputs("000111", bin);
+                fputs("00111", bin);
 
             else if(strcmp(str, "$t0\n") == 0)
-                fputs("001000", bin);
+                fputs("01000", bin);
 
             else if(strcmp(str, "$t1\n") == 0)
-                fputs("001001", bin);
+                fputs("01001", bin);
 
             else if(strcmp(str, "$t2\n") == 0)
-                fputs("001010", bin);
+                fputs("01010", bin);
 
             else if(strcmp(str, "$t3\n") == 0)
-                fputs("001011", bin);
+                fputs("01011", bin);
 
             else if(strcmp(str, "$t4\n") == 0)
-                fputs("001100", bin);
+                fputs("01100", bin);
 
             else if(strcmp(str, "$t5\n") == 0)
-                fputs("001101", bin);
+                fputs("01101", bin);
 
             else if(strcmp(str, "$t6\n") == 0)
-                fputs("001110", bin);
+                fputs("01110", bin);
 
             else if(strcmp(str, "$t7\n") == 0)
-                fputs("001111", bin);
+                fputs("01111", bin);
 
             else if(strcmp(str, "$s0\n") == 0)
-                fputs("010000", bin);
+                fputs("10000", bin);
 
             else if(strcmp(str, "$s1\n") == 0)
-                fputs("010001", bin);
+                fputs("10001", bin);
 
             else if(strcmp(str, "$s2\n") == 0)
-                fputs("010010", bin);
+                fputs("10010", bin);
 
             else if(strcmp(str, "$s3\n") == 0)
-                fputs("010011", bin);
+                fputs("10011", bin);
 
             else if(strcmp(str, "$s4\n") == 0)
-                fputs("010100", bin);
+                fputs("10100", bin);
 
             else if(strcmp(str, "$s5\n") == 0)
-                fputs("010101", bin);
+                fputs("10101", bin);
 
             else if(strcmp(str, "$s6\n") == 0)
-                fputs("010110", bin);
+                fputs("10110", bin);
 
             else if(strcmp(str, "$s7\n") == 0)
-                fputs("010111", bin);
+                fputs("10111", bin);
 
             else if(strcmp(str, "$t8\n") == 0)
-                fputs("011000", bin);
+                fputs("11000", bin);
 
             else if(strcmp(str, "$t9\n") == 0)
-                fputs("011001", bin);
+                fputs("11001", bin);
 
             else if(strcmp(str, "$k0\n") == 0)
-                fputs("011010", bin);
+                fputs("11010", bin);
 
             else if(strcmp(str, "$k1\n") == 0)
-                fputs("011011", bin);
+                fputs("11011", bin);
 
             else if(strcmp(str, "$gp\n") == 0)
-                fputs("011100", bin);
+                fputs("11100", bin);
 
             else if(strcmp(str, "$sp\n") == 0)
-                fputs("011101", bin);
+                fputs("11101", bin);
 
             else if(strcmp(str, "$fp\n") == 0)
-                fputs("011110", bin);
+                fputs("11110", bin);
 
             else if(strcmp(str, "$ra\n") == 0)
-                fputs("011111", bin);
+                fputs("11111", bin);
 
             else
                 printf("\nRegistrador não encontrado!");
@@ -137,8 +148,27 @@ void arquivoBin(FILE* arq){
         else if(isdigit(str[0])){
 
             //traduzir decimal para binário
+            int aux, primeiro = 0;
+            num = atoi(str);
 
+            if(num < 0){
+                imediato[0] = 1;
+                primeiro++;
+            }
             
+            for(aux = 15; aux >= primeiro; aux--){
+
+                if(num % 2 == 0)
+                    imediato[aux] = '0';
+
+                else
+                    imediato[aux] = '1';
+
+                num = num / 2;
+
+            }
+
+            fputs(str, bin);
 
             i++;
 
