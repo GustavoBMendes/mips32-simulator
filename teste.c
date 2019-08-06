@@ -11,6 +11,7 @@
 #include "includes/somadorPC.h"
 #include "includes/branchPredictor.h"
 #include "includes/bypass.h"
+#include "includes/tradutor.h"
 #define VAZIO 0
 
 int main(){
@@ -177,6 +178,13 @@ int main(){
     printf("\nPrevisor de desvio:\n");
     printf("Total de acertos = %d\n", n.acertos);
     printf("Total de erros = %d\n", n.erros);
+    
+
+    /* TESTE TRADUTOR
+    ler();
+    arquivoBin();
+    arquivoHex();
+    */
 
     /*
     int a = 111;       
