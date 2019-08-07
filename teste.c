@@ -12,6 +12,7 @@
 #include "includes/branchPredictor.h"
 #include "includes/bypass.h"
 #include "includes/tradutor.h"
+#include "includes/scoreboarding.h"
 #define VAZIO 0
 
 int main(){
@@ -179,19 +180,24 @@ int main(){
     printf("Total de acertos = %d\n", n.acertos);
     printf("Total de erros = %d\n", n.erros);
     */    
-
+/* 
     // TESTE TRADUTOR
     FILA F;
     ler();
     arquivoBin();
     arquivoHex();
     
-
+*/
     /*
     int a = 111;       
     inserirNoBarramento(a);
     printf("%s \n",biu);
     printf("Recuperado do barramento o valor: %d",recuperarNoBarramento());
     */
+
+
+   //teste tabela score
+    inicializarFus();
+
     
 }

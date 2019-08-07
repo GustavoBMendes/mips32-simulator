@@ -11,22 +11,25 @@ int cicloClock;
 //Num de instruções que o .asm possui
 int numInstrucoes;
 //Essa matriz devolverá a ordem de execução das instruções
-int instructionStatus[numInstrucoes][4];
+//int instructionStatus[numInstrucoes][4];
 
-typedef struct functionalUnitStatus{
+struct functionalUnitStatus{
     char *nomeUnidade,*opName,*fi,*fj,*fk,*qj,*qk;
     bool busy,rj,rk;
     int time;
 };
 
-functionalUnitStatus fus[5];
+struct functionalUnitStatus fus[5];
 
-typedef struct registerResultStatus{
+struct registerResultStatus{
     char *regName;
     char *ufName;
-}
+};
 
-registerResultStatus rss[32];
+struct registerResultStatus rss[32];
 
+
+
+void inicializarFus();
 
 #endif

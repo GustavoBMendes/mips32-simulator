@@ -6,7 +6,7 @@
 
 
 void inicializarFus(){
-    functionalUnitStatus fus[5];
+    struct functionalUnitStatus fus[5];
     
     char *unidadeInt = (char*)malloc( 7 * sizeof(char));
     strcpy(unidadeInt,"Integer");
@@ -37,5 +37,10 @@ void inicializarFus(){
     strcpy(fus[4].nomeUnidade,unidadeDiv);
     fus[4].busy = false;
     fus[4].time = 40;
+
+
+    for(int i = 0; i < 5; i++){
+        printf("%s \n",fus[i].nomeUnidade);
+    }
     
 }
