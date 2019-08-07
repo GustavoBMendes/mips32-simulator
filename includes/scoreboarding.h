@@ -16,6 +16,7 @@ int instructionStatus[numInstrucoes][4];
 typedef struct functionalUnitStatus{
     char *nomeUnidade,*opName,*fi,*fj,*fk,*qj,*qk;
     bool busy,rj,rk;
+    int time;
 };
 
 functionalUnitStatus fus[5];
