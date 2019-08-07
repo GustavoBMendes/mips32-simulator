@@ -44,9 +44,14 @@ void inicializarFus(){
     fus[4].busy = false;
     fus[4].time = 40;
 
-    
-    for(int i = 0; i < 5; i++){
-        printf("%s \n",fus[i].nomeUnidade);
+
+    //Esses prints podem ser reaproveitado pra printar a tabela na simulação completa
+
+    printf("Functional Unit Status - FUS\n");
+    printf("TIME\tNAME\tBUSY\tOP\tFi\tFj\tFk\tQj\tQk\tRj\tRk");
+    for(int i = 0; i < 5; i++){  
+        printf("\n%d\t%s\t%d\n",fus[i].time,fus[i].nomeUnidade,fus[i].busy);
     }
+    printf("\nPS: O é o mesmo que false nessa tabela\n");
     
 }
