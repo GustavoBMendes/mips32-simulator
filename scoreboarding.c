@@ -5,7 +5,7 @@
 #include "includes/scoreboarding.h"
 
 
-void inicializarFus(){
+void inicializarFus(FILA *F, int total_instrucoes){
     struct functionalUnitStatus fus[5];
     
     char *unidadeInt = (char*)malloc( 8 * sizeof(char));
@@ -53,5 +53,38 @@ void inicializarFus(){
         printf("\n%d\t%s\t%d\n",fus[i].time,fus[i].nomeUnidade,fus[i].busy);
     }
     printf("\nPS: O é o mesmo que false nessa tabela\n");
-    
+
+    //PREENCHER FUS
+    int indice = 0;
+    NO* instrucao = F->inicio;
+
+    while(indice < total_instrucoes){
+        
+        //Comparar instrucao->instructionName com o nome das instruções 
+        //que entram em determinada unidade
+        //provavelmente fazer um if para cada uma das 33 instrucoes
+        if(strcmp(instrucao->instructionName, "add") == 0){
+            if(fus[0].busy != 0){
+                fus[0].busy = 1;
+                strcpy(fus[0].opName, instrucao->instructionName);
+                strcpy(fus[0].fi, instrucao->regDestino);
+                strcpy(fus[0].fj, instrucao->reg1);
+                strcpy(fus[0].fk, instrucao->reg2);
+            }
+        }
+
+        /*  
+        COMPARAR COM AS OUTRAS INSTRUCOES
+        else if(){
+
+        }
+        */
+
+        else{
+            printf("\nNão foi encontrada a instrução");
+        }
+
+        indice++;
+
+    }
 }

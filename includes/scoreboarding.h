@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include "executionQueue.h"
 
 //Retornará o número de ciclos total levado para o scoreboarding do codigo analisado
 int cicloClock;
@@ -28,8 +29,6 @@ struct registerResultStatus{
 
 struct registerResultStatus rss[32];
 
-
-
-void inicializarFus();
+void inicializarFus(FILA *F, int total_instrucoes);
 
 #endif

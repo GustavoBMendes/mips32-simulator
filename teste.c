@@ -196,8 +196,11 @@ int main(){
     */
 
 
-   //teste tabela score
-    inicializarFus();
+    //teste tabela score
+    FILA F;
+    ler();
+    int total_instrucoes = inserirElementos(&F);
+    inicializarFus(&F);
 
     
 }
