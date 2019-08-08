@@ -84,36 +84,33 @@ void inicializarFus(FILA *F, int total_instrucoes){
 
                 //verificar nas instrucoes anteriores se possui dependecia de dados
                 //percorrer todas as outras unidades do fus
-                if(strcmp(fus[0].fi, fus[3].fi) == 0 || strcmp(fus[0].fi, fus[3].fj) == 0
-                   || strcmp(fus[0].fi, fus[3].fk) == 0 || strcmp(fus[0].fj, fus[3].fi)
-                   || strcmp(fus[0].fi, fus[3].fk)){
+                if(strcmp(fus[0].fi, fus[3].fj) == 0)
+                    strcpy(fus[3].qj, fus[0].opName);
 
-                    //dependencia WAW, WAR ou RAW 
+                else if(strcmp(fus[0].fi, fus[3].fk) == 0)
+                    strcpy(fus[3].qk, fus[0].opName);
 
-                }
+                else if(strcmp(fus[1].fi, fus[3].fj) == 0)
+                    strcpy(fus[3].qj, fus[1].opName);
 
-                else if(strcmp(fus[1].fi, fus[3].fi) == 0 || strcmp(fus[1].fi, fus[3].fj) == 0
-                   || strcmp(fus[1].fi, fus[3].fk) == 0 || strcmp(fus[1].fj, fus[3].fi)
-                   || strcmp(fus[1].fi, fus[3].fk)){
+                else if(strcmp(fus[1].fi, fus[3].fk) == 0)
+                    strcpy(fus[3].qk, fus[1].opName);
 
-                    //dependencia WAW, WAR ou RAW 
+                else if(strcmp(fus[2].fi, fus[3].fj) == 0)
+                    strcpy(fus[3].qj, fus[2].opName);
 
-                }
+                else if(strcmp(fus[2].fi, fus[3].fk) == 0)
+                    strcpy(fus[3].qk, fus[2].opName);
 
-                else if(strcmp(fus[2].fi, fus[3].fi) == 0 || strcmp(fus[2].fi, fus[3].fj) == 0
-                   || strcmp(fus[2].fi, fus[3].fk) == 0 || strcmp(fus[2].fj, fus[3].fi)
-                   || strcmp(fus[2].fi, fus[3].fk)){
+                else if(strcmp(fus[4].fi, fus[3].fj) == 0)
+                    strcpy(fus[3].qj, fus[4].opName);
 
-                    //dependencia WAW, WAR ou RAW 
+                else if(strcmp(fus[4].fi, fus[3].fk) == 0)
+                    strcpy(fus[3].qk, fus[4].opName);
 
-                }
-
-                else if(strcmp(fus[4].fi, fus[3].fi) == 0 || strcmp(fus[4].fi, fus[3].fj) == 0
-                   || strcmp(fus[4].fi, fus[3].fk) == 0 || strcmp(fus[4].fj, fus[3].fi)
-                   || strcmp(fus[4].fi, fus[3].fk)){
-
-                    //dependencia WAW, WAR ou RAW 
-
+                else{
+                    //não possui dependecias
+                    //chamar função para executar
                 }
 
             }
