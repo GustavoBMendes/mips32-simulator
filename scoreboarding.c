@@ -72,12 +72,49 @@ void inicializarFus(FILA *F, int total_instrucoes){
             if(fus[3].busy == false){
 
                 fus[3].busy = true;
+                
+                fus[3].opName = (char*) malloc(5 * sizeof(char));
                 strcpy(fus[3].opName, instrucao->instructionName);
+                fus[3].fi = (char*) malloc(5 * sizeof(char));
                 strcpy(fus[3].fi, instrucao->regDestino);
+                fus[3].fj = (char*) malloc(5 * sizeof(char));
                 strcpy(fus[3].fj, instrucao->reg1);
+                fus[3].fk = (char*) malloc(5 * sizeof(char));
                 strcpy(fus[3].fk, instrucao->reg2);
 
                 //verificar nas instrucoes anteriores se possui dependecia de dados
+                //percorrer todas as outras unidades do fus
+                if(strcmp(fus[0].fi, fus[3].fi) == 0 || strcmp(fus[0].fi, fus[3].fj) == 0
+                   || strcmp(fus[0].fi, fus[3].fk) == 0 || strcmp(fus[0].fj, fus[3].fi)
+                   || strcmp(fus[0].fi, fus[3].fk)){
+
+                    //dependencia WAW, WAR ou RAW 
+
+                }
+
+                else if(strcmp(fus[1].fi, fus[3].fi) == 0 || strcmp(fus[1].fi, fus[3].fj) == 0
+                   || strcmp(fus[1].fi, fus[3].fk) == 0 || strcmp(fus[1].fj, fus[3].fi)
+                   || strcmp(fus[1].fi, fus[3].fk)){
+
+                    //dependencia WAW, WAR ou RAW 
+
+                }
+
+                else if(strcmp(fus[2].fi, fus[3].fi) == 0 || strcmp(fus[2].fi, fus[3].fj) == 0
+                   || strcmp(fus[2].fi, fus[3].fk) == 0 || strcmp(fus[2].fj, fus[3].fi)
+                   || strcmp(fus[2].fi, fus[3].fk)){
+
+                    //dependencia WAW, WAR ou RAW 
+
+                }
+
+                else if(strcmp(fus[4].fi, fus[3].fi) == 0 || strcmp(fus[4].fi, fus[3].fj) == 0
+                   || strcmp(fus[4].fi, fus[3].fk) == 0 || strcmp(fus[4].fj, fus[3].fi)
+                   || strcmp(fus[4].fi, fus[3].fk)){
+
+                    //dependencia WAW, WAR ou RAW 
+
+                }
 
             }
 
@@ -95,9 +132,13 @@ void inicializarFus(FILA *F, int total_instrucoes){
             if(fus[4].busy == false){
 
                 fus[4].busy = true;
+                fus[4].opName = (char*) malloc(5 * sizeof(char));
                 strcpy(fus[4].opName, instrucao->instructionName);
+                fus[4].fi = (char*) malloc(5 * sizeof(char));
                 strcpy(fus[4].fi, HI);
+                fus[4].fj = (char*) malloc(5 * sizeof(char));
                 strcpy(fus[4].fj, instrucao->regDestino);
+                fus[4].fk = (char*) malloc(5 * sizeof(char));
                 strcpy(fus[4].fk, instrucao->reg1);
 
                 //verificar nas instrucoes anteriores se possui dependecia de dados
@@ -116,9 +157,13 @@ void inicializarFus(FILA *F, int total_instrucoes){
             if(fus[1].busy == false){
 
                 fus[1].busy = true;
+                fus[1].opName = (char*) malloc(5 * sizeof(char));
                 strcpy(fus[1].opName, instrucao->instructionName);
+                fus[1].fi = (char*) malloc(5 * sizeof(char));
                 strcpy(fus[1].fi, instrucao->regDestino);
+                fus[1].fj = (char*) malloc(5 * sizeof(char));
                 strcpy(fus[1].fj, instrucao->reg1);
+                fus[1].fk = (char*) malloc(5 * sizeof(char));
                 strcpy(fus[1].fk, instrucao->reg2);
 
                 //verificar nas instrucoes anteriores se possui dependecia de dados
@@ -128,9 +173,13 @@ void inicializarFus(FILA *F, int total_instrucoes){
             else if(fus[2].busy == false){
 
                 fus[2].busy = true;
+                fus[2].opName = (char*) malloc(5 * sizeof(char));
                 strcpy(fus[2].opName, instrucao->instructionName);
+                fus[2].fi = (char*) malloc(5 * sizeof(char));
                 strcpy(fus[2].fi, instrucao->regDestino);
+                fus[2].fj = (char*) malloc(5 * sizeof(char));
                 strcpy(fus[2].fj, instrucao->reg1);
+                fus[2].fk = (char*) malloc(5 * sizeof(char));
                 strcpy(fus[2].fk, instrucao->reg2);
 
                 //verificar nas instrucoes anteriores se possui dependecia de dados
@@ -149,7 +198,8 @@ void inicializarFus(FILA *F, int total_instrucoes){
             if(fus[0].busy == false){
 
                 fus[0].busy = true;
-                fus[0].opName = instrucao->instructionName;
+                fus[0].opName = (char*) malloc(5 * sizeof(char));
+                strcpy(fus[0].opName, instrucao->instructionName);
                 fus[0].fi = instrucao->regDestino;
 
                 //verificar nas instrucoes anteriores se possui dependecia de dados
