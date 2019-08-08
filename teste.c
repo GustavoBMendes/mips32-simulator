@@ -200,7 +200,7 @@ int main(){
     FILA F;
     ler();
     int total_instrucoes = inserirElementos(&F);
-    inicializarFus(&F);
+    inicializarFus(&F, total_instrucoes);
 
     
 }

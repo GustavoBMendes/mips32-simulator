@@ -60,30 +60,114 @@ void inicializarFus(FILA *F, int total_instrucoes){
 
     while(indice < total_instrucoes){
         
+        //verificar se as instruções da fila de espera já podem entrar no fus
+
         //Comparar instrucao->instructionName com o nome das instruções 
         //que entram em determinada unidade
         //provavelmente fazer um if para cada uma das 33 instrucoes
+
+        //unidade add
         if(strcmp(instrucao->instructionName, "add") == 0){
-            if(fus[0].busy != 0){
-                fus[0].busy = 1;
-                strcpy(fus[0].opName, instrucao->instructionName);
-                strcpy(fus[0].fi, instrucao->regDestino);
-                strcpy(fus[0].fj, instrucao->reg1);
-                strcpy(fus[0].fk, instrucao->reg2);
+
+            if(fus[3].busy == false){
+
+                fus[3].busy = true;
+                strcpy(fus[3].opName, instrucao->instructionName);
+                strcpy(fus[3].fi, instrucao->regDestino);
+                strcpy(fus[3].fj, instrucao->reg1);
+                strcpy(fus[3].fk, instrucao->reg2);
+
+                //verificar nas instrucoes anteriores se possui dependecia de dados
+
             }
+
+            else{
+                //criar uma fila de espera
+                //para as instruções que não conseguiram entrar na fus
+                //marcar o indice da instrucao que entrou na fila
+            }
+
+        }
+        
+        //unidade div
+        else if(strcmp(instrucao->instructionName, "div") == 0){
+
+            if(fus[4].busy == false){
+
+                fus[4].busy = true;
+                strcpy(fus[4].opName, instrucao->instructionName);
+                strcpy(fus[4].fi, HI);
+                strcpy(fus[4].fj, instrucao->regDestino);
+                strcpy(fus[4].fk, instrucao->reg1);
+
+                //verificar nas instrucoes anteriores se possui dependecia de dados
+
+            }
+
+            else{
+                //fila
+            }
+
         }
 
-        /*  
-        COMPARAR COM AS OUTRAS INSTRUCOES
-        else if(){
+        //unidade mult1 e mult2
+        else if(strcmp(instrucao->instructionName, "mul") == 0){
+
+            if(fus[1].busy == false){
+
+                fus[1].busy = true;
+                strcpy(fus[1].opName, instrucao->instructionName);
+                strcpy(fus[1].fi, instrucao->regDestino);
+                strcpy(fus[1].fj, instrucao->reg1);
+                strcpy(fus[1].fk, instrucao->reg2);
+
+                //verificar nas instrucoes anteriores se possui dependecia de dados
+
+            }
+
+            else if(fus[2].busy == false){
+
+                fus[2].busy = true;
+                strcpy(fus[2].opName, instrucao->instructionName);
+                strcpy(fus[2].fi, instrucao->regDestino);
+                strcpy(fus[2].fj, instrucao->reg1);
+                strcpy(fus[2].fk, instrucao->reg2);
+
+                //verificar nas instrucoes anteriores se possui dependecia de dados
+
+            }
+
+            else{
+                //fila
+            }
 
         }
-        */
+
+        //unidade de inteiros
+        else if(strcmp(instrucao->instructionName, "lui") == 0){
+
+            if(fus[0].busy == false){
+
+                fus[0].busy = true;
+                fus[0].opName = instrucao->instructionName;
+                fus[0].fi = instrucao->regDestino;
+
+                //verificar nas instrucoes anteriores se possui dependecia de dados
+
+            }
+
+            else{
+                //fila
+            }
+
+        }
+        
 
         else{
             printf("\nNão foi encontrada a instrução");
         }
 
+        instrucao = instrucao->prox;
         indice++;
 
     }

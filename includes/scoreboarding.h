@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "executionQueue.h"
+#include "registradores.h"
 
 //Retornará o número de ciclos total levado para o scoreboarding do codigo analisado
 int cicloClock;
