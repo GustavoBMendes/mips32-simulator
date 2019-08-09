@@ -106,7 +106,6 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 strcpy(fus[3].fj, instrucao->reg1);
                 strcpy(fus[3].fk, instrucao->reg2);
                 fus[3].id = indice;
-
                 //verificar nas instrucoes anteriores se possui dependecia de dados
                 //percorrer todas as outras unidades do fus
                 if(strcmp(fus[0].fi, fus[3].fj) == 0){
@@ -243,17 +242,42 @@ void inicializarFus(FILA *F, int total_instrucoes){
             printf("\nNão foi encontrada a instrução");
         }
 
+        if(indice == 0){
+            is[indice][1] = ciclo++;
+            Estage();
+            is[indice][2] = ciclo++;
+            Mstage();
+            is[indice][3] = ciclo++;
+            Wstage();
+
+            instrucao = instrucao->prox;
+            indice++;
+            continue;
+        }
 
         //execução
-        int aux = 0;
-        do{
+        int aux = 1;
+        while(aux <= indice){
 
             if(aux == fus[0].id){
                 if(fus[0].rj == true && fus[0].rk == true){
                     //executar
+                    if(is[aux][0] == 0){
+                        is[indice][0] = ciclo;
+                    }
+                    else if(is[aux][1] == 0){
+
+                    }
+                    else if(is[aux][2] == 0){
+
+                    }
+                    else if(is[aux][3] == 0){
+                        
+                    }
                 }
                 else{
                     //verificar no rss[] se o registrador da dependencia já está pronto
+
                 }
             }
 
@@ -274,17 +298,23 @@ void inicializarFus(FILA *F, int total_instrucoes){
             }
 
             else{
-                printf("\nNão foi possível acessar o fus");
+                printf("\nInstrução nao encontrada ou está na fila");
+            }
+
+            if((indice == total_instrucoes-1) && (fus[0].busy==true || fus[1].busy==true 
+            || fus[2].busy == true || fus[3].busy == true || fus[4].busy == true)){
+                aux = 1;
+                continue;
             }
 
             aux++;
-            ciclo++;
 
-        } while(aux <= indice && dependencia != 0);
+        }
         
 
         instrucao = instrucao->prox;
         indice++;
+        ciclo++;
 
     }
 }
