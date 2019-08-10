@@ -99,15 +99,45 @@ void inicializarFus(FILA *F, int total_instrucoes){
             if(fus[3].busy == false){
 
                 fus[3].busy = true;
+                fus[3].i_fi = getReg(instrucao->regDestino);
+                fus[3].i_fj = getReg(instrucao->reg1);
+                fus[3].i_fk = getReg(instrucao->reg2);
+
                 strcpy(fus[3].opName, instrucao->instructionName);
-                int reg = getReg(instrucao->regDestino);
-                rss[reg].regIndice = 4; //indice da unidade + 1
                 strcpy(fus[3].fi, instrucao->regDestino);
                 strcpy(fus[3].fj, instrucao->reg1);
                 strcpy(fus[3].fk, instrucao->reg2);
                 fus[3].id = indice;
+
                 //verificar nas instrucoes anteriores se possui dependecia de dados
                 //percorrer todas as outras unidades do fus
+                int i = 0;
+                while(i <= fus[3].i_fj || i <= fus[3].i_fk){
+
+                    if(fus[3].i_fj == i){
+                        if(rss[i].indice_unidade != 0){  //dependencia
+                            strcpy(fus[3].qj, fus[rss[i].indice_unidade - 1].nomeUnidade);
+                            fus[3].rj = false;
+                        }
+                        else
+                            fus[3].rj = true;
+                    }
+
+                    else if(fus[3].i_fk == i){
+                        if(rss[i].indice_unidade != 0){
+                            strcpy(fus[3].qk, fus[rss[i].indice_unidade - 1].nomeUnidade);
+                            fus[3].rk = false;
+                        }
+                        else
+                            fus[3].rk = true;
+                    }
+
+                    i++;
+                }
+
+                rss[fus[3].i_fi].indice_unidade = 4; //indice da unidade + 1
+
+                /*
                 if(strcmp(fus[0].fi, fus[3].fj) == 0){
                     strcpy(fus[3].qj, fus[0].fi);
                     fus[3].rj = false;
@@ -153,13 +183,15 @@ void inicializarFus(FILA *F, int total_instrucoes){
                     fus[3].rj = true;
                     fus[3].rk = true;
                 }
-
+                */
             }
 
             else{
                 //criar uma fila de espera
                 //para as instruções que não conseguiram entrar na fus
                 //marcar o indice da instrucao que entrou na fila
+                //marcar dependencia do registrador desta instrucao
+                rss[getReg(instrucao->regDestino)].indice_unidade = 4;
             }
 
         }
@@ -243,6 +275,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
         }
 
         if(indice == 0){
+            is[indice][0] = ciclo;
             is[indice][1] = ciclo++;
             Estage();
             is[indice][2] = ciclo++;
@@ -251,6 +284,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
             Wstage();
 
             instrucao = instrucao->prox;
+            ciclo++;
             indice++;
             continue;
         }
@@ -260,19 +294,19 @@ void inicializarFus(FILA *F, int total_instrucoes){
         while(aux <= indice){
 
             if(aux == fus[0].id){
+                if(is[aux][0] == 0){
+                    is[aux][0] = ciclo;
+                }
                 if(fus[0].rj == true && fus[0].rk == true){
                     //executar
-                    if(is[aux][0] == 0){
-                        is[indice][0] = ciclo;
-                    }
-                    else if(is[aux][1] == 0){
-
+                    if(is[aux][1] == 0){
+                        is[aux][1] = ciclo;
                     }
                     else if(is[aux][2] == 0){
-
+                        is[aux][2] = ciclo;
                     }
                     else if(is[aux][3] == 0){
-                        
+                        is[aux][3] = ciclo;
                     }
                 }
                 else{
@@ -298,7 +332,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
             }
 
             else{
-                printf("\nInstrução nao encontrada ou está na fila");
+                printf("\nInstrução está na fila ou não foi encontrada");
             }
 
             if((indice == total_instrucoes-1) && (fus[0].busy==true || fus[1].busy==true 

@@ -19,7 +19,7 @@ int numInstrucoes;
 struct functionalUnitStatus{
     char *nomeUnidade,*opName,*fi,*fj,*fk, *qj, *qk;
     bool busy,rj,rk;
-    int time, id;
+    int time, id, i_fi, i_fj, i_fk;
 };
 
 struct functionalUnitStatus fus[5];
@@ -27,7 +27,7 @@ struct functionalUnitStatus fus[5];
 struct registerResultStatus{
     char *regName;
     char *ufName;
-    int regIndice;
+    int indice_unidade;
 };
 
 struct registerResultStatus rss[32];
