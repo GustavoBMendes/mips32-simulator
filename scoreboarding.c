@@ -101,8 +101,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
 
         //unidade add
         if(strcmp(instrucao->instructionName, "add\n") == 0 || strcmp(instrucao->instructionName, "sub\n") == 0
-        || strcmp(instrucao->instructionName, "and\n") == 0 || strcmp(instrucao->instructionName, "movn\n") == 0
-        || strcmp(instrucao->instructionName, "movz\n") == 0 || strcmp(instrucao->instructionName, "nor\n") == 0 
+        || strcmp(instrucao->instructionName, "and\n") == 0 || strcmp(instrucao->instructionName, "nor\n") == 0 
         || strcmp(instrucao->instructionName, "or\n") == 0 || strcmp(instrucao->instructionName, "xor\n") == 0)
         {
 
@@ -271,6 +270,36 @@ void inicializarFus(FILA *F, int total_instrucoes){
 
         }
 
+        else if(strcmp(instrucao->instructionName, "mult\n") == 0){
+
+            if(fus[1].busy == false){
+
+                fus[1].busy = true;
+                strcpy(fus[1].opName, instrucao->instructionName);
+                strcpy(fus[1].fi, instrucao->regDestino);
+                strcpy(fus[1].fj, instrucao->reg1);
+
+                //verificar nas instrucoes anteriores se possui dependecia de dados
+
+            }
+
+            else if(fus[2].busy == false){
+
+                fus[2].busy = true;
+                strcpy(fus[2].opName, instrucao->instructionName);
+                strcpy(fus[2].fi, instrucao->regDestino);
+                strcpy(fus[2].fj, instrucao->reg1);
+
+                //verificar nas instrucoes anteriores se possui dependecia de dados
+
+            }
+
+            else{
+                //fila
+            }
+
+        }
+
         //unidade de inteiros
         else if(strcmp(instrucao->instructionName, "lui\n") == 0 || strcmp(instrucao->instructionName, "bgez\n") == 0
             || strcmp(instrucao->instructionName, "bgtz\n") == 0 || strcmp(instrucao->instructionName, "blez\n") == 0
@@ -393,8 +422,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
 
         }
 
-        else if(strcmp(instrucao->instructionName, "madd\n") == 0 || strcmp(instrucao->instructionName, "jr\n") == 0
-            || strcmp(instrucao->instructionName, "mult\n") == 0){
+        else if(strcmp(instrucao->instructionName, "madd\n") == 0 || strcmp(instrucao->instructionName, "jr\n") == 0){
 
             if(fus[0].busy == false){
 
@@ -441,6 +469,70 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
                 strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
                 strcpy(fila_espera[auxFila].Fj, instrucao->reg1);
+
+                auxFila++;
+
+            }
+
+        }
+
+        else if(strcmp(instrucao->instructionName, "movn\n") == 0 || strcmp(instrucao->instructionName, "movz\n") == 0){
+
+            if(fus[0].busy == false){
+
+                fus[0].busy = true;
+                fus[0].i_fi = getReg(instrucao->regDestino);
+                fus[0].i_fj = getReg(instrucao->reg1);
+                fus[0].i_fk = getReg(instrucao->reg2);
+
+                strcpy(fus[0].opName, instrucao->instructionName);
+                strcpy(fus[0].fi, instrucao->regDestino);
+                strcpy(fus[0].fj, instrucao->reg1);
+                strcpy(fus[0].fk, instrucao->reg2);
+                fus[0].id = indice;
+
+                //verificar nas instrucoes anteriores se possui dependecia de dados
+                //percorrer o rss verificando se os registradores já estão sendo utilizados para escrita
+                int i = 0;
+                while(i <= fus[0].i_fj || i <= fus[0].i_fk){
+
+                    if(fus[0].i_fj == i){
+                        if(rss[i].indice_unidade != 0){  //dependencia
+                            strcpy(fus[0].qj, fus[rss[i].indice_unidade - 1].nomeUnidade);
+                            fus[0].rj = false;
+                        }
+                        else
+                            fus[0].rj = true;
+                    }
+
+                    else if(fus[0].i_fk == i){
+                        if(rss[i].indice_unidade != 0){
+                            strcpy(fus[3].qk, fus[rss[i].indice_unidade - 1].nomeUnidade);
+                            fus[0].rk = false;
+                        }
+                        else
+                            fus[0].rk = true;
+                    }
+
+                    i++;
+                }
+
+                rss[fus[3].i_fi].indice_unidade = 1; //indice da unidade + 1
+
+            }
+
+            else{
+
+                rss[getReg(instrucao->regDestino)].indice_unidade = 1;
+                fila_espera[auxFila].unidade = 0;
+                fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
+                fila_espera[auxFila].iFj = getReg(instrucao->reg1);
+                fila_espera[auxFila].iFk = getReg(instrucao->reg2);
+
+                strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
+                strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
+                strcpy(fila_espera[auxFila].Fj, instrucao->reg1);
+                strcpy(fila_espera[auxFila].Fk, instrucao->reg2);
 
                 auxFila++;
 
@@ -515,11 +607,11 @@ void inicializarFus(FILA *F, int total_instrucoes){
         if(indice == 0){
             is[indice][0] = ciclo;
             is[indice][1] = ciclo++;
-            Estage();
+            //Estage();
             is[indice][2] = ciclo++;
-            Mstage();
+            //Mstage();
             is[indice][3] = ciclo++;
-            Wstage();
+            //Wstage();
 
             instrucao = instrucao->prox;
             ciclo++;
@@ -565,12 +657,16 @@ void inicializarFus(FILA *F, int total_instrucoes){
                     //executar
                     if(is[aux][1] == 0){
                         is[aux][1] = ciclo;
+                        //estágio de busca
                     }
-                    else if(is[aux][2] == 0){
+                    else if(is[aux][2] == 0 || fus[0].time > 0){
                         is[aux][2] = ciclo;
+                        //estágio de execução
+                        fus[0].time--;  //a cada ciclo decrementa o time em 1
                     }
                     else if(is[aux][3] == 0){
                         is[aux][3] = ciclo;
+                        //estágio de escrita
                     }
                 }
                 else{
