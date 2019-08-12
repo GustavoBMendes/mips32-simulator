@@ -82,12 +82,18 @@ void inicializarFus(FILA *F, int total_instrucoes){
     int indice = 0;
     int ciclo = 1;
     int dependencia = 0;
+    int auxFila = 0;
     //int idInstrucao = 0;
     NO* instrucao = F->inicio;
 
+    struct fila{
+        int unidade, id, iFi, iFj, iFk;
+        char* nomeInstrucao, Fi, Fj, Fk;
+    };
+    struct fila fila_espera[total_instrucoes-1];
+
     while(indice < total_instrucoes){
         
-        //verificar se as instruções da fila de espera já podem entrar no fus
 
         //Comparar instrucao->instructionName com o nome das instruções 
         //que entram em determinada unidade
@@ -110,7 +116,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 fus[3].id = indice;
 
                 //verificar nas instrucoes anteriores se possui dependecia de dados
-                //percorrer todas as outras unidades do fus
+                //percorrer o rss verificando se os registradores já estão sendo utilizados para escrita
                 int i = 0;
                 while(i <= fus[3].i_fj || i <= fus[3].i_fk){
 
@@ -192,6 +198,17 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 //marcar o indice da instrucao que entrou na fila
                 //marcar dependencia do registrador desta instrucao
                 rss[getReg(instrucao->regDestino)].indice_unidade = 4;
+                fila_espera[auxFila].unidade = 3;
+                fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
+                fila_espera[auxFila].iFj = getReg(instrucao->reg1);
+                fila_espera[auxFila].iFk = getReg(instrucao->reg2);
+
+                strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
+                strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
+                strcpy(fila_espera[auxFila].Fj, instrucao->reg1);
+                strcpy(fila_espera[auxFila].Fk, instrucao->reg2);
+
+                auxFila++;
             }
 
         }
@@ -293,6 +310,32 @@ void inicializarFus(FILA *F, int total_instrucoes){
         int aux = 1;
         while(aux <= indice){
 
+            //verificar se as instruções da fila de espera já podem entrar no fus
+            int i = 0;
+            while(i <= auxFila){
+
+                int unidade = fila_espera[i].unidade;
+                //unidade livre, inserir
+                if(fus[unidade].busy == false){
+
+                    fus[unidade].id = aux;
+                    fus[unidade].busy = true;
+                    fus[unidade].i_fi = getReg(fila_espera[i].iFi);
+                    fus[unidade].i_fj = getReg(fila_espera[i].iFj);
+                    fus[unidade].i_fk = getReg(fila_espera[i].iFk );
+
+                    strcpy(fus[unidade].opName, fila_espera[i].nomeInstrucao);
+                    strcpy(fus[unidade].fi, fila_espera[i].Fi);
+                    strcpy(fus[unidade].fj, fila_espera[i].Fj);
+                    strcpy(fus[unidade].fk, fila_espera[i].Fk);
+
+                    //remover da fila ou marcar como já inserido no fus
+
+                }
+                i++;
+
+            }
+
             if(aux == fus[0].id){
                 if(is[aux][0] == 0){
                     is[aux][0] = ciclo;
@@ -315,24 +358,20 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 }
             }
 
-            else if(aux == fus[1].id){
+            if(aux == fus[1].id){
 
             }
 
-            else if(aux == fus[2].id){
+            if(aux == fus[2].id){
 
             }
 
-            else if(aux == fus[3].id){
+            if(aux == fus[3].id){
 
             }
 
-            else if(aux == fus[4].id){
+            if(aux == fus[4].id){
 
-            }
-
-            else{
-                printf("\nInstrução está na fila ou não foi encontrada");
             }
 
             if((indice == total_instrucoes-1) && (fus[0].busy==true || fus[1].busy==true 
