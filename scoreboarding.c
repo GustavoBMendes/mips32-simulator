@@ -87,7 +87,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
     NO* instrucao = F->inicio;
 
     struct fila{
-        int unidade, id, iFi, iFj, iFk;
+        int unidade, id, iFi, iFj, iFk, imm;
         char* nomeInstrucao, Fi, Fj, Fk;
     };
     struct fila fila_espera[total_instrucoes-1];
@@ -100,7 +100,11 @@ void inicializarFus(FILA *F, int total_instrucoes){
         //provavelmente fazer um if para cada uma das 33 instrucoes
 
         //unidade add
-        if(strcmp(instrucao->instructionName, "add\n") == 0){
+        if(strcmp(instrucao->instructionName, "add\n") == 0 || strcmp(instrucao->instructionName, "sub\n") == 0
+        || strcmp(instrucao->instructionName, "and\n") == 0 || strcmp(instrucao->instructionName, "movn\n") == 0
+        || strcmp(instrucao->instructionName, "movz\n") == 0 || strcmp(instrucao->instructionName, "nor\n") == 0 
+        || strcmp(instrucao->instructionName, "or\n") == 0 || strcmp(instrucao->instructionName, "xor\n") == 0)
+        {
 
             if(fus[3].busy == false){
 
@@ -268,27 +272,244 @@ void inicializarFus(FILA *F, int total_instrucoes){
         }
 
         //unidade de inteiros
-        else if(strcmp(instrucao->instructionName, "lui\n") == 0){
+        else if(strcmp(instrucao->instructionName, "lui\n") == 0 || strcmp(instrucao->instructionName, "bgez\n") == 0
+            || strcmp(instrucao->instructionName, "bgtz\n") == 0 || strcmp(instrucao->instructionName, "blez\n") == 0
+            || strcmp(instrucao->instructionName, "bltz\n") == 0){
 
             if(fus[0].busy == false){
 
                 fus[0].busy = true;
+                fus[0].i_fi = getReg(instrucao->regDestino);
+                fus[0].immediate = instrucao->imediato;
+
                 strcpy(fus[0].opName, instrucao->instructionName);
-                fus[0].fi = instrucao->regDestino;
+                strcpy(fus[0].fi, instrucao->regDestino);
+                fus[0].id = indice;
 
                 //verificar nas instrucoes anteriores se possui dependecia de dados
+                //percorrer o rss verificando se os registradores já estão sendo utilizados para escrita
+                fus[0].rk = true;
+                fus[0].rj = true;
+                rss[fus[0].i_fi].indice_unidade = 1;
 
             }
 
             else{
-                //fila
+
+                rss[getReg(instrucao->regDestino)].indice_unidade = 1;
+                fila_espera[auxFila].unidade = 0;
+                fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
+                fila_espera[auxFila].imm = instrucao->imediato;
+
+                strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
+                strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
+
+                auxFila++;
+
+            }
+
+        }
+
+        else if(strcmp(instrucao->instructionName, "b\n") == 0 || strcmp(instrucao->instructionName, "j\n") == 0){
+
+            if(fus[0].busy == false){
+
+                fus[0].busy = true;
+                fus[0].immediate = instrucao->imediato;
+
+                strcpy(fus[0].opName, instrucao->instructionName);
+                fus[0].id = indice;
+
+                //verificar nas instrucoes anteriores se possui dependecia de dados
+                //percorrer o rss verificando se os registradores já estão sendo utilizados para escrita
+                fus[0].rk = true;
+                fus[0].rj = true;
+                rss[fus[0].i_fi].indice_unidade = 1;
+
+            }
+
+            else{
+
+                rss[getReg(instrucao->regDestino)].indice_unidade = 1;
+                fila_espera[auxFila].unidade = 0;
+                fila_espera[auxFila].imm = instrucao->imediato;
+
+                strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
+
+                auxFila++;
+
+            }
+
+        }
+
+        else if(strcmp(instrucao->instructionName, "jr\n") == 0 || strcmp(instrucao->instructionName, "mfhi\n") == 0
+            || strcmp(instrucao->instructionName, "mflo\n") == 0 || strcmp(instrucao->instructionName, "mthi\n") == 0
+            || strcmp(instrucao->instructionName, "mtlo\n") == 0){
+
+            if(fus[0].busy == false){
+
+                fus[0].busy = true;
+                fus[0].i_fi = getReg(instrucao->regDestino);
+
+                strcpy(fus[0].opName, instrucao->instructionName);
+                strcpy(fus[0].fi, instrucao->regDestino);
+                fus[0].id = indice;
+
+                //verificar nas instrucoes anteriores se possui dependecia de dados
+                //percorrer o rss verificando se os registradores já estão sendo utilizados para escrita
+                int i = 0;
+                while(i <= fus[0].i_fj){
+
+                    if(fus[0].i_fj == i){
+
+                        if(rss[i].indice_unidade != 0){  //dependencia
+                            strcpy(fus[0].qj, fus[rss[i].indice_unidade - 1].nomeUnidade);
+                            fus[0].rj = false;
+                        }
+                        else
+                            fus[0].rj = true;
+
+                    }
+                    i++;
+
+                }
+                fus[0].rk = true;
+                rss[fus[0].i_fi].indice_unidade = 1;
+
+            }
+
+            else{
+
+                rss[getReg(instrucao->regDestino)].indice_unidade = 1;
+                fila_espera[auxFila].unidade = 0;
+                fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
+
+                strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
+                strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
+
+                auxFila++;
+
+            }
+
+        }
+
+        else if(strcmp(instrucao->instructionName, "madd\n") == 0 || strcmp(instrucao->instructionName, "jr\n") == 0
+            || strcmp(instrucao->instructionName, "mult\n") == 0){
+
+            if(fus[0].busy == false){
+
+                fus[0].busy = true;
+                fus[0].i_fi = getReg(instrucao->regDestino);
+                fus[0].i_fj = getReg(instrucao->reg1);
+
+                strcpy(fus[0].opName, instrucao->instructionName);
+                strcpy(fus[0].fi, instrucao->regDestino);
+                strcpy(fus[0].fj, instrucao->reg1);
+                fus[0].id = indice;
+
+                //verificar nas instrucoes anteriores se possui dependecia de dados
+                //percorrer o rss verificando se os registradores já estão sendo utilizados para escrita
+                int i = 0;
+                while(i <= fus[0].i_fj){
+
+                    if(fus[0].i_fj == i){
+
+                        if(rss[i].indice_unidade != 0){  //dependencia
+                            strcpy(fus[0].qj, fus[rss[i].indice_unidade - 1].nomeUnidade);
+                            fus[0].rj = false;
+                        }
+
+                        else
+                            fus[0].rj = true;
+
+                    }
+                    i++;
+
+                }
+                fus[0].rk = true;
+                rss[fus[0].i_fi].indice_unidade = 1;
+
+            }
+
+            else{
+
+                rss[getReg(instrucao->regDestino)].indice_unidade = 1;
+                fila_espera[auxFila].unidade = 0;
+                fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
+                fila_espera[auxFila].iFj = getReg(instrucao->reg1);
+
+                strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
+                strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
+                strcpy(fila_espera[auxFila].Fj, instrucao->reg1);
+
+                auxFila++;
+
+            }
+
+        }
+
+        else if(strcmp(instrucao->instructionName, "addi\n") == 0 || strcmp(instrucao->instructionName, "beq\n") == 0
+            || strcmp(instrucao->instructionName, "beql\n") == 0  || strcmp(instrucao->instructionName, "bne\n") == 0
+            || strcmp(instrucao->instructionName, "xori\n") == 0 || strcmp(instrucao->instructionName, "andi\n") == 0
+            || strcmp(instrucao->instructionName, "ori\n") == 0)
+        {
+
+            if(fus[0].busy == false){
+
+                fus[0].busy = true;
+                fus[0].i_fi = getReg(instrucao->regDestino);
+                fus[0].i_fj = getReg(instrucao->reg1);
+                fus[0].immediate = instrucao->imediato;
+
+                strcpy(fus[0].opName, instrucao->instructionName);
+                strcpy(fus[0].fi, instrucao->regDestino);
+                strcpy(fus[0].fj, instrucao->reg1);
+                fus[0].id = indice;
+
+                //verificar nas instrucoes anteriores se possui dependecia de dados
+                //percorrer o rss verificando se os registradores já estão sendo utilizados para escrita
+                int i = 0;
+                while(i <= fus[0].i_fj){
+
+                    if(fus[0].i_fj == i){
+
+                        if(rss[i].indice_unidade != 0){  //dependencia
+                            strcpy(fus[0].qj, fus[rss[i].indice_unidade - 1].nomeUnidade);
+                            fus[0].rj = false;
+                        }
+                        else
+                            fus[0].rj = true;
+
+                    }
+                    i++;
+
+                }
+                fus[0].rk = true;
+                rss[fus[0].i_fi].indice_unidade = 1;
+
+            }
+
+            else{
+
+                rss[getReg(instrucao->regDestino)].indice_unidade = 1;
+                fila_espera[auxFila].unidade = 0;
+                fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
+                fila_espera[auxFila].iFj = getReg(instrucao->reg1);
+                fila_espera[auxFila].imm = instrucao->imediato;
+
+                strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
+                strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
+                strcpy(fila_espera[auxFila].Fj, instrucao->reg1);
+
+                auxFila++;
+
             }
 
         }
         
 
         else{
-            printf("\nNão foi encontrada a instrução");
+            printf("\nNão foi encontrada a instrução, no operation 'nop()'");
         }
 
         if(indice == 0){

@@ -19,7 +19,7 @@ int numInstrucoes;
 struct functionalUnitStatus{
     char* nomeUnidade, opName, fi, fj, fk, qj, qk;
     bool busy,rj,rk;
-    int time, id, i_fi, i_fj, i_fk;
+    int time, id, i_fi, i_fj, i_fk, immediate;
 };
 
 struct functionalUnitStatus fus[5];
