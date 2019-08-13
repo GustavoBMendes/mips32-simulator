@@ -8,6 +8,8 @@
 
 void inicializarFus(FILA *F, int total_instrucoes){
 
+    extern unsigned int reg[32];
+
     struct functionalUnitStatus fus[5];
     int is[total_instrucoes][4] = inicializaIS(is, total_instrucoes);
     
@@ -623,7 +625,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
         int aux = 1;
         while(aux <= indice){
 
-            //verificar se as instruções da fila de espera já podem entrar no fus
+            //verificar se as instruções da fila de espera já podem entrar no  fus
             int i = 0;
             while(i <= auxFila){
 
@@ -658,20 +660,41 @@ void inicializarFus(FILA *F, int total_instrucoes){
                     if(is[aux][1] == 0){
                         is[aux][1] = ciclo;
                         //estágio de busca
+                        if(fus[0].fi != '\0'){
+                            fus[0].operando1 = reg[fus[0].i_fi];
+                        }
+                        if(fus[0].fj != '\0'){
+                            fus[0].operando2 = reg[fus[0].i_fj];
+                        }
+                        if(fus[0].fk != '\0'){
+                            fus[0].operando3 = reg[fus[0].i_fk];
+                        }
                     }
                     else if(is[aux][2] == 0 || fus[0].time > 0){
                         is[aux][2] = ciclo;
                         //estágio de execução
+                        if(fus[0].time == 1)
+                            execucao(fus[0].operando1, fus[0].operando2, fus[0].operando3, fus[0].opName, fus[0].immediate);
                         fus[0].time--;  //a cada ciclo decrementa o time em 1
                     }
                     else if(is[aux][3] == 0){
                         is[aux][3] = ciclo;
                         //estágio de escrita
+                        //reiniciar unidade e indice correspondente do rss
                     }
                 }
                 else{
                     //verificar no rss[] se o registrador da dependencia já está pronto
+                    if(fus[0].rj == false)
+                        if(rss[fus[0].i_fj].indice_unidade == 0)
+                            fus[0].rj = true;
 
+                    if(fus[0].rk == false)
+                        if(rss[fus[0].i_fk].indice_unidade == 0)
+                            fus[0].rk = true;
+
+                    if(fus[0].rj == true && fus[0].rk == true)
+                        continue;
                 }
             }
 
@@ -729,5 +752,118 @@ int** incializaIS(int **is, int tam1){
             is[i][j] = 0;
 
     return is;
+
+}
+
+unsigned int execucao(unsigned int operando1, unsigned int operando2, unsigned int operando3, char* instrucao, int imediato){
+
+    if(strcmp(instrucao, "add\n") == 0)
+        operando1 = add(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "addi\n") == 0)
+        operando1 = addi(operando1, operando2, imediato);
+
+    else if(strcmp(instrucao, "and\n") == 0)
+        operando1 = And(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "andi\n") == 0)
+        operando1 = andi(operando1, operando2, imediato);
+
+    else if(strcmp(instrucao, "b\n") == 0)
+        PC = b(PC, imediato);
+
+    else if(strcmp(instrucao, "beq\n") == 0)
+        PC = beq(operando1, operando2, PC, imediato);
+
+    else if(strcmp(instrucao, "beql\n") == 0)
+        PC = beql(operando1, operando2, PC, imediato);
+
+    else if(strcmp(instrucao, "bgez\n") == 0)
+        PC = bgez(operando1, PC, imediato);
+
+    else if(strcmp(instrucao, "bgtz\n") == 0)
+        PC = bgtz(operando1, PC, imediato);
+
+    else if(strcmp(instrucao, "blez\n") == 0)
+        PC = blez(operando1, PC, imediato);
+
+    else if(strcmp(instrucao, "bltz\n") == 0)
+        PC = bltz(operando1, PC, imediato);
+
+    else if(strcmp(instrucao, "bne\n") == 0)
+        PC = bne(operando1, operando2, PC, imediato);
+
+    else if(strcmp(instrucao, "div\n") == 0){
+        HI = DivHI(operando1, operando2, HI, LO);
+        LO = DivLO(operando1, operando2, HI, LO);
+    }
+
+    else if(strcmp(instrucao, "j\n") == 0)
+        PC = j(PC, imediato);
+
+    else if(strcmp(instrucao, "jr\n") == 0)
+        PC = jr(PC, operando1);
+
+    else if(strcmp(instrucao, "lui\n") == 0)
+        operando1 = lui(operando1, imediato);
+
+    else if(strcmp(instrucao, "madd\n") == 0){
+        HI += LO;
+        HI = madd(operando1, operando2, HI);
+    }
+
+    else if(strcmp(instrucao, "mfhi\n") == 0)
+        operando1 = mfhi(operando1, HI);
+    
+    else if(strcmp(instrucao, "mflo\n") == 0)
+        operando1 = mflo(operando1, LO);
+
+    else if(strcmp(instrucao, "movn\n") == 0)
+        operando1 = movn(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "movz\n") == 0)
+        operando1 = movz(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "msub\n") == 0){
+        HI += LO;
+        HI = msub(operando1, operando2, HI);
+    }
+
+    else if(strcmp(instrucao, "mthi\n") == 0)
+        HI = mthi(operando1, HI);
+
+    else if(strcmp(instrucao, "mtlo\n") == 0)
+        LO = mtlo(operando1, LO);
+
+    else if(strcmp(instrucao, "mul\n") == 0)
+        operando1 = mul(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "mult\n") == 0){
+        HI += LO;
+        HI = mult(operando1, operando2, HI);
+    }
+
+    else if(strcmp(instrucao, "nor\n") == 0)
+        operando1 = nor(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "or\n") == 0)
+        operando1 = Or(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "ori\n") == 0)
+        operando1 = Ori(operando1, operando2, imediato);
+
+    else if(strcmp(instrucao, "sub\n") == 0)
+        operando1 = sub(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "xor\n") == 0)
+        operando1 = Xor(operando1, operando2, operando3);
+
+    else if(strcmp(instrucao, "xori\n") == 0)
+        operando1 = Xori(operando1, operando2, imediato);
+
+    else
+        nop();
+
+    return operando1;
 
 }
