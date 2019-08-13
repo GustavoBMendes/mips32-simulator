@@ -6,40 +6,43 @@
 #include "includes/executionQueue.h"
 #include "includes/scoreboarding.h"
 
-int speculation(){
+
+bool isSpec(struct functionalUnitStatus fus){
+    if(strcmp(fus.opName,"add\n") == 0 || strcmp(fus.opName,"sub\n") == 0 || strcmp(fus.opName,"mul\n") == 0 || strcmp(fus.opName,"div\n") == 0){
+        return true;
+    }
+    return false;
+}
+
+int speculation(struct functionalUnitStatus fus){
     bool especulacaoCorreta = false;
-    int vetorEspeculativo[5];
+    int vetorEspeculativo[4];
     int resultToBeWritten;
-
-    //fazer com que a próxima linha de instrução entre no estágio de capturar os valores dos registradores
-
-    //preenchendo o vetor especulativo com os resultados para as possíveis operações: +,-,*,/ e desvio tomado como verdadeiro
-    //falta mesclar com o código de capturar os valores dos registradores
+    int valorReg1,valorReg2;
+    valorReg1 = fus.operando2;
+    valorReg2 = fus.operando3;
+    
     vetorEspeculativo[0] = valorReg1 + valorReg2;
     vetorEspeculativo[1] = valorReg1 - valorReg2;
     vetorEspeculativo[2] = valorReg1 * valorReg2;
     vetorEspeculativo[3] = valorReg1 / valorReg2;
-    vetorEspeculativo[4] = 1; //recebendo 1 pois o desvio tomado foi verdadeiro (desvio sempre tomado)
-
-    if(/*nome da instrucao for + - * / ou de desvio*/){
+    if(isSpec(fus) == true){
         especulacaoCorreta = true;
-        if(/*nome instrucao for +*/){
+        if(strcmp(fus.opName,"add\n") == 0){
             resultToBeWritten = vetorEspeculativo[0];
         }
-        else if(/*nome instrucao for -*/){
+        else if(strcmp(fus.opName,"sub\n") == 0 ){
             resultToBeWritten = vetorEspeculativo[1];
         }
 
-        else if(/*nome instrucao for * */){
+        else if(strcmp(fus.opName,"mul\n") == 0){
             resultToBeWritten = vetorEspeculativo[2];
         }
 
-        else if(/*nome instrucao for / */){
+        else{
             resultToBeWritten = vetorEspeculativo[3];
         }
-        else{
-            resultToBeWritten = vetorEspeculativo[4];
-        }
+     
 
         if(especulacaoCorreta == true){
             return resultToBeWritten;
