@@ -15,68 +15,63 @@ void inicializarFus(FILA *F, int total_instrucoes){
     
     char *unidadeInt = (char*)malloc( 8 * sizeof(char));
     strcpy(unidadeInt,"Integer");
-    fus[0].nomeUnidade = (char*) malloc(8 * sizeof(char));
     strcpy(fus[0].nomeUnidade,unidadeInt);
     fus[0].busy = false;
     fus[0].time = 1;
-    fus[0].opName = (char*) malloc(5 * sizeof(char));
-    fus[0].fi = (char*) malloc(5 * sizeof(char));
-    fus[0].fj = (char*) malloc(5 * sizeof(char));
-    fus[0].fk = (char*) malloc(5 * sizeof(char));
-    fus[0].qj = (char*) malloc(5 * sizeof(char));
-    fus[0].qk = (char*) malloc(5 * sizeof(char));
+    strcpy(fus[0].opName, "");
+    strcpy(fus[0].fi, "");
+    strcpy(fus[0].fj, "");
+    strcpy(fus[0].fk, "");
+    strcpy(fus[0].qj, "");
+    strcpy(fus[0].qk, "");
      
     char *unidadeMult1 = (char*)malloc( 8 * sizeof(char));
     strcpy(unidadeMult1,"Mult1");
-    fus[1].nomeUnidade = (char*) malloc(8 * sizeof(char));
     strcpy(fus[1].nomeUnidade,unidadeMult1);
     fus[1].busy = false;
     fus[1].time = 10;
-    fus[1].opName = (char*) malloc(5 * sizeof(char));
-    fus[1].fi = (char*) malloc(5 * sizeof(char));
-    fus[1].fj = (char*) malloc(5 * sizeof(char));
-    fus[1].fk = (char*) malloc(5 * sizeof(char));
-    fus[1].qj = (char*) malloc(5 * sizeof(char));
-    fus[1].qk = (char*) malloc(5 * sizeof(char));
+    strcpy(fus[1].opName, "");
+    strcpy(fus[1].fi, "");
+    strcpy(fus[1].fj, "");
+    strcpy(fus[1].fk, "");
+    strcpy(fus[1].qj, "");
+    strcpy(fus[1].qk, "");
 
     char *unidadeMult2 = (char*)malloc( 8 * sizeof(char));
     strcpy(unidadeMult2,"Mult2");
-    fus[2].nomeUnidade = (char*) malloc(8 * sizeof(char));
     strcpy(fus[2].nomeUnidade,unidadeMult2);
     fus[2].busy = false;
     fus[2].time = 10;
-    fus[2].opName = (char*) malloc(5 * sizeof(char));
-    fus[2].fi = (char*) malloc(5 * sizeof(char));
-    fus[2].fj = (char*) malloc(5 * sizeof(char));
-    fus[2].fk = (char*) malloc(5 * sizeof(char));
-    fus[2].qj = (char*) malloc(5 * sizeof(char));
-    fus[2].qk = (char*) malloc(5 * sizeof(char));
+    strcpy(fus[2].opName, "");
+    strcpy(fus[2].fi, "");
+    strcpy(fus[2].fj, "");
+    strcpy(fus[2].fk, "");
+    strcpy(fus[2].qj, "");
+    strcpy(fus[2].qk, "");
 
     char *unidadeAdd = (char*)malloc( 8 * sizeof(char));
     strcpy(unidadeAdd,"Add");
-    fus[3].nomeUnidade = (char*) malloc(8 * sizeof(char));
     strcpy(fus[3].nomeUnidade,unidadeAdd);
     fus[3].busy = false;
     fus[3].time = 2;
-    fus[3].opName = (char*) malloc(5 * sizeof(char));
-    fus[3].fi = (char*) malloc(5 * sizeof(char));
-    fus[3].fj = (char*) malloc(5 * sizeof(char));
-    fus[3].fk = (char*) malloc(5 * sizeof(char));
-    fus[3].qj = (char*) malloc(5 * sizeof(char));
-    fus[3].qk = (char*) malloc(5 * sizeof(char));
+    strcpy(fus[3].opName, "");
+    strcpy(fus[3].fi, "");
+    strcpy(fus[3].fj, "");
+    strcpy(fus[3].fk, "");
+    strcpy(fus[3].qj, "");
+    strcpy(fus[3].qk, "");
 
     char *unidadeDiv = (char*)malloc( 8 * sizeof(char));
     strcpy(unidadeDiv,"Divide");
-    fus[4].nomeUnidade = (char*) malloc(8 * sizeof(char));
     strcpy(fus[4].nomeUnidade,unidadeDiv);
     fus[4].busy = false;
     fus[4].time = 40;
-    fus[4].opName = (char*) malloc(5 * sizeof(char));
-    fus[4].fi = (char*) malloc(5 * sizeof(char));
-    fus[4].fj = (char*) malloc(5 * sizeof(char));
-    fus[4].fk = (char*) malloc(5 * sizeof(char));
-    fus[4].qj = (char*) malloc(5 * sizeof(char));
-    fus[4].qk = (char*) malloc(5 * sizeof(char));
+    strcpy(fus[4].opName, "");
+    strcpy(fus[4].fi, "");
+    strcpy(fus[4].fj, "");
+    strcpy(fus[4].fk, "");
+    strcpy(fus[4].qj, "");
+    strcpy(fus[4].qk, "");
 
 
 
@@ -85,6 +80,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
     int ciclo = 1;
     int dependencia = 0;
     int auxFila = 0;
+    int inicioFila = 0;
     //int idInstrucao = 0;
     NO* instrucao = F->inicio;
 
@@ -95,11 +91,6 @@ void inicializarFus(FILA *F, int total_instrucoes){
     struct fila fila_espera[total_instrucoes-1];
 
     while(indice < total_instrucoes){
-        
-
-        //Comparar instrucao->instructionName com o nome das instruções 
-        //que entram em determinada unidade
-        //provavelmente fazer um if para cada uma das 33 instrucoes
 
         //unidade add
         if(strcmp(instrucao->instructionName, "add\n") == 0 || strcmp(instrucao->instructionName, "sub\n") == 0
@@ -234,7 +225,16 @@ void inicializarFus(FILA *F, int total_instrucoes){
             }
 
             else{
-                //fila
+                rss[getReg(instrucao->regDestino)].indice_unidade = 5;
+                fila_espera[auxFila].unidade = 4;
+                fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
+                fila_espera[auxFila].iFj = getReg(instrucao->reg1);
+
+                strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
+                strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
+                strcpy(fila_espera[auxFila].Fj, instrucao->reg1);
+
+                auxFila++;
             }
 
         }
@@ -267,7 +267,18 @@ void inicializarFus(FILA *F, int total_instrucoes){
             }
 
             else{
-                //fila
+                rss[getReg(instrucao->regDestino)].indice_unidade = 2;
+                fila_espera[auxFila].unidade = 1;
+                fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
+                fila_espera[auxFila].iFj = getReg(instrucao->reg1);
+                fila_espera[auxFila].iFk = getReg(instrucao->reg2);
+
+                strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
+                strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
+                strcpy(fila_espera[auxFila].Fj, instrucao->reg1);
+                strcpy(fila_espera[auxFila].Fk, instrucao->reg2);
+
+                auxFila++;
             }
 
         }
@@ -297,7 +308,16 @@ void inicializarFus(FILA *F, int total_instrucoes){
             }
 
             else{
-                //fila
+                rss[getReg(instrucao->regDestino)].indice_unidade = 2;
+                fila_espera[auxFila].unidade = 1;
+                fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
+                fila_espera[auxFila].iFj = getReg(instrucao->reg1);
+
+                strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
+                strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
+                strcpy(fila_espera[auxFila].Fj, instrucao->reg1);
+
+                auxFila++;
             }
 
         }
@@ -626,7 +646,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
         while(aux <= indice){
 
             //verificar se as instruções da fila de espera já podem entrar no  fus
-            int i = 0;
+            int i = inicioFila;
             while(i <= auxFila){
 
                 int unidade = fila_espera[i].unidade;
@@ -644,43 +664,63 @@ void inicializarFus(FILA *F, int total_instrucoes){
                     strcpy(fus[unidade].fj, fila_espera[i].Fj);
                     strcpy(fus[unidade].fk, fila_espera[i].Fk);
 
-                    //remover da fila ou marcar como já inserido no fus
-
+                    inicioFila++;   //atualiza primeiro elemento da fila
                 }
                 i++;
 
             }
 
             if(aux == fus[0].id){
-                if(is[aux][0] == 0){
+
+                if(is[aux][0] == 0)
                     is[aux][0] = ciclo;
-                }
+
                 if(fus[0].rj == true && fus[0].rk == true){
                     //executar
                     if(is[aux][1] == 0){
+
                         is[aux][1] = ciclo;
+
                         //estágio de busca
-                        if(fus[0].fi != '\0'){
+                        if(fus[0].fi != '\0')
                             fus[0].operando1 = reg[fus[0].i_fi];
-                        }
-                        if(fus[0].fj != '\0'){
+
+                        if(fus[0].fj != '\0')
                             fus[0].operando2 = reg[fus[0].i_fj];
-                        }
-                        if(fus[0].fk != '\0'){
+                        
+                        if(fus[0].fk != '\0')
                             fus[0].operando3 = reg[fus[0].i_fk];
-                        }
+                        
                     }
                     else if(is[aux][2] == 0 || fus[0].time > 0){
+
                         is[aux][2] = ciclo;
+
                         //estágio de execução
                         if(fus[0].time == 1)
-                            execucao(fus[0].operando1, fus[0].operando2, fus[0].operando3, fus[0].opName, fus[0].immediate);
+                            fus[0].operando1 = execucao(fus[0].operando1, fus[0].operando2, fus[0].operando3, fus[0].opName, fus[0].immediate);
+                        
                         fus[0].time--;  //a cada ciclo decrementa o time em 1
+                        
                     }
                     else if(is[aux][3] == 0){
                         is[aux][3] = ciclo;
+
                         //estágio de escrita
+                        reg[fus[0].i_fi] = fus[0].operando1;
+
                         //reiniciar unidade e indice correspondente do rss
+                        rss[fus[0].i_fi].indice_unidade = 0;
+                        fus[0].id = 0;
+                        fus[0].busy = false;
+                        fus[0].time = 1;
+                        strcpy(fus[0].opName, "");
+                        strcpy(fus[0].fi, "");
+                        strcpy(fus[0].fj, "");
+                        strcpy(fus[0].fk, "");
+                        strcpy(fus[0].qj, "");
+                        strcpy(fus[0].qk, "");
+
                     }
                 }
                 else{
