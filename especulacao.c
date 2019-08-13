@@ -41,8 +41,11 @@ int speculation(){
             resultToBeWritten = vetorEspeculativo[4];
         }
 
-        return resultToBeWritten;
+        if(especulacaoCorreta == true){
+            return resultToBeWritten;
 
+        }
+            
     }
     else{
         //adiciona de repente um ou mais cilos a mais no contador pelo tempo perdido pela especulação errada
