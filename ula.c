@@ -28,6 +28,15 @@ int ulaAdd(int regOrigem1, int regOrigem2){
     return saida_ula;
 }
 
+
+int ulaAddi(int regOrigem1, int imediato){
+    operando1 = regOrigem1;
+    operando2 = imediato;
+    saida_ula = addi(saida_ula, operando1, operando2);
+    return saida_ula;
+}
+
+
 /*
  * @function int ulaAnd(int regOrigem1, int regOrigem2)
  * @abstract Executa a operação AND 

@@ -25,14 +25,16 @@ unsigned int HI, LO, PC;
 * @abstract Executa a operação DIV através da chamada da função div() no módulo "instruções".
 */
 int mduDivHI(int regOrigem1, int regOrigem2, int HI, int LO){
-    DivHI(regOrigem1,regOrigem2,HI,LO);
+    int res = DivHI(regOrigem1,regOrigem2,HI,LO);
+    return res;
 }
 /* 
 * @function void mduDiv(mdu *mdu_executavel)
 * @abstract Executa a operação DIV através da chamada da função div() no módulo "instruções".
 */
 int mduDivLO(int regOrigem1, int regOrigem2,int HI, int LO){
-    DivLO(regOrigem1,regOrigem2,HI,LO);
+    int res = DivLO(regOrigem1,regOrigem2,HI,LO);
+    return res;
 }
 /* 
 * @function void mduMul(mdu *mdu_executavel)

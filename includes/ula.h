@@ -8,6 +8,7 @@ extern unsigned int operando2;
 extern unsigned int saida_ula;
 
 int ulaAdd(int regOrigem1, int regOrigem2);
+int ulaAddi(int regOrigem1, int imediato);
 int ulaSub(int regOrigem1, int regOrigem2);
 int ulaAnd(int regOrigem1, int regOrigem2);
 int ulaOr(int regOrigem1, int regOrigem2);
