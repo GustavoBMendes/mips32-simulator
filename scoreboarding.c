@@ -4,14 +4,18 @@
 #include <stdbool.h>
 #include "includes/scoreboarding.h"
 
-
+unsigned int reg[32];
 
 void inicializarFus(FILA *F, int total_instrucoes){
 
-    extern unsigned int reg[32];
-
     struct functionalUnitStatus fus[5];
-    int is[total_instrucoes][4] = inicializaIS(is, total_instrucoes);
+    int is[total_instrucoes][4];
+
+    int linha, coluna;
+
+    for(linha = 0; linha < total_instrucoes; linha++)
+        for(coluna = 0; coluna < 4; coluna++)
+            is[linha][coluna] = 0;
     
     char *unidadeInt = (char*)malloc( 8 * sizeof(char));
     strcpy(unidadeInt,"Integer");
@@ -86,7 +90,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
 
     struct fila{
         int unidade, id, iFi, iFj, iFk, imm;
-        char* nomeInstrucao, Fi, Fj, Fk;
+        char nomeInstrucao[5], Fi[5], Fj[5], Fk[5];
     };
     struct fila fila_espera[total_instrucoes-1];
 
@@ -216,7 +220,6 @@ void inicializarFus(FILA *F, int total_instrucoes){
 
                 fus[4].busy = true;
                 strcpy(fus[4].opName, instrucao->instructionName);
-                strcpy(fus[4].fi, HI);
                 strcpy(fus[4].fj, instrucao->regDestino);
                 strcpy(fus[4].fk, instrucao->reg1);
 
@@ -406,8 +409,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 strcpy(fus[0].fi, instrucao->regDestino);
                 fus[0].id = indice;
 
-                //verificar nas instrucoes anteriores se possui dependecia de dados
-                //percorrer o rss verificando se os registradores já estão sendo utilizados para escrita
+                
                 int i = 0;
                 while(i <= fus[0].i_fj){
 
@@ -457,8 +459,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 strcpy(fus[0].fj, instrucao->reg1);
                 fus[0].id = indice;
 
-                //verificar nas instrucoes anteriores se possui dependecia de dados
-                //percorrer o rss verificando se os registradores já estão sendo utilizados para escrita
+               
                 int i = 0;
                 while(i <= fus[0].i_fj){
 
@@ -513,8 +514,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 strcpy(fus[0].fk, instrucao->reg2);
                 fus[0].id = indice;
 
-                //verificar nas instrucoes anteriores se possui dependecia de dados
-                //percorrer o rss verificando se os registradores já estão sendo utilizados para escrita
+                
                 int i = 0;
                 while(i <= fus[0].i_fj || i <= fus[0].i_fk){
 
@@ -580,8 +580,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 strcpy(fus[0].fj, instrucao->reg1);
                 fus[0].id = indice;
 
-                //verificar nas instrucoes anteriores se possui dependecia de dados
-                //percorrer o rss verificando se os registradores já estão sendo utilizados para escrita
+                
                 int i = 0;
                 while(i <= fus[0].i_fj){
 
@@ -655,9 +654,9 @@ void inicializarFus(FILA *F, int total_instrucoes){
 
                     fus[unidade].id = aux;
                     fus[unidade].busy = true;
-                    fus[unidade].i_fi = getReg(fila_espera[i].iFi);
-                    fus[unidade].i_fj = getReg(fila_espera[i].iFj);
-                    fus[unidade].i_fk = getReg(fila_espera[i].iFk );
+                    fus[unidade].i_fi = fila_espera[i].iFi;
+                    fus[unidade].i_fj = fila_espera[i].iFj;
+                    fus[unidade].i_fk = fila_espera[i].iFk;
 
                     strcpy(fus[unidade].opName, fila_espera[i].nomeInstrucao);
                     strcpy(fus[unidade].fi, fila_espera[i].Fi);
@@ -676,22 +675,24 @@ void inicializarFus(FILA *F, int total_instrucoes){
                     is[aux][0] = ciclo;
 
                 if(fus[0].rj == true && fus[0].rk == true){
+
                     //executar
                     if(is[aux][1] == 0){
 
                         is[aux][1] = ciclo;
 
                         //estágio de busca
-                        if(fus[0].fi != '\0')
+                        if(fus[0].fi[0] != '\0')
                             fus[0].operando1 = reg[fus[0].i_fi];
 
-                        if(fus[0].fj != '\0')
+                        if(fus[0].fj[0] != '\0')
                             fus[0].operando2 = reg[fus[0].i_fj];
                         
-                        if(fus[0].fk != '\0')
+                        if(fus[0].fk[0] != '\0')
                             fus[0].operando3 = reg[fus[0].i_fk];
                         
                     }
+
                     else if(is[aux][2] == 0 || fus[0].time > 0){
 
                         is[aux][2] = ciclo;
@@ -701,9 +702,12 @@ void inicializarFus(FILA *F, int total_instrucoes){
                             fus[0].operando1 = execucao(fus[0].operando1, fus[0].operando2, fus[0].operando3, fus[0].opName, fus[0].immediate);
                         
                         fus[0].time--;  //a cada ciclo decrementa o time em 1
+                        continue;
                         
                     }
+
                     else if(is[aux][3] == 0){
+
                         is[aux][3] = ciclo;
 
                         //estágio de escrita
@@ -713,6 +717,8 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         rss[fus[0].i_fi].indice_unidade = 0;
                         fus[0].id = 0;
                         fus[0].busy = false;
+                        fus[0].rj = false;
+                        fus[0].rk = false;
                         fus[0].time = 1;
                         strcpy(fus[0].opName, "");
                         strcpy(fus[0].fi, "");
@@ -723,7 +729,9 @@ void inicializarFus(FILA *F, int total_instrucoes){
 
                     }
                 }
+
                 else{
+
                     //verificar no rss[] se o registrador da dependencia já está pronto
                     if(fus[0].rj == false)
                         if(rss[fus[0].i_fj].indice_unidade == 0)
@@ -736,21 +744,322 @@ void inicializarFus(FILA *F, int total_instrucoes){
                     if(fus[0].rj == true && fus[0].rk == true)
                         continue;
                 }
+
             }
 
             if(aux == fus[1].id){
+
+                if(is[aux][0] == 0)
+                    is[aux][0] = ciclo;
+
+                if(fus[1].rj == true && fus[1].rk == true){
+
+                    //executar
+                    if(is[aux][1] == 0){
+
+                        is[aux][1] = ciclo;
+
+                        //estágio de busca
+                        if(fus[1].fi[0] != '\0')
+                            fus[1].operando1 = reg[fus[1].i_fi];
+
+                        if(fus[1].fj[0] != '\0')
+                            fus[1].operando2 = reg[fus[1].i_fj];
+                        
+                        if(fus[1].fk[0] != '\0')
+                            fus[1].operando3 = reg[fus[1].i_fk];
+                        
+                    }
+
+                    else if(is[aux][2] == 0 || fus[1].time > 0){
+
+                        is[aux][2] = ciclo;
+
+                        //estágio de execução
+                        if(fus[1].time == 1)
+                            fus[1].operando1 = execucao(fus[1].operando1, fus[1].operando2, fus[1].operando3, fus[1].opName, fus[1].immediate);
+                        
+                        fus[1].time--;  //a cada ciclo decrementa o time em 1
+                        continue;
+                        
+                    }
+
+                    else if(is[aux][3] == 0){
+
+                        is[aux][3] = ciclo;
+
+                        //estágio de escrita
+                        reg[fus[1].i_fi] = fus[1].operando1;
+
+                        //reiniciar unidade e indice correspondente do rss
+                        rss[fus[1].i_fi].indice_unidade = 0;
+                        fus[1].id = 0;
+                        fus[1].busy = false;
+                        fus[1].rj = false;
+                        fus[1].rk = false;
+                        fus[1].time = 1;
+                        strcpy(fus[1].opName, "");
+                        strcpy(fus[1].fi, "");
+                        strcpy(fus[1].fj, "");
+                        strcpy(fus[1].fk, "");
+                        strcpy(fus[1].qj, "");
+                        strcpy(fus[1].qk, "");
+
+                    }
+                }
+
+                else{
+
+                    //verificar no rss[] se o registrador da dependencia já está pronto
+                    if(fus[1].rj == false)
+                        if(rss[fus[1].i_fj].indice_unidade == 0)
+                            fus[1].rj = true;
+
+                    if(fus[1].rk == false)
+                        if(rss[fus[1].i_fk].indice_unidade == 0)
+                            fus[1].rk = true;
+
+                    if(fus[1].rj == true && fus[1].rk == true)
+                        continue;
+
+                }
 
             }
 
             if(aux == fus[2].id){
 
+                if(is[aux][0] == 0)
+                    is[aux][0] = ciclo;
+
+                if(fus[2].rj == true && fus[2].rk == true){
+
+                    //executar
+                    if(is[aux][1] == 0){
+
+                        is[aux][1] = ciclo;
+
+                        //estágio de busca
+                        if(fus[2].fi[0] != '\0')
+                            fus[2].operando1 = reg[fus[2].i_fi];
+
+                        if(fus[2].fj[0] != '\0')
+                            fus[2].operando2 = reg[fus[2].i_fj];
+                        
+                        if(fus[2].fk[0] != '\0')
+                            fus[2].operando3 = reg[fus[2].i_fk];
+                        
+                    }
+                    
+                    else if(is[aux][2] == 0 || fus[2].time > 0){
+
+                        is[aux][2] = ciclo;
+
+                        //estágio de execução
+                        if(fus[2].time == 1)
+                            fus[2].operando1 = execucao(fus[2].operando1, fus[2].operando2, fus[2].operando3, fus[2].opName, fus[2].immediate);
+                        
+                        fus[2].time--;  //a cada ciclo decrementa o time em 1
+                        continue;
+                        
+                    }
+
+                    else if(is[aux][3] == 0){
+
+                        is[aux][3] = ciclo;
+
+                        //estágio de escrita
+                        reg[fus[2].i_fi] = fus[2].operando1;
+
+                        //reiniciar unidade e indice correspondente do rss
+                        rss[fus[2].i_fi].indice_unidade = 0;
+                        fus[2].id = 0;
+                        fus[2].busy = false;
+                        fus[2].rj = false;
+                        fus[2].rk = false;
+                        fus[2].time = 1;
+                        strcpy(fus[2].opName, "");
+                        strcpy(fus[2].fi, "");
+                        strcpy(fus[2].fj, "");
+                        strcpy(fus[2].fk, "");
+                        strcpy(fus[2].qj, "");
+                        strcpy(fus[2].qk, "");
+
+                    }
+                }
+
+                else{
+
+                    //verificar no rss[] se o registrador da dependencia já está pronto
+                    if(fus[2].rj == false)
+                        if(rss[fus[2].i_fj].indice_unidade == 0)
+                            fus[2].rj = true;
+
+                    if(fus[2].rk == false)
+                        if(rss[fus[2].i_fk].indice_unidade == 0)
+                            fus[2].rk = true;
+
+                    if(fus[2].rj == true && fus[2].rk == true)
+                        continue;
+
+                }
+
             }
 
             if(aux == fus[3].id){
 
+                if(is[aux][0] == 0)
+                    is[aux][0] = ciclo;
+
+                if(fus[3].rj == true && fus[3].rk == true){
+
+                    //executar
+                    if(is[aux][1] == 0){
+
+                        is[aux][1] = ciclo;
+
+                        //estágio de busca
+                        if(fus[3].fi[0] != '\0')
+                            fus[3].operando1 = reg[fus[3].i_fi];
+
+                        if(fus[3].fj[0] != '\0')
+                            fus[3].operando2 = reg[fus[3].i_fj];
+                        
+                        if(fus[3].fk[0] != '\0')
+                            fus[3].operando3 = reg[fus[3].i_fk];
+                        
+                    }
+                    
+                    else if(is[aux][2] == 0 || fus[2].time > 0){
+
+                        is[aux][2] = ciclo;
+
+                        //estágio de execução
+                        if(fus[3].time == 1)
+                            fus[3].operando1 = execucao(fus[3].operando1, fus[3].operando2, fus[3].operando3, fus[3].opName, fus[3].immediate);
+                        
+                        fus[3].time--;  //a cada ciclo decrementa o time em 1
+                        continue;
+                        
+                    }
+
+                    else if(is[aux][3] == 0){
+
+                        is[aux][3] = ciclo;
+
+                        //estágio de escrita
+                        reg[fus[3].i_fi] = fus[3].operando1;
+
+                        //reiniciar unidade e indice correspondente do rss
+                        rss[fus[3].i_fi].indice_unidade = 0;
+                        fus[3].id = 0;
+                        fus[3].busy = false;
+                        fus[3].rj = false;
+                        fus[3].rk = false;
+                        fus[3].time = 1;
+                        strcpy(fus[3].opName, "");
+                        strcpy(fus[3].fi, "");
+                        strcpy(fus[3].fj, "");
+                        strcpy(fus[3].fk, "");
+                        strcpy(fus[3].qj, "");
+                        strcpy(fus[3].qk, "");
+
+                    }
+                }
+
+                else{
+
+                    //verificar no rss[] se o registrador da dependencia já está pronto
+                    if(fus[3].rj == false)
+                        if(rss[fus[3].i_fj].indice_unidade == 0)
+                            fus[3].rj = true;
+
+                    if(fus[3].rk == false)
+                        if(rss[fus[3].i_fk].indice_unidade == 0)
+                            fus[3].rk = true;
+
+                    if(fus[3].rj == true && fus[3].rk == true)
+                        continue;
+
+                }
+
             }
 
             if(aux == fus[4].id){
+
+                if(is[aux][0] == 0)
+                    is[aux][0] = ciclo;
+
+                if(fus[4].rj == true && fus[4].rk == true){
+
+                    //executar
+                    if(is[aux][1] == 0){
+
+                        is[aux][1] = ciclo;
+
+                        //estágio de busca
+                        if(fus[4].fi[0] != '\0')
+                            fus[4].operando1 = reg[fus[4].i_fi];
+
+                        if(fus[4].fj[0] != '\0')
+                            fus[4].operando2 = reg[fus[4].i_fj];
+                        
+                        if(fus[4].fk[0] != '\0')
+                            fus[4].operando3 = reg[fus[4].i_fk];
+                        
+                    }
+                    
+                    else if(is[aux][2] == 0 || fus[4].time > 0){
+
+                        is[aux][2] = ciclo;
+
+                        //estágio de execução
+                        if(fus[4].time == 1)
+                            fus[4].operando1 = execucao(fus[4].operando1, fus[4].operando2, fus[4].operando3, fus[4].opName, fus[4].immediate);
+                        
+                        fus[4].time--;  //a cada ciclo decrementa o time em 1
+                        continue;
+                        
+                    }
+
+                    else if(is[aux][3] == 0){
+
+                        is[aux][3] = ciclo;
+
+                        //estágio de escrita
+                        reg[fus[4].i_fi] = fus[4].operando1;
+
+                        //reiniciar unidade e indice correspondente do rss
+                        rss[fus[4].i_fi].indice_unidade = 0;
+                        fus[4].id = 0;
+                        fus[4].busy = false;
+                        fus[4].rj = false;
+                        fus[4].rk = false;
+                        fus[4].time = 1;
+                        strcpy(fus[4].opName, "");
+                        strcpy(fus[4].fi, "");
+                        strcpy(fus[4].fj, "");
+                        strcpy(fus[4].fk, "");
+                        strcpy(fus[4].qj, "");
+                        strcpy(fus[4].qk, "");
+
+                    }
+                }
+
+                else{
+
+                    //verificar no rss[] se o registrador da dependencia já está pronto
+                    if(fus[4].rj == false)
+                        if(rss[fus[4].i_fj].indice_unidade == 0)
+                            fus[4].rj = true;
+
+                    if(fus[4].rk == false)
+                        if(rss[fus[4].i_fk].indice_unidade == 0)
+                            fus[4].rk = true;
+
+                    if(fus[4].rj == true && fus[4].rk == true)
+                        continue;
+
+                }
 
             }
 
@@ -781,18 +1090,6 @@ void printFus(struct functionalUnitStatus fus[5]){
         printf("\n%d\t%s\t%d\n",fus[i].time,fus[i].nomeUnidade,fus[i].busy);
     }
     printf("\nPS: O é o mesmo que false nessa tabela\n");
-}
-
-int** incializaIS(int **is, int tam1){
-
-    int i, j;
-
-    for(i = 0; i < tam1; i++)
-        for(j = 0; j < 4; j++)
-            is[i][j] = 0;
-
-    return is;
-
 }
 
 unsigned int execucao(unsigned int operando1, unsigned int operando2, unsigned int operando3, char* instrucao, int imediato){

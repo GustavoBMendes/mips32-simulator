@@ -9,6 +9,7 @@
 #include "registradores.h"
 #include "pipeline.h"
 
+extern unsigned int reg[32];
 //Retornará o número de ciclos total levado para o scoreboarding do codigo analisado
 int cicloClock;
 //Num de instruções que o .asm possui
@@ -17,11 +18,10 @@ int numInstrucoes;
 //int instructionStatus[numInstrucoes][4];
 
 struct functionalUnitStatus{
-    char* nomeUnidade, opName, fi, fj, fk, qj, qk;
+    char *nomeUnidade, opName[5], fi[5], fj[5], fk[5], qj[5], qk[5];
     bool busy,rj,rk;
-    unsigned int time, id, 
-                i_fi, i_fj, i_fk, 
-                operando1, operando2, operando3, immediate;
+    int time, id, i_fi, i_fj, i_fk; 
+    unsigned int operando1, operando2, operando3, immediate;
 };
 
 struct functionalUnitStatus fus[5];
@@ -36,6 +36,6 @@ struct registerResultStatus rss[32];
 
 void inicializarFus(FILA *F, int total_instrucoes);
 void printFus();
-int** inicializaIS(int **is, int tam);
+unsigned int execucao(unsigned int operando1, unsigned int operando2, unsigned int operando3, char* instrucao, int imediato);
 
 #endif
