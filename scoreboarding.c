@@ -625,14 +625,50 @@ void inicializarFus(FILA *F, int total_instrucoes){
             printf("\nNão foi encontrada a instrução, no operation 'nop()'");
         }
 
+        //Válido apenas para a primeira instrução a ser executada
         if(indice == 0){
+            int indiceAtual;
+
             is[indice][0] = ciclo;
             is[indice][1] = ciclo++;
-            //Estage();
+            //Estagio de busca
+            for(int x = 0; x < 5; x++){
+                if(fus[x].busy == true){
+                    if(fus[x].fi[0] != '\0')
+                            fus[x].operando1 = reg[fus[x].i_fi];
+
+                    if(fus[x].fj[0] != '\0')
+                        fus[x].operando2 = reg[fus[x].i_fj];
+                    
+                    if(fus[x].fk[0] != '\0')
+                        fus[x].operando3 = reg[fus[x].i_fk];
+
+                    indiceAtual = x;
+                    break;
+                }
+            }
+
             is[indice][2] = ciclo++;
-            //Mstage();
+            //Estagio de execucao;
+            fus[indiceAtual].operando1 = execucao(fus[indiceAtual].operando1, fus[indiceAtual].operando2, fus[indiceAtual].operando3, fus[indiceAtual].opName, fus[indiceAtual].immediate);
+            
             is[indice][3] = ciclo++;
-            //Wstage();
+            //Estagio de escrita;
+            reg[fus[indiceAtual].i_fi] = fus[indiceAtual].operando1;
+
+            //reiniciar unidade e indice correspondente do rss
+            rss[fus[indiceAtual].i_fi].indice_unidade = 0;
+            fus[indiceAtual].id = 0;
+            fus[indiceAtual].busy = false;
+            fus[indiceAtual].rj = false;
+            fus[indiceAtual].rk = false;
+            fus[indiceAtual].time = 1;
+            strcpy(fus[indiceAtual].opName, "");
+            strcpy(fus[indiceAtual].fi, "");
+            strcpy(fus[indiceAtual].fj, "");
+            strcpy(fus[indiceAtual].fk, "");
+            strcpy(fus[indiceAtual].qj, "");
+            strcpy(fus[indiceAtual].qk, "");
 
             instrucao = instrucao->prox;
             ciclo++;

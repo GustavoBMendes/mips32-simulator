@@ -198,6 +198,7 @@ int main(){
 
     //teste tabela score
     FILA F;
+    create(&F);
     ler();
     int total_instrucoes = inserirElementos(&F);
     inicializarFus(&F, total_instrucoes);
