@@ -157,6 +157,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
                 fila_espera[auxFila].iFj = getReg(instrucao->reg1);
                 fila_espera[auxFila].iFk = getReg(instrucao->reg2);
+                fila_espera[auxFila].id = indice;
 
                 strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
                 strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
@@ -174,9 +175,13 @@ void inicializarFus(FILA *F, int total_instrucoes){
             if(fus[4].busy == false){
 
                 fus[4].busy = true;
+                fus[4].i_fi = getReg(instrucao->regDestino);
+                fus[4].i_fj = getReg(instrucao->reg1);
+
                 strcpy(fus[4].opName, instrucao->instructionName);
-                strcpy(fus[4].fj, instrucao->regDestino);
-                strcpy(fus[4].fk, instrucao->reg1);
+                strcpy(fus[4].fi, instrucao->regDestino);
+                strcpy(fus[4].fj, instrucao->reg1);
+                fus[4].id = indice;
 
                 //verificar nas instrucoes anteriores se possui dependecia de dados
                 int i = 0;
@@ -204,6 +209,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 fila_espera[auxFila].unidade = 4;
                 fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
                 fila_espera[auxFila].iFj = getReg(instrucao->reg1);
+                fila_espera[auxFila].id = indice;
 
                 strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
                 strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
@@ -220,10 +226,15 @@ void inicializarFus(FILA *F, int total_instrucoes){
             if(fus[1].busy == false){
 
                 fus[1].busy = true;
+                fus[1].i_fi = getReg(instrucao->regDestino);
+                fus[1].i_fj = getReg(instrucao->reg1);
+                fus[1].i_fk = getReg(instrucao->reg2);
+
                 strcpy(fus[1].opName, instrucao->instructionName);
                 strcpy(fus[1].fi, instrucao->regDestino);
                 strcpy(fus[1].fj, instrucao->reg1);
                 strcpy(fus[1].fk, instrucao->reg2);
+                fus[1].id = indice;
 
                 //verificar nas instrucoes anteriores se possui dependecia de dados
                 int i = 0;
@@ -256,10 +267,15 @@ void inicializarFus(FILA *F, int total_instrucoes){
             else if(fus[2].busy == false){
 
                 fus[2].busy = true;
+                fus[2].i_fi = getReg(instrucao->regDestino);
+                fus[2].i_fj = getReg(instrucao->reg1);
+                fus[2].i_fk = getReg(instrucao->reg2);
+
                 strcpy(fus[2].opName, instrucao->instructionName);
                 strcpy(fus[2].fi, instrucao->regDestino);
                 strcpy(fus[2].fj, instrucao->reg1);
                 strcpy(fus[2].fk, instrucao->reg2);
+                fus[2].id = indice;
 
                 //verificar nas instrucoes anteriores se possui dependecia de dados
                 int i = 0;
@@ -295,6 +311,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
                 fila_espera[auxFila].iFj = getReg(instrucao->reg1);
                 fila_espera[auxFila].iFk = getReg(instrucao->reg2);
+                fila_espera[auxFila].id = indice;
 
                 strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
                 strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
@@ -306,14 +323,18 @@ void inicializarFus(FILA *F, int total_instrucoes){
 
         }
 
-        else if(strcmp(instrucao->instructionName, "mult\n") == 0){
+        else if(strcmp(instrucao->instructionName, "mult\n") == 0 || strcmp(instrucao->instructionName, "msub\n") == 0){
 
             if(fus[1].busy == false){
 
                 fus[1].busy = true;
+                fus[1].i_fi = getReg(instrucao->regDestino);
+                fus[1].i_fj = getReg(instrucao->reg1);
+
                 strcpy(fus[1].opName, instrucao->instructionName);
                 strcpy(fus[1].fi, instrucao->regDestino);
                 strcpy(fus[1].fj, instrucao->reg1);
+                fus[1].id = indice;
 
                 //verificar nas instrucoes anteriores se possui dependecia de dados
                 int i = 0;
@@ -339,9 +360,13 @@ void inicializarFus(FILA *F, int total_instrucoes){
             else if(fus[2].busy == false){
 
                 fus[2].busy = true;
+                fus[2].i_fi = getReg(instrucao->regDestino);
+                fus[2].i_fj = getReg(instrucao->reg1);
+
                 strcpy(fus[2].opName, instrucao->instructionName);
                 strcpy(fus[2].fi, instrucao->regDestino);
                 strcpy(fus[2].fj, instrucao->reg1);
+                fus[2].id = indice;
 
                 //verificar nas instrucoes anteriores se possui dependecia de dados
                 int i = 0;
@@ -368,6 +393,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 fila_espera[auxFila].unidade = 1;
                 fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
                 fila_espera[auxFila].iFj = getReg(instrucao->reg1);
+                fila_espera[auxFila].id = indice;
 
                 strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
                 strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
@@ -407,6 +433,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 fila_espera[auxFila].unidade = 0;
                 fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
                 fila_espera[auxFila].imm = instrucao->imediato;
+                fila_espera[auxFila].id = indice;
 
                 strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
                 strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
@@ -440,6 +467,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 rss[getReg(instrucao->regDestino)].indice_unidade = 1;
                 fila_espera[auxFila].unidade = 0;
                 fila_espera[auxFila].imm = instrucao->imediato;
+                fila_espera[auxFila].id = indice;
 
                 strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
 
@@ -489,6 +517,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 rss[getReg(instrucao->regDestino)].indice_unidade = 1;
                 fila_espera[auxFila].unidade = 0;
                 fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
+                fila_espera[auxFila].id = indice;
 
                 strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
                 strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
@@ -541,6 +570,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 fila_espera[auxFila].unidade = 0;
                 fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
                 fila_espera[auxFila].iFj = getReg(instrucao->reg1);
+                fila_espera[auxFila].id = indice;
 
                 strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
                 strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
@@ -603,6 +633,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
                 fila_espera[auxFila].iFj = getReg(instrucao->reg1);
                 fila_espera[auxFila].iFk = getReg(instrucao->reg2);
+                fila_espera[auxFila].id = indice;
 
                 strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
                 strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
@@ -662,6 +693,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 fila_espera[auxFila].iFi = getReg(instrucao->regDestino);
                 fila_espera[auxFila].iFj = getReg(instrucao->reg1);
                 fila_espera[auxFila].imm = instrucao->imediato;
+                fila_espera[auxFila].id = indice;
 
                 strcpy(fila_espera[auxFila].nomeInstrucao, instrucao->instructionName);
                 strcpy(fila_espera[auxFila].Fi, instrucao->regDestino);
@@ -703,11 +735,14 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 }
             }
 
-            ciclo++;
-            is[indice][2] = ciclo;
             //Estagio de execucao;
-            fus[indiceAtual].operando1 = execucao(fus[indiceAtual].operando1, fus[indiceAtual].operando2, fus[indiceAtual].operando3, fus[indiceAtual].opName, fus[indiceAtual].immediate);
-            
+            while(fus[indiceAtual].time > 0){
+                fus[indiceAtual].operando1 = execucao(fus[indiceAtual].operando1, fus[indiceAtual].operando2, fus[indiceAtual].operando3, fus[indiceAtual].opName, fus[indiceAtual].immediate);
+                fus[indiceAtual].time--;
+                ciclo++;
+            }
+            is[indice][2] = ciclo;
+
             ciclo++;
             is[indice][3] = ciclo;
             //Estagio de escrita;
@@ -751,6 +786,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         fus[unidade].i_fi = fila_espera[i].iFi;
                         fus[unidade].i_fj = fila_espera[i].iFj;
                         fus[unidade].i_fk = fila_espera[i].iFk;
+                        fus[unidade].id = fila_espera[i].id;
 
                         strcpy(fus[unidade].opName, fila_espera[i].nomeInstrucao);
                         strcpy(fus[unidade].fi, fila_espera[i].Fi);
@@ -769,7 +805,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                 if(is[aux][0] == 0)
                     is[aux][0] = ciclo;
 
-                if(fus[0].rj == true && fus[0].rk == true){
+                else if(fus[0].rj == true && fus[0].rk == true){
 
                     //executar
                     if(is[aux][1] == 0){
@@ -797,6 +833,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                             fus[0].operando1 = execucao(fus[0].operando1, fus[0].operando2, fus[0].operando3, fus[0].opName, fus[0].immediate);
                         
                         fus[0].time--;  //a cada ciclo decrementa o time em 1
+                        aux++;
                         continue;
                         
                     }
@@ -836,18 +873,20 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         if(rss[fus[0].i_fk].indice_unidade == 0)
                             fus[0].rk = true;
 
-                    if(fus[0].rj == true && fus[0].rk == true)
+                    if(fus[0].rj == true && fus[0].rk == true){
+                        ciclo++;
                         continue;
+                    }
                 }
 
             }
 
-            if(aux == fus[1].id){
+            else if(aux == fus[1].id){
 
                 if(is[aux][0] == 0)
                     is[aux][0] = ciclo;
 
-                if(fus[1].rj == true && fus[1].rk == true){
+                else if(fus[1].rj == true && fus[1].rk == true){
 
                     //executar
                     if(is[aux][1] == 0){
@@ -875,6 +914,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                             fus[1].operando1 = execucao(fus[1].operando1, fus[1].operando2, fus[1].operando3, fus[1].opName, fus[1].immediate);
                         
                         fus[1].time--;  //a cada ciclo decrementa o time em 1
+                        aux++;
                         continue;
                         
                     }
@@ -914,19 +954,21 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         if(rss[fus[1].i_fk].indice_unidade == 0)
                             fus[1].rk = true;
 
-                    if(fus[1].rj == true && fus[1].rk == true)
+                    if(fus[1].rj == true && fus[1].rk == true){
+                        ciclo++;
                         continue;
+                    }
 
                 }
 
             }
 
-            if(aux == fus[2].id){
+            else if(aux == fus[2].id){
 
                 if(is[aux][0] == 0)
                     is[aux][0] = ciclo;
 
-                if(fus[2].rj == true && fus[2].rk == true){
+                else if(fus[2].rj == true && fus[2].rk == true){
 
                     //executar
                     if(is[aux][1] == 0){
@@ -954,6 +996,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                             fus[2].operando1 = execucao(fus[2].operando1, fus[2].operando2, fus[2].operando3, fus[2].opName, fus[2].immediate);
                         
                         fus[2].time--;  //a cada ciclo decrementa o time em 1
+                        aux++;
                         continue;
                         
                     }
@@ -993,19 +1036,21 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         if(rss[fus[2].i_fk].indice_unidade == 0)
                             fus[2].rk = true;
 
-                    if(fus[2].rj == true && fus[2].rk == true)
+                    if(fus[2].rj == true && fus[2].rk == true){
+                        ciclo++;
                         continue;
+                    }
 
                 }
 
             }
 
-            if(aux == fus[3].id){
+            else if(aux == fus[3].id){
 
                 if(is[aux][0] == 0)
                     is[aux][0] = ciclo;
 
-                if(fus[3].rj == true && fus[3].rk == true){
+                else if(fus[3].rj == true && fus[3].rk == true){
 
                     //executar
                     if(is[aux][1] == 0){
@@ -1024,7 +1069,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         
                     }
                     
-                    else if(is[aux][2] == 0 || fus[2].time > 0){
+                    else if(is[aux][2] == 0 || fus[3].time > 0){
 
                         is[aux][2] = ciclo;
 
@@ -1033,6 +1078,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                             fus[3].operando1 = execucao(fus[3].operando1, fus[3].operando2, fus[3].operando3, fus[3].opName, fus[3].immediate);
                         
                         fus[3].time--;  //a cada ciclo decrementa o time em 1
+                        aux++;
                         continue;
                         
                     }
@@ -1072,19 +1118,21 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         if(rss[fus[3].i_fk].indice_unidade == 0)
                             fus[3].rk = true;
 
-                    if(fus[3].rj == true && fus[3].rk == true)
+                    if(fus[3].rj == true && fus[3].rk == true){
+                        ciclo++;
                         continue;
+                    }
 
                 }
 
             }
 
-            if(aux == fus[4].id){
+            else if(aux == fus[4].id){
 
                 if(is[aux][0] == 0)
                     is[aux][0] = ciclo;
 
-                if(fus[4].rj == true && fus[4].rk == true){
+                else if(fus[4].rj == true && fus[4].rk == true){
 
                     //executar
                     if(is[aux][1] == 0){
@@ -1112,6 +1160,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                             fus[4].operando1 = execucao(fus[4].operando1, fus[4].operando2, fus[4].operando3, fus[4].opName, fus[4].immediate);
                         
                         fus[4].time--;  //a cada ciclo decrementa o time em 1
+                        aux++;
                         continue;
                         
                     }
@@ -1151,8 +1200,10 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         if(rss[fus[4].i_fk].indice_unidade == 0)
                             fus[4].rk = true;
 
-                    if(fus[4].rj == true && fus[4].rk == true)
+                    if(fus[4].rj == true && fus[4].rk == true){
+                        ciclo++;
                         continue;
+                    }
 
                 }
 
@@ -1168,7 +1219,6 @@ void inicializarFus(FILA *F, int total_instrucoes){
 
         }
         
-
         instrucao = instrucao->prox;
         indice++;
         ciclo++;
