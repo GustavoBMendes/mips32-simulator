@@ -19,7 +19,7 @@ int numInstrucoes;
 //int instructionStatus[numInstrucoes][4];
 
 struct functionalUnitStatus{
-    char nomeUnidade[8], opName[5], fi[5], fj[5], fk[5], qj[5], qk[5];
+    char nomeUnidade[8], opName[5], fi[5], fj[5], fk[5], qj[8], qk[8];
     bool busy,rj,rk;
     int time, id, i_fi, i_fj, i_fk; 
     unsigned int operando1, operando2, operando3, immediate;
