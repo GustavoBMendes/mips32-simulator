@@ -9,7 +9,7 @@
 #include "includes/scoreboarding.h"
 
 
-int vetorEspeculativo[8];
+int vetorEspeculativo[5];
 int speculation(struct functionalUnitStatus fus);
 
 
