@@ -24,6 +24,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
     strcpy(fus[0].nomeUnidade,unidadeInt);
     fus[0].busy = false;
     fus[0].time = 1;
+    fus[0].immediate = -1;
     strcpy(fus[0].opName, "");
     strcpy(fus[0].fi, "");
     strcpy(fus[0].fj, "");
@@ -36,6 +37,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
     strcpy(fus[1].nomeUnidade,unidadeMult1);
     fus[1].busy = false;
     fus[1].time = 10;
+    fus[1].immediate = -1;
     strcpy(fus[1].opName, "");
     strcpy(fus[1].fi, "");
     strcpy(fus[1].fj, "");
@@ -48,6 +50,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
     strcpy(fus[2].nomeUnidade,unidadeMult2);
     fus[2].busy = false;
     fus[2].time = 10;
+    fus[2].immediate = -1;
     strcpy(fus[2].opName, "");
     strcpy(fus[2].fi, "");
     strcpy(fus[2].fj, "");
@@ -60,6 +63,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
     strcpy(fus[3].nomeUnidade,unidadeAdd);
     fus[3].busy = false;
     fus[3].time = 2;
+    fus[3].immediate = -1;
     strcpy(fus[3].opName, "");
     strcpy(fus[3].fi, "");
     strcpy(fus[3].fj, "");
@@ -72,6 +76,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
     strcpy(fus[4].nomeUnidade,unidadeDiv);
     fus[4].busy = false;
     fus[4].time = 40;
+    fus[4].immediate = -1;
     strcpy(fus[4].opName, "");
     strcpy(fus[4].fi, "");
     strcpy(fus[4].fj, "");
@@ -737,7 +742,8 @@ void inicializarFus(FILA *F, int total_instrucoes){
 
             //Estagio de execucao;
             while(fus[indiceAtual].time > 0){
-                fus[indiceAtual].operando1 = execucao(fus[indiceAtual].operando1, fus[indiceAtual].operando2, fus[indiceAtual].operando3, fus[indiceAtual].opName, fus[indiceAtual].immediate);
+                if(fus[indiceAtual].time == 1)
+                    fus[indiceAtual].operando1 = execucao(fus[indiceAtual].operando1, fus[indiceAtual].operando2, fus[indiceAtual].operando3, fus[indiceAtual].opName, fus[indiceAtual].immediate);
                 fus[indiceAtual].time--;
                 ciclo++;
             }
@@ -755,6 +761,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
             fus[indiceAtual].rj = false;
             fus[indiceAtual].rk = false;
             fus[indiceAtual].time = timeUnidade;
+            fus[indiceAtual].immediate = -1;
             strcpy(fus[indiceAtual].opName, "");
             strcpy(fus[indiceAtual].fi, "");
             strcpy(fus[indiceAtual].fj, "");
@@ -781,12 +788,12 @@ void inicializarFus(FILA *F, int total_instrucoes){
                     //unidade livre, inserir
                     if(fus[unidade].busy == false){
 
-                        fus[unidade].id = aux;
                         fus[unidade].busy = true;
                         fus[unidade].i_fi = fila_espera[i].iFi;
                         fus[unidade].i_fj = fila_espera[i].iFj;
                         fus[unidade].i_fk = fila_espera[i].iFk;
                         fus[unidade].id = fila_espera[i].id;
+                        fus[unidade].immediate = fila_espera[i].imm;
 
                         strcpy(fus[unidade].opName, fila_espera[i].nomeInstrucao);
                         strcpy(fus[unidade].fi, fila_espera[i].Fi);
@@ -821,6 +828,9 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         
                         if(fus[0].fk[0] != '\0')
                             fus[0].operando3 = reg[fus[0].i_fk];
+
+                        if(fus[0].immediate != -1)
+                            fus[0].operando3 = fus[0].immediate;
                         
                     }
 
@@ -852,6 +862,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         fus[0].rj = false;
                         fus[0].rk = false;
                         fus[0].time = 1;
+                        fus[0].immediate = -1;
                         strcpy(fus[0].opName, "");
                         strcpy(fus[0].fi, "");
                         strcpy(fus[0].fj, "");
@@ -902,6 +913,9 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         
                         if(fus[1].fk[0] != '\0')
                             fus[1].operando3 = reg[fus[1].i_fk];
+
+                        if(fus[1].immediate != -1)
+                            fus[1].operando3 = fus[1].immediate;
                         
                     }
 
@@ -933,6 +947,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         fus[1].rj = false;
                         fus[1].rk = false;
                         fus[1].time = 10;
+                        fus[1].immediate = -1;
                         strcpy(fus[1].opName, "");
                         strcpy(fus[1].fi, "");
                         strcpy(fus[1].fj, "");
@@ -984,6 +999,9 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         
                         if(fus[2].fk[0] != '\0')
                             fus[2].operando3 = reg[fus[2].i_fk];
+
+                        if(fus[2].immediate != -1)
+                            fus[2].operando3 = fus[2].immediate;
                         
                     }
                     
@@ -1015,6 +1033,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         fus[2].rj = false;
                         fus[2].rk = false;
                         fus[2].time = 10;
+                        fus[2].immediate = -1;
                         strcpy(fus[2].opName, "");
                         strcpy(fus[2].fi, "");
                         strcpy(fus[2].fj, "");
@@ -1067,6 +1086,8 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         if(fus[3].fk[0] != '\0')
                             fus[3].operando3 = reg[fus[3].i_fk];
                         
+                        if(fus[3].immediate != -1)
+                            fus[3].operando3 = fus[3].immediate;
                     }
                     
                     else if(is[aux][2] == 0 || fus[3].time > 0){
@@ -1097,6 +1118,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         fus[3].rj = false;
                         fus[3].rk = false;
                         fus[3].time = 2;
+                        fus[3].immediate = -1;
                         strcpy(fus[3].opName, "");
                         strcpy(fus[3].fi, "");
                         strcpy(fus[3].fj, "");
@@ -1148,6 +1170,9 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         
                         if(fus[4].fk[0] != '\0')
                             fus[4].operando3 = reg[fus[4].i_fk];
+
+                        if(fus[4].immediate != -1)
+                            fus[4].operando3 = fus[4].immediate;
                         
                     }
                     
@@ -1179,6 +1204,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
                         fus[4].rj = false;
                         fus[4].rk = false;
                         fus[4].time = 40;
+                        fus[4].immediate = -1;
                         strcpy(fus[4].opName, "");
                         strcpy(fus[4].fi, "");
                         strcpy(fus[4].fj, "");
@@ -1218,7 +1244,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
             aux++;
 
         }
-        
+        printFus(fus);
         instrucao = instrucao->prox;
         indice++;
         ciclo++;
@@ -1237,110 +1263,110 @@ void printFus(struct functionalUnitStatus fus[5]){
     printf("\nPS: O é o mesmo que false nessa tabela\n");
 }
 
-unsigned int execucao(unsigned int operando1, unsigned int operando2, unsigned int operando3, char* instrucao, int imediato){
+unsigned int execucao(unsigned int operando1, unsigned int operando2, unsigned int operando3, char nome_instrucao[7], int imediato){
 
-    if(strcmp(instrucao, "add\n") == 0)
+    if(strcmp(nome_instrucao, "add\n") == 0)
         operando1 = add(operando1, operando2, operando3);
 
-    else if(strcmp(instrucao, "addi\n") == 0)
+    else if(strcmp(nome_instrucao, "addi\n") == 0)
         operando1 = addi(operando1, operando2, imediato);
 
-    else if(strcmp(instrucao, "and\n") == 0)
+    else if(strcmp(nome_instrucao, "and\n") == 0)
         operando1 = And(operando1, operando2, operando3);
 
-    else if(strcmp(instrucao, "andi\n") == 0)
+    else if(strcmp(nome_instrucao, "andi\n") == 0)
         operando1 = andi(operando1, operando2, imediato);
 
-    else if(strcmp(instrucao, "b\n") == 0)
+    else if(strcmp(nome_instrucao, "b\n") == 0)
         PC = b(PC, imediato);
 
-    else if(strcmp(instrucao, "beq\n") == 0)
+    else if(strcmp(nome_instrucao, "beq\n") == 0)
         PC = beq(operando1, operando2, PC, imediato);
 
-    else if(strcmp(instrucao, "beql\n") == 0)
+    else if(strcmp(nome_instrucao, "beql\n") == 0)
         PC = beql(operando1, operando2, PC, imediato);
 
-    else if(strcmp(instrucao, "bgez\n") == 0)
+    else if(strcmp(nome_instrucao, "bgez\n") == 0)
         PC = bgez(operando1, PC, imediato);
 
-    else if(strcmp(instrucao, "bgtz\n") == 0)
+    else if(strcmp(nome_instrucao, "bgtz\n") == 0)
         PC = bgtz(operando1, PC, imediato);
 
-    else if(strcmp(instrucao, "blez\n") == 0)
+    else if(strcmp(nome_instrucao, "blez\n") == 0)
         PC = blez(operando1, PC, imediato);
 
-    else if(strcmp(instrucao, "bltz\n") == 0)
+    else if(strcmp(nome_instrucao, "bltz\n") == 0)
         PC = bltz(operando1, PC, imediato);
 
-    else if(strcmp(instrucao, "bne\n") == 0)
+    else if(strcmp(nome_instrucao, "bne\n") == 0)
         PC = bne(operando1, operando2, PC, imediato);
 
-    else if(strcmp(instrucao, "div\n") == 0){
+    else if(strcmp(nome_instrucao, "div\n") == 0){
         HI = DivHI(operando1, operando2, HI, LO);
         LO = DivLO(operando1, operando2, HI, LO);
     }
 
-    else if(strcmp(instrucao, "j\n") == 0)
+    else if(strcmp(nome_instrucao, "j\n") == 0)
         PC = j(PC, imediato);
 
-    else if(strcmp(instrucao, "jr\n") == 0)
+    else if(strcmp(nome_instrucao, "jr\n") == 0)
         PC = jr(PC, operando1);
 
-    else if(strcmp(instrucao, "lui\n") == 0)
+    else if(strcmp(nome_instrucao, "lui\n") == 0)
         operando1 = lui(operando1, imediato);
 
-    else if(strcmp(instrucao, "madd\n") == 0){
+    else if(strcmp(nome_instrucao, "madd\n") == 0){
         HI += LO;
         HI = madd(operando1, operando2, HI);
     }
 
-    else if(strcmp(instrucao, "mfhi\n") == 0)
+    else if(strcmp(nome_instrucao, "mfhi\n") == 0)
         operando1 = mfhi(operando1, HI);
     
-    else if(strcmp(instrucao, "mflo\n") == 0)
+    else if(strcmp(nome_instrucao, "mflo\n") == 0)
         operando1 = mflo(operando1, LO);
 
-    else if(strcmp(instrucao, "movn\n") == 0)
+    else if(strcmp(nome_instrucao, "movn\n") == 0)
         operando1 = movn(operando1, operando2, operando3);
 
-    else if(strcmp(instrucao, "movz\n") == 0)
+    else if(strcmp(nome_instrucao, "movz\n") == 0)
         operando1 = movz(operando1, operando2, operando3);
 
-    else if(strcmp(instrucao, "msub\n") == 0){
+    else if(strcmp(nome_instrucao, "msub\n") == 0){
         HI += LO;
         HI = msub(operando1, operando2, HI);
     }
 
-    else if(strcmp(instrucao, "mthi\n") == 0)
+    else if(strcmp(nome_instrucao, "mthi\n") == 0)
         HI = mthi(operando1, HI);
 
-    else if(strcmp(instrucao, "mtlo\n") == 0)
+    else if(strcmp(nome_instrucao, "mtlo\n") == 0)
         LO = mtlo(operando1, LO);
 
-    else if(strcmp(instrucao, "mul\n") == 0)
+    else if(strcmp(nome_instrucao, "mul\n") == 0)
         operando1 = mul(operando1, operando2, operando3);
 
-    else if(strcmp(instrucao, "mult\n") == 0){
+    else if(strcmp(nome_instrucao, "mult\n") == 0){
         HI += LO;
         HI = mult(operando1, operando2, HI);
     }
 
-    else if(strcmp(instrucao, "nor\n") == 0)
+    else if(strcmp(nome_instrucao, "nor\n") == 0)
         operando1 = nor(operando1, operando2, operando3);
 
-    else if(strcmp(instrucao, "or\n") == 0)
+    else if(strcmp(nome_instrucao, "or\n") == 0)
         operando1 = Or(operando1, operando2, operando3);
 
-    else if(strcmp(instrucao, "ori\n") == 0)
+    else if(strcmp(nome_instrucao, "ori\n") == 0)
         operando1 = Ori(operando1, operando2, imediato);
 
-    else if(strcmp(instrucao, "sub\n") == 0)
+    else if(strcmp(nome_instrucao, "sub\n") == 0)
         operando1 = sub(operando1, operando2, operando3);
 
-    else if(strcmp(instrucao, "xor\n") == 0)
+    else if(strcmp(nome_instrucao, "xor\n") == 0)
         operando1 = Xor(operando1, operando2, operando3);
 
-    else if(strcmp(instrucao, "xori\n") == 0)
+    else if(strcmp(nome_instrucao, "xori\n") == 0)
         operando1 = Xori(operando1, operando2, imediato);
 
     else

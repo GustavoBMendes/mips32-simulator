@@ -71,24 +71,6 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
 
     unsigned int operando1, operando2, operando3, imediato;
 
-    /*
-    if(linha->imediato != NULL)
-        operando2 = linha->imediato;
-
-    if(linha->regDestino != NULL)
-        destino = getReg(linha->regDestino);
-
-    if(linha->reg1 != NULL){
-        int k = getReg(linha->reg1);
-        operando1 = reg[k];
-    }
-
-    if(linha->reg2 != NULL){
-        int k = getReg(linha->reg2);
-        operando2 = reg[k];
-    }
-    */
-
     if(strcmp(instrucao, "add\n") == 0){
 
         iDest = getReg(linha->regDestino);

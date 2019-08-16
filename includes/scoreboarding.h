@@ -19,7 +19,7 @@ int numInstrucoes;
 //int instructionStatus[numInstrucoes][4];
 
 struct functionalUnitStatus{
-    char nomeUnidade[8], opName[5], fi[5], fj[5], fk[5], qj[8], qk[8];
+    char nomeUnidade[8], opName[7], fi[5], fj[5], fk[5], qj[8], qk[8];
     bool busy,rj,rk;
     int time, id, i_fi, i_fj, i_fk; 
     unsigned int operando1, operando2, operando3, immediate;
@@ -37,6 +37,6 @@ struct registerResultStatus rss[32];
 
 void inicializarFus(FILA *F, int total_instrucoes);
 void printFus();
-unsigned int execucao(unsigned int operando1, unsigned int operando2, unsigned int operando3, char* instrucao, int imediato);
+unsigned int execucao(unsigned int operando1, unsigned int operando2, unsigned int operando3, char instrucao[7], int imediato);
 
 #endif

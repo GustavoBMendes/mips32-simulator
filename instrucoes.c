@@ -26,7 +26,7 @@ int add(int regDestino,int regOrigem1, int regOrigem2){
 * @abstract Faz a operação de soma entre os valores contidos em um registrador de origem e um imediato
 *  e a insere em um registrador de destino.
 */
-int addi(int regDestino,int regOrigem1, int imediato){
+unsigned int addi(int regDestino,int regOrigem1, int imediato){
     regDestino = regOrigem1 + imediato;
     return regDestino;
 }
