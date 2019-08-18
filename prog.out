@@ -1,0 +1,19 @@
+Programa:
+add $t0, $zero,$zero
+addi $t0, $t0, 10
+add $t1, $t0, $zero
+addi $t1, $t1, 3
+mul $t2, $t1, $t0
+
+Binário:
+10000008
+21290008
+310A0005
+396C0007
+358D000A
+012B6820
+012B6820
+
+Previsão:
+Ciclos:
+Instruções:

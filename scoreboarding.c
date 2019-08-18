@@ -1265,6 +1265,7 @@ void inicializarFus(FILA *F, int total_instrucoes){
         ciclo++;
 
     }
+
 }
 
 void printFus(struct functionalUnitStatus fus[5]){
@@ -1275,7 +1276,6 @@ void printFus(struct functionalUnitStatus fus[5]){
     for(int i = 0; i < 5; i++){  
         printf("\n%d\t%s\t%d\n",fus[i].time,fus[i].nomeUnidade,fus[i].busy);
     }
-    printf("\nPS: O é o mesmo que false nessa tabela\n");
 }
 
 unsigned int execucao(unsigned int operando1, unsigned int operando2, unsigned int operando3, char nome_instrucao[7], int imediato){

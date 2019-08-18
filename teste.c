@@ -204,4 +204,37 @@ int main(){
     inicializarFus(&F, total_instrucoes);
 
     
+    //GERAR .OUT
+    FILE* out = fopen("prog.out", "w");
+    FILE* assembly = fopen("arq.asm", "r");
+    FILE* binario = fopen("saida_hex.txt", "r");
+
+    char linha[50];
+
+    fprintf(out, "Programa:\n");
+
+    while(!feof(assembly)){
+        fgets(linha, 50, assembly);
+        fputs(linha, out);
+    }
+    fputs("\n", out);
+    fputs("\n", out);
+
+    char bin[10];
+
+    fprintf(out, "Binário:\n");
+    while(!feof(binario)){
+        fgets(bin, 10, binario);
+        fputs(bin, out);
+    }
+    fputs("\n", out);
+
+    fprintf(out, "Previsão:\n");
+    fprintf(out, "Ciclos:\n");
+    fprintf(out, "Instruções:\n");
+
+    fclose(out);
+    fclose(assembly);
+    fclose(binario);
+
 }
