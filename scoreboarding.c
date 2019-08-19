@@ -7,7 +7,7 @@
 unsigned int reg[32];
 unsigned int HI = 0,LO = 0, PC = 0;
 
-void inicializarFus(FILA *F, int total_instrucoes){
+int inicializarFus(FILA *F, int total_instrucoes){
 
     struct functionalUnitStatus fus[5];
     struct registerResultStatus rss[32];
@@ -1265,6 +1265,8 @@ void inicializarFus(FILA *F, int total_instrucoes){
         ciclo++;
 
     }
+
+    return ciclo;
 
 }
 

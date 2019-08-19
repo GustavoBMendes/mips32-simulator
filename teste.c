@@ -75,7 +75,7 @@ int main(){
 
     PC = somarPC(PC);
     printf("\nPC = %d\n", PC);
-    
+    */
 
     struct instrucoes{
         int estagio,
@@ -88,6 +88,7 @@ int main(){
     struct numerosPrevisao n;
     n.acertos = 0;
     n.erros = 0;
+    n.saltos = 0;
 
     FILA F;
 
@@ -179,7 +180,7 @@ int main(){
     printf("\nPrevisor de desvio:\n");
     printf("Total de acertos = %d\n", n.acertos);
     printf("Total de erros = %d\n", n.erros);
-    */    
+       
 /* 
     // TESTE TRADUTOR
     FILA F;
@@ -197,10 +198,10 @@ int main(){
 
 
     //teste tabela score
-    FILA F;
-    create(&F);
-    ler();
-    int total_instrucoes = inserirElementos(&F);
+    //FILA F;
+    //create(&F);
+    //ler();
+    //int total_instrucoes = inserirElementos(&F);
     inicializarFus(&F, total_instrucoes);
 
     
@@ -215,6 +216,7 @@ int main(){
 
     while(!feof(assembly)){
         fgets(linha, 50, assembly);
+        fputs("\t", out);
         fputs(linha, out);
     }
     fputs("\n", out);
@@ -225,13 +227,19 @@ int main(){
     fprintf(out, "Binário:\n");
     while(!feof(binario)){
         fgets(bin, 10, binario);
+        fputs("\t", out);
         fputs(bin, out);
     }
     fputs("\n", out);
 
     fprintf(out, "Previsão:\n");
-    fprintf(out, "Ciclos:\n");
+    fprintf(out, "\tTotal de saltos: %d\n", n.saltos);
+    fprintf(out, "\tAcertos: %d\n", n.acertos);
+    fprintf(out, "\tErros: %d\n\n", n.erros);
+    fprintf(out, "Ciclos:\n\t%d ciclos\n\n", ciclo);
     fprintf(out, "Instruções:\n");
+    fprintf(out, "\tEmitidas: %d\n", total_instrucoes);
+    fprintf(out, "\tEfetivadas: %d\n", ciclo);
 
     fclose(out);
     fclose(assembly);

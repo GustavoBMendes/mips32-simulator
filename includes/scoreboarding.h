@@ -35,7 +35,7 @@ struct registerResultStatus{
 
 struct registerResultStatus rss[32];
 
-void inicializarFus(FILA *F, int total_instrucoes);
+int inicializarFus(FILA *F, int total_instrucoes);
 void printFus();
 unsigned int execucao(unsigned int operando1, unsigned int operando2, unsigned int operando3, char instrucao[7], int imediato);
 

@@ -10,6 +10,7 @@
 typedef struct numerosPrevisao{
     int acertos;
     int erros;
+    int saltos;
 }numerosPrevisao;
 
 numerosPrevisao previsao();

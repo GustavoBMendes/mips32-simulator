@@ -131,6 +131,8 @@ numerosPrevisao previsao(char *instrucao, int reg1, int reg2, struct numerosPrev
 
     else
         n.erros++;
+
+    n.saltos++;
     
     return n;
 
