@@ -24,7 +24,7 @@ int DivHI(int regOrigem1, int regOrigem2, int HI, int LO); //adicionado a mdu
 int DivLO(int regOrigem1, int regOrigem2,int HI, int LO);
 int j(int PC, int offset); //adicionado a OPU
 int jr(int PC, int regOrigem1); //adicionado a OPU
-int lui(int regDestino, int imediato); //revisar | adicionado a OPU
+unsigned int lui(int regDestino, int imediato); //revisar | adicionado a OPU
 int madd(int regOrigem1, int regOrigem2, int regAcumulador); //adicionado a mdu
 int mfhi(int HI,int regOrigem1); //adicionado a mdu
 int mflo(int LO, int regOrigem1); //adicionado a mdu

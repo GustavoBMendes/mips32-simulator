@@ -16,8 +16,7 @@
 #define VAZIO 0
 
 int main(){
-    unsigned int reg[32];
-    reg[0] = 0;
+    unsigned int reg[32] = {0};
     unsigned int HI = 0,LO = 0, PC = 0;
     inicializeMemory(); //Ok está alocando
     
@@ -85,6 +84,8 @@ int main(){
         char *nome;
     };
 
+    int multiplexador;
+
     struct numerosPrevisao n;
     n.acertos = 0;
     n.erros = 0;
@@ -113,7 +114,8 @@ int main(){
                 continue;
 
             else if(instrucao[i].estagio == 0){
-
+                printf("Ciclo:%d\n", ciclo);
+                printRegistradores(reg, HI, LO, PC);
                 instrucao[i].nome = (char*) malloc(7 * sizeof(char));
                 strcpy(instrucao[i].nome, Istage(&F, PC));
                 instrucao[i].endereco = PC;
@@ -141,6 +143,7 @@ int main(){
 
                 //suporte ao bypass
                 reg[instrucao[i].indRegistrador] = returnMultiplexador();
+                //printf("\nRegistrador[%d] = %d\n", instrucao[i].indRegistrador, reg[instrucao[i].indRegistrador]);
 
             }
 
@@ -160,8 +163,9 @@ int main(){
 
             else if(instrucao[i].estagio == 4){
 
-                reg[instrucao[i].indRegistrador] = 
-                Wstage(instrucao[i].endereco, instrucao[i].dado, instrucao[i].indRegistrador, reg);
+                if(reg[instrucao[i].indRegistrador] == instrucao[i].dado)
+                    reg[instrucao[i].indRegistrador] = 
+                    Wstage(instrucao[i].endereco, instrucao[i].dado, instrucao[i].indRegistrador, reg);
                 instrucao[i].estagio++;
 
             }
@@ -180,7 +184,7 @@ int main(){
     printf("\nPrevisor de desvio:\n");
     printf("Total de acertos = %d\n", n.acertos);
     printf("Total de erros = %d\n", n.erros);
-       
+    
 /* 
     // TESTE TRADUTOR
     FILA F;
@@ -202,7 +206,7 @@ int main(){
     //create(&F);
     //ler();
     //int total_instrucoes = inserirElementos(&F);
-    inicializarFus(&F, total_instrucoes);
+    //inicializarFus(&F, total_instrucoes);
 
     
     //GERAR .OUT

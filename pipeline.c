@@ -11,11 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "includes/pipeline.h"
-#include "includes/executionQueue.h"
-#include "includes/memoria.h"
-#include "includes/memoria.h"
-#include "includes/branchPredictor.h"
-#include "includes/bypass.h"
+
 
 extern unsigned int HI,LO;
 
@@ -83,7 +79,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
         operando3 = reg[iOp3];
 
         operando1 = add(operando1, operando2, operando3);
-
+        
     }
 
     else if(strcmp(instrucao, "addi\n") == 0){
@@ -435,11 +431,12 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
 
         iOp2 = getReg(linha->reg1);
         operando2 = reg[iOp2];
-
-        HI += LO;
         
-        HI = mult(operando1, operando2, HI);
+        iOp3 = getReg(linha->reg2);
+        operando3 = reg[iOp3];
 
+        operando1 = mult(operando2, operando3, operando1);
+        
     }
 
     else if(strcmp(instrucao, "nor\n") == 0){
@@ -535,7 +532,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
         
     //suporte ao bypass
     inserirMultiplexador(operando1);
-
+    //reg[iDest] = operando1;
     inserirNoBarramento(operando1);
     writeInMemory(PC);
 

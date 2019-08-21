@@ -187,8 +187,8 @@ int jr(int PC, int regOrigem1){
 * @function
 * @abstract Executa um shift em 16 bits no imediato e concatena com outros 16 bits de zero.
 */
-int lui(int regDestino, int imediato){
-    regDestino = imediato << 16;
+unsigned int lui(int regDestino, int imediato){
+    regDestino = imediato;
     return regDestino;
 }
 /* 
