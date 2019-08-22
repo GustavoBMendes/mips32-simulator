@@ -24,8 +24,6 @@ void inserirNoBarramento(unsigned int dado){
 
     for(int i = 0; i <= strlen(sdado); i++)
         biu[i] = sdado[i];
-    
-    printf("\nInserido no barramento\n");
 
 }
 

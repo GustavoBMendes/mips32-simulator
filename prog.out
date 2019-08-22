@@ -8,13 +8,14 @@ Programa:
 	add $t3, $t2, $zero
 
 Binário:
-	10000008
-	21290008
-	310A0005
-	396C0007
-	358D000A
-	012B6820
-	012B6820
+	3C08000A
+	01084018
+	3C09000A
+	35400003
+	01295018
+	01484820
+	016A0020
+	016A0020
 
 Previsão:
 	Total de saltos: 0
@@ -22,8 +23,135 @@ Previsão:
 	Erros: 0
 
 Ciclos:
-	7 ciclos
+	11 ciclos
+Ciclo 1:
+	Busca:
+		lui $t0, 10
 
-Instruções:
-	Emitidas: 7
-	Efetivadas: 7
+Ciclo 2:
+	Execução:
+		lui $t0, 10
+
+	Busca:
+		mult $t0, $t0, $t0
+
+Ciclo 3:
+	Busca da memória:
+		lui $t0, 10
+
+	Execução:
+		mult $t0, $t0, $t0
+
+	Busca:
+		lui $t1, 10
+
+Ciclo 4:
+	Alinhamento:
+		lui $t0, 10
+
+	Busca da memória:
+		mult $t0, $t0, $t0
+
+	Execução:
+		lui $t1, 10
+
+	Busca:
+		ori $t2, $zero, 3
+
+Ciclo 5:
+	Escrita:
+		lui $t0, 10
+
+	Efetivando:
+		lui $t0, 10
+
+	Alinhamento:
+		mult $t0, $t0, $t0
+
+	Busca da memória:
+		lui $t1, 10
+
+	Execução:
+		ori $t2, $zero, 3
+
+	Busca:
+		mult $t1, $t1, $t2
+
+Ciclo 6:
+	Escrita:
+		mult $t0, $t0, $t0
+
+	Efetivando:
+		mult $t0, $t0, $t0
+
+	Alinhamento:
+		lui $t1, 10
+
+	Busca da memória:
+		ori $t2, $zero, 3
+
+	Execução:
+		mult $t1, $t1, $t2
+
+	Busca:
+		add $t2, $t0, $t1
+
+Ciclo 7:
+	Escrita:
+		lui $t1, 10
+
+	Efetivando:
+		lui $t1, 10
+
+	Alinhamento:
+		ori $t2, $zero, 3
+
+	Busca da memória:
+		mult $t1, $t1, $t2
+
+	Execução:
+		add $t2, $t0, $t1
+
+	Busca:
+		add $t3, $t2, $zero
+Ciclo 7:
+	Escrita:
+		ori $t2, $zero, 3
+
+	Efetivando:
+		ori $t2, $zero, 3
+
+	Alinhamento:
+		mult $t1, $t1, $t2
+
+	Busca da memória:
+		add $t2, $t0, $t1
+
+	Execução:
+		add $t3, $t2, $zero
+Ciclo 7:
+	Escrita:
+		mult $t1, $t1, $t2
+
+	Efetivando:
+		mult $t1, $t1, $t2
+
+	Alinhamento:
+		add $t2, $t0, $t1
+
+	Busca da memória:
+		add $t3, $t2, $zero
+Ciclo 7:
+	Escrita:
+		add $t2, $t0, $t1
+
+	Efetivando:
+		add $t2, $t0, $t1
+
+	Alinhamento:
+		add $t3, $t2, $zero
+Ciclo 7:
+	Escrita:
+		add $t3, $t2, $zero
+	Efetivando:
+		add $t3, $t2, $zero

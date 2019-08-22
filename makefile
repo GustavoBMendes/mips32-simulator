@@ -1,2 +1,2 @@
-mips32: barramento.c memoria.c teste.c ula.c mdu.c operationsUnit.c instrucoes.c executionQueue.c pipeline.c somadorPC.c registradores.c branchPredictor.c bypass.c tradutor.c scoreboarding.c
-		gcc barramento.c memoria.c teste.c ula.c mdu.c operationsUnit.c instrucoes.c executionQueue.c pipeline.c somadorPC.c registradores.c branchPredictor.c bypass.c tradutor.c scoreboarding.c -o simulador 
+mips32: barramento.c memoria.c main.c ula.c mdu.c operationsUnit.c instrucoes.c executionQueue.c pipeline.c somadorPC.c registradores.c branchPredictor.c bypass.c tradutor.c scoreboarding.c
+		gcc barramento.c memoria.c main.c ula.c mdu.c operationsUnit.c instrucoes.c executionQueue.c pipeline.c somadorPC.c registradores.c branchPredictor.c bypass.c tradutor.c scoreboarding.c -o mips32sim 

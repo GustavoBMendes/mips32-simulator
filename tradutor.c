@@ -206,8 +206,7 @@ void arquivoBin(){
 		else if(strcmp(str, "lui\n") == 0){
 
 			fputs("001111", bin);
-			if(fgets(str, 7, arq) != NULL)
-				fputs(getRegistrador(str), bin);
+			fputs("00000", bin);
 			if(fgets(str, 7, arq) != NULL)
 				fputs(getRegistrador(str), bin);
 			if(fgets(str, 7, arq) != NULL)
@@ -329,7 +328,9 @@ void arquivoBin(){
 				fputs(getRegistrador(str), bin);
 			if(fgets(str, 7, arq) != NULL)
 				fputs(getRegistrador(str), bin);
-			fputs("0000000000", bin);
+			if(fgets(str, 7, arq) != NULL)
+				fputs(getRegistrador(str), bin);
+			fputs("00000", bin);
 			fputs("011000", bin);
 
 		}

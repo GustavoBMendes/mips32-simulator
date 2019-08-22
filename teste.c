@@ -16,7 +16,7 @@
 #define VAZIO 0
 
 int main(){
-    unsigned int reg[32] = {0};
+    unsigned int reg[32] = {VAZIO};
     unsigned int HI = 0,LO = 0, PC = 0;
     inicializeMemory(); //Ok está alocando
     
@@ -114,8 +114,7 @@ int main(){
                 continue;
 
             else if(instrucao[i].estagio == 0){
-                printf("Ciclo:%d\n", ciclo);
-                printRegistradores(reg, HI, LO, PC);
+                 
                 instrucao[i].nome = (char*) malloc(7 * sizeof(char));
                 strcpy(instrucao[i].nome, Istage(&F, PC));
                 instrucao[i].endereco = PC;
@@ -143,7 +142,6 @@ int main(){
 
                 //suporte ao bypass
                 reg[instrucao[i].indRegistrador] = returnMultiplexador();
-                //printf("\nRegistrador[%d] = %d\n", instrucao[i].indRegistrador, reg[instrucao[i].indRegistrador]);
 
             }
 

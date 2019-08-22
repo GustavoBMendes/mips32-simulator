@@ -66,7 +66,6 @@ void inicializeMemory(){
 
     memory = malloc(memCapacity * sizeof(char));
     palavra = malloc(4 * sizeof(char));
-    printf("Memoria inicializada\n");
 
 }
 
