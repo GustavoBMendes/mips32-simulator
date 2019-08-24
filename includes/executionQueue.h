@@ -24,7 +24,7 @@ void queueInReg2(FILA *novo, char* reg);
 void queueInImediato(FILA *novo, unsigned int imediato);
 int queueOut(FILA* F);
 void printQueue (FILA F);
-void ler();
+void ler(char *programName);
 int inserirElementos(FILA *F);
 
 #endif

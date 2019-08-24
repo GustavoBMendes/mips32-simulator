@@ -16,66 +16,14 @@
 #define VAZIO 0
 
 int main(){
-    unsigned int reg[32] = {VAZIO};
+
+    unsigned int reg[32] = {0};
     unsigned int HI = 0,LO = 0, PC = 0;
-    inicializeMemory(); //Ok está alocando
+    FILE* out = fopen("prog.out", "w");
+    FILE* assembly = fopen("arq.asm", "r");
+    FILE* binario = fopen("saida_hex.txt", "r");
+    inicializeMemory();
     
-    /* 
-    unsigned char *dado = "15";
-    inserirNoBarramento(dado);
-    writeInMemory(0);
-
-    int i;
-    for(i = 0; i < 4; i++){
-        printf("\n[%d] : %d", i, *(memory + i));
-    }
-    */
-   
-    //$T0 = 15;
-    //$T1 = 5;
-    /*
-    printf("\nRESULTADO ACIONANDO A ULA (+) > %d \n", ulaAdd(T0, T1));
-    printf("\nRESULTADO ACIONANDO O MDU (*) > %d \n", mduMul(T0, T1));
-    printf("\nRESULTADO ACIONANDO O MDU (MADD) > %d \n", mduMadd(T0, T1));
-    printf("\nRESULTADO ACIONANDO O MDU (MSUB) > %d \n", mduMsub(T0, T1));
-    printf("REsultado do HI: %d\nResultado do LO: %d\n",mduDivHI(T0, T1,HI,LO),mduDivLO(T0, T1,HI,LO));
-    */
-    /* 
-    printf("Teste MFLO, MTLO, MTHI E MTHI:\n\n");
-    printf("MTHI: %d\nMFHI: %d",mduMthi(T0,HI),mduMfhi(HI,T0));
-    */
-    
-    /*
-    FILA F;
-
-    create(&F);
-    ler();
-    int instrucoes = inserirElementos(&F);
-
-    printf("\n%d instrucoes\n", instrucoes);
-
-    char *a = (char*) malloc(7 * sizeof(char));
-    strcpy(a, Istage(&F, PC));
-    printf("%s ",a);
-
-    int indiceReg = Estage(a, &F, PC, reg);
-    printf("\nIndice registrador destino: %d\n", indiceReg);
-
-    int dado = Mstage(PC);
-    printf("\nResultado: %d", dado);
-    
-    if(Astage(PC) == 1)
-        printf("\nEndereço Correto!\n");
-    else
-        printf("\nEndereço incorreto!\n");
-
-    reg[indiceReg] = Wstage(PC, dado, indiceReg, reg);
-    printf("\nEscrita no Registrador[%d] = %d\n", indiceReg, reg[indiceReg]);
-
-    PC = somarPC(PC);
-    printf("\nPC = %d\n", PC);
-    */
-
     struct instrucoes{
         int estagio,
             indRegistrador,
@@ -83,52 +31,43 @@ int main(){
             dado;
         char *nome;
     };
-
-    int multiplexador;
-
-    struct numerosPrevisao n;
-    n.acertos = 0;
-    n.erros = 0;
-    n.saltos = 0;
-
+    
     FILA F;
 
     create(&F);
-    ler();
+    ler("arq.asm");
     int total_instrucoes = inserirElementos(&F);
     int total_ciclos = (total_instrucoes - 1) + 5;
     struct instrucoes instrucao[total_instrucoes];
-    int ciclo = 1;
+    
+    arquivoBin();
+    arquivoHex();
+    
+    fclose(assembly);
 
     int i;
     for (i = 0; i < total_instrucoes; i++){
-        instrucao[i].estagio = VAZIO;
+        instrucao[i].estagio = 0;
     }
-    
+
+    int ciclo = 1;
 
     while(total_ciclos > 0){
-        
+    
         for (i = 0; i < ciclo; i++){
 
             if(instrucao[i].estagio >= 5)
                 continue;
 
             else if(instrucao[i].estagio == 0){
-                 
+                
                 instrucao[i].nome = (char*) malloc(7 * sizeof(char));
-                strcpy(instrucao[i].nome, Istage(&F, PC));
+                if((PC / 4) < total_instrucoes)
+                    strcpy(instrucao[i].nome, Istage(&F, PC));
+                else 
+                    continue;
                 instrucao[i].endereco = PC;
-
-                //suporte a previsão de desvio
-                if(isBranch(instrucao[i].nome)){
-
-                    NO* aux = getNoBranch(&F, PC);
-                    int indReg1 = getRegBranch(aux, 1);
-                    int indReg2 = getRegBranch(aux, 2);
-
-                    n = previsao(instrucao[i].nome, reg[indReg1], reg[indReg2], n);
-
-                }
+                printf("Buscou\n");
 
                 PC = somarPC(PC);
                 instrucao[i].estagio++;
@@ -139,6 +78,14 @@ int main(){
 
                 instrucao[i].indRegistrador = Estage(instrucao[i].nome, &F, instrucao[i].endereco, reg);
                 instrucao[i].estagio++;
+                printf("Executou\n");
+                if(instrucao[i].indRegistrador == 32)
+                    PC += returnMultiplexador();
+
+                else if(instrucao[i].indRegistrador == 33){
+                    instrucao[i].estagio = 5;
+                    continue;
+                }
 
                 //suporte ao bypass
                 reg[instrucao[i].indRegistrador] = returnMultiplexador();
@@ -146,20 +93,25 @@ int main(){
             }
 
             else if(instrucao[i].estagio == 2){
-
+                printf("Memória\n");
                 instrucao[i].dado = Mstage(instrucao[i].endereco);
                 instrucao[i].estagio++;
 
             }
 
             else if(instrucao[i].estagio == 3){
-
+                printf("Alinhamento\n");
                 Astage(instrucao[i].endereco);
                 instrucao[i].estagio++;
 
             }
 
             else if(instrucao[i].estagio == 4){
+                printf("escrita\n");
+                if(instrucao[i].indRegistrador == 32){
+                    instrucao[i].estagio++;
+                    continue;
+                }
 
                 if(reg[instrucao[i].indRegistrador] == instrucao[i].dado)
                     reg[instrucao[i].indRegistrador] = 
@@ -177,42 +129,10 @@ int main(){
     }
     
     printRegistradores(reg, HI, LO, PC);
-    printMemory();
-
-    printf("\nPrevisor de desvio:\n");
-    printf("Total de acertos = %d\n", n.acertos);
-    printf("Total de erros = %d\n", n.erros);
-    
-/* 
-    // TESTE TRADUTOR
-    FILA F;
-    ler();
-    arquivoBin();
-    arquivoHex();
-    
-*/
-    /*
-    int a = 111;       
-    inserirNoBarramento(a);
-    printf("%s \n",biu);
-    printf("Recuperado do barramento o valor: %d",recuperarNoBarramento());
-    */
-
-
-    //teste tabela score
-    //FILA F;
-    //create(&F);
-    //ler();
-    //int total_instrucoes = inserirElementos(&F);
-    //inicializarFus(&F, total_instrucoes);
-
-    
-    //GERAR .OUT
-    FILE* out = fopen("prog.out", "w");
-    FILE* assembly = fopen("arq.asm", "r");
-    FILE* binario = fopen("saida_hex.txt", "r");
 
     char linha[50];
+
+    assembly = fopen("arq.asm", "r");
 
     fprintf(out, "Programa:\n");
 
@@ -223,6 +143,8 @@ int main(){
     }
     fputs("\n", out);
     fputs("\n", out);
+
+    fclose(assembly);
 
     char bin[10];
 
@@ -235,16 +157,15 @@ int main(){
     fputs("\n", out);
 
     fprintf(out, "Previsão:\n");
-    fprintf(out, "\tTotal de saltos: %d\n", n.saltos);
-    fprintf(out, "\tAcertos: %d\n", n.acertos);
-    fprintf(out, "\tErros: %d\n\n", n.erros);
     fprintf(out, "Ciclos:\n\t%d ciclos\n\n", ciclo);
     fprintf(out, "Instruções:\n");
     fprintf(out, "\tEmitidas: %d\n", total_instrucoes);
     fprintf(out, "\tEfetivadas: %d\n", ciclo);
 
+
     fclose(out);
-    fclose(assembly);
     fclose(binario);
+
+    return 0;
 
 }

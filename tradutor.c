@@ -446,6 +446,8 @@ void arquivoHex(){
 		char sub8[5];
 
 		fgets(sub1, 5, bin);
+		if(strcmp(sub1,"") == 0)
+			break;
 		hex = tradutorHex(sub1);
 		fputc(hex, hexa);
 		fgets(sub2, 5, bin);

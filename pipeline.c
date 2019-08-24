@@ -183,16 +183,17 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
 
     else if(strcmp(instrucao, "bgez\n") == 0){
 
-        int aux = PC;
+        int aux = 0;
 
         iDest = getReg(linha->regDestino);
         operando1 = reg[iDest];
 
         imediato = linha->imediato;
         
-        PC = bgez(operando1, PC, imediato);
+        aux = bgez(operando1, aux, imediato);
 
-        inserirNoBarramento(PC);
+        inserirMultiplexador(aux);
+        inserirNoBarramento(aux);
         writeInMemory(aux);
 
         return 32;
@@ -217,15 +218,18 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
 
     else if(strcmp(instrucao, "blez\n") == 0){
 
+        int destino = 0;
+
         iDest = getReg(linha->regDestino);
         operando1 = reg[iDest];
 
         imediato = linha->imediato;
 
-        PC = blez(operando1, PC, imediato);
+        destino = blez(operando1, destino, imediato);
 
-        inserirNoBarramento(PC);
-        writeInMemory(PC);
+        inserirMultiplexador(destino);
+        inserirNoBarramento(destino);
+        writeInMemory(destino);
 
         return 32;
 
@@ -527,8 +531,10 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
 
     }
 
-    else
+    else{
         nop();
+        return 33;
+    }
         
     //suporte ao bypass
     inserirMultiplexador(operando1);

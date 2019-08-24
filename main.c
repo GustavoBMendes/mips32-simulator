@@ -73,14 +73,14 @@ int main(int argc, char *argv[]){
     FILA F;
 
     create(&F);
-    ler();
+    ler(programName);
     int total_instrucoes = inserirElementos(&F);
     int total_ciclos = (total_instrucoes - 1) + 5;
     struct instrucoes instrucao[total_instrucoes];
     
     arquivoBin();
     arquivoHex();
-
+    
     fclose(assembly);
 
     int i;
@@ -137,19 +137,11 @@ int main(int argc, char *argv[]){
                 else if(instrucao[i].estagio == 0){
                     
                     instrucao[i].nome = (char*) malloc(7 * sizeof(char));
-                    strcpy(instrucao[i].nome, Istage(&F, PC));
+                    if((PC / 4) < total_instrucoes)
+                        strcpy(instrucao[i].nome, Istage(&F, PC));
+                    else 
+                        continue;
                     instrucao[i].endereco = PC;
-
-                    //suporte a previsão de desvio
-                    if(isBranch(instrucao[i].nome)){
-
-                        NO* aux = getNoBranch(&F, PC);
-                        int indReg1 = getRegBranch(aux, 1);
-                        int indReg2 = getRegBranch(aux, 2);
-
-                        n = previsao(instrucao[i].nome, reg[indReg1], reg[indReg2], n);
-
-                    }
 
                     assembly = fopen(programName, "r");
                     int linha = 0;
@@ -172,8 +164,17 @@ int main(int argc, char *argv[]){
                     instrucao[i].indRegistrador = Estage(instrucao[i].nome, &F, instrucao[i].endereco, reg);
                     instrucao[i].estagio++;
 
+                    if(instrucao[i].indRegistrador == 32)
+                        PC += returnMultiplexador();
+
+                    else if(instrucao[i].indRegistrador == 33){
+                        instrucao[i].estagio = 5;
+                        continue;
+                    }
+
                     //suporte ao bypass
-                    reg[instrucao[i].indRegistrador] = returnMultiplexador();
+                    else
+                        reg[instrucao[i].indRegistrador] = returnMultiplexador();
 
                     assembly = fopen(programName, "r");
                     int linha = 0;
@@ -226,9 +227,13 @@ int main(int argc, char *argv[]){
 
                 else if(instrucao[i].estagio == 4){
 
+                    if(instrucao[i].indRegistrador == 32){
+                        instrucao[i].estagio++;
+                        continue;
+                    }
+
                     if(reg[instrucao[i].indRegistrador] == instrucao[i].dado)
-                        reg[instrucao[i].indRegistrador] = 
-                        Wstage(instrucao[i].endereco, instrucao[i].dado, instrucao[i].indRegistrador, reg);
+                        reg[instrucao[i].indRegistrador] = Wstage(instrucao[i].endereco, instrucao[i].dado, instrucao[i].indRegistrador, reg);
                     instrucao[i].estagio++;
 
                     assembly = fopen(programName, "r");
@@ -255,6 +260,11 @@ int main(int argc, char *argv[]){
             total_ciclos--;
         }
         
+        fprintf(out, "\nInstruções:\n");
+        fprintf(out, "\tEmitidas: %d\n", total_instrucoes);
+        fprintf(out, "\tEfetivadas: %d\n", ciclo);
+
+
         printRegistradores(reg, HI, LO, PC);
 
     }
@@ -274,20 +284,13 @@ int main(int argc, char *argv[]){
                 else if(instrucao[i].estagio == 0){
                     
                     instrucao[i].nome = (char*) malloc(7 * sizeof(char));
-                    strcpy(instrucao[i].nome, Istage(&F, PC));
+                    if((PC / 4) < total_instrucoes)
+                        strcpy(instrucao[i].nome, Istage(&F, PC));
+                    else 
+                        continue;
                     instrucao[i].endereco = PC;
-
-                    //suporte a previsão de desvio
-                    if(isBranch(instrucao[i].nome)){
-
-                        NO* aux = getNoBranch(&F, PC);
-                        int indReg1 = getRegBranch(aux, 1);
-                        int indReg2 = getRegBranch(aux, 2);
-
-                        n = previsao(instrucao[i].nome, reg[indReg1], reg[indReg2], n);
-
-                    }
-
+                    
+                    
                     PC = somarPC(PC);
                     instrucao[i].estagio++;
 
@@ -297,31 +300,44 @@ int main(int argc, char *argv[]){
 
                     instrucao[i].indRegistrador = Estage(instrucao[i].nome, &F, instrucao[i].endereco, reg);
                     instrucao[i].estagio++;
+                    
+                    if(instrucao[i].indRegistrador == 32)
+                        PC += returnMultiplexador();
+
+                    else if(instrucao[i].indRegistrador == 33){
+                        instrucao[i].estagio = 5;
+                        continue;
+                    }
 
                     //suporte ao bypass
-                    reg[instrucao[i].indRegistrador] = returnMultiplexador();
+                    else
+                        reg[instrucao[i].indRegistrador] = returnMultiplexador();
 
                 }
 
                 else if(instrucao[i].estagio == 2){
-
+                    
                     instrucao[i].dado = Mstage(instrucao[i].endereco);
                     instrucao[i].estagio++;
 
                 }
 
                 else if(instrucao[i].estagio == 3){
-
+                    
                     Astage(instrucao[i].endereco);
                     instrucao[i].estagio++;
 
                 }
 
                 else if(instrucao[i].estagio == 4){
+                    
+                    if(instrucao[i].indRegistrador == 32){
+                        instrucao[i].estagio++;
+                        continue;
+                    }
 
                     if(reg[instrucao[i].indRegistrador] == instrucao[i].dado)
-                        reg[instrucao[i].indRegistrador] = 
-                        Wstage(instrucao[i].endereco, instrucao[i].dado, instrucao[i].indRegistrador, reg);
+                        reg[instrucao[i].indRegistrador] = Wstage(instrucao[i].endereco, instrucao[i].dado, instrucao[i].indRegistrador, reg);
                     instrucao[i].estagio++;
 
                 }

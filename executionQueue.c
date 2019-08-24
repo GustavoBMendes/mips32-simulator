@@ -154,9 +154,9 @@ void printQueue(FILA F){
  * SEPARA TODAS AS INSTRUÇÕES, OPERANDOS, IMEDIATOS 
  * INSERINDO TODOS EM UM NOVO ARQUIVO "saida.txt"
  */
-void ler(){
+void ler(char *programName){
 
-    FILE* arq_asm = fopen("arq.asm", "r");
+    FILE* arq_asm = fopen(programName, "r");
     FILE* saida = fopen("saida.txt", "w");
 
     char atual;

@@ -231,7 +231,7 @@ int inicializarFus(FILA *F, int total_instrucoes){
         }
 
         //unidade mult1 e mult2
-        else if(strcmp(instrucao->instructionName, "mul\n") == 0){
+        else if(strcmp(instrucao->instructionName, "mul\n") == 0 || strcmp(instrucao->instructionName, "mult\n") == 0){
 
             if(fus[1].busy == false){
 
@@ -335,7 +335,7 @@ int inicializarFus(FILA *F, int total_instrucoes){
 
         }
 
-        else if(strcmp(instrucao->instructionName, "mult\n") == 0 || strcmp(instrucao->instructionName, "msub\n") == 0){
+        else if(strcmp(instrucao->instructionName, "msub\n") == 0){
 
             if(fus[1].busy == false){
 
@@ -1363,10 +1363,8 @@ unsigned int execucao(unsigned int operando1, unsigned int operando2, unsigned i
     else if(strcmp(nome_instrucao, "mul\n") == 0)
         operando1 = mul(operando1, operando2, operando3);
 
-    else if(strcmp(nome_instrucao, "mult\n") == 0){
-        HI += LO;
-        HI = mult(operando1, operando2, HI);
-    }
+    else if(strcmp(nome_instrucao, "mult\n") == 0)
+        operando1 = mult(operando2, operando3, operando1);
 
     else if(strcmp(nome_instrucao, "nor\n") == 0)
         operando1 = nor(operando1, operando2, operando3);
