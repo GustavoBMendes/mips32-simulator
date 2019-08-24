@@ -78,10 +78,18 @@ int main(int argc, char *argv[]){
     int total_ciclos = (total_instrucoes - 1) + 5;
     struct instrucoes instrucao[total_instrucoes];
     
+    if(strcmp("arq10.asm", programName) == 0){
+        printf("\nScoreboarding\n");
+        inicializarFus(&F, total_instrucoes);
+    }
+
     arquivoBin();
     arquivoHex();
     
     fclose(assembly);
+
+    //arquivo que exemplifica o uso do scoreboarding
+    
 
     int i;
     for (i = 0; i < total_instrucoes; i++){

@@ -144,7 +144,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
 
     else if(strcmp(instrucao, "beq\n") == 0){
 
-        int aux = PC;
+        int aux = 0;
 
         iDest = getReg(linha->regDestino);
         operando1 = reg[iDest];
@@ -154,9 +154,10 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
 
         imediato = linha->imediato;
 
-        PC = beq(operando1, operando2, PC, imediato);
+        aux = beq(operando1, operando2, aux, imediato);
 
-        inserirNoBarramento(PC);
+        inserirMultiplexador(aux);
+        inserirNoBarramento(aux);
         writeInMemory(aux);
 
         return 32;
@@ -203,15 +204,18 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
 
     else if(strcmp(instrucao, "bgtz\n") == 0){
 
+        int aux = 0;
+
         iDest = getReg(linha->regDestino);
         operando1 = reg[iDest];
 
         imediato = linha->imediato;
         
-        PC = bgtz(operando1, PC, imediato);
+        aux = bgtz(operando1, aux, imediato);
 
-        inserirNoBarramento(PC);
-        writeInMemory(PC);
+        inserirMultiplexador(aux);
+        inserirNoBarramento(aux);
+        writeInMemory(aux);
 
         return 32;
 
@@ -238,15 +242,18 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
 
     else if(strcmp(instrucao, "bltz\n") == 0){
 
+        int aux = 0;
+
         iDest = getReg(linha->regDestino);
         operando1 = reg[iDest];
 
         imediato = linha->imediato;
         
-        PC = bltz(operando1, PC, imediato);
+        aux = bltz(operando1, aux, imediato);
 
-        inserirNoBarramento(PC);
-        writeInMemory(PC);
+        inserirMultiplexador(aux);
+        inserirNoBarramento(aux);
+        writeInMemory(aux);
 
         return 32;
 
@@ -288,12 +295,15 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
 
     else if(strcmp(instrucao, "j\n") == 0){
 
+        int aux = 0;
+
         imediato = linha->imediato;
         
-        PC = j(PC, imediato);
+        aux = j(aux, imediato);
 
-        inserirNoBarramento(PC);
-        writeInMemory(PC);
+        inserirMultiplexador(aux);
+        inserirNoBarramento(aux);
+        writeInMemory(aux);
 
         return 32;
 

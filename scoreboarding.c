@@ -7,7 +7,7 @@
 unsigned int reg[32];
 unsigned int HI = 0,LO = 0, PC = 0;
 
-int inicializarFus(FILA *F, int total_instrucoes){
+void inicializarFus(FILA *F, int total_instrucoes){
 
     struct functionalUnitStatus fus[5];
     struct registerResultStatus rss[32];
@@ -101,6 +101,8 @@ int inicializarFus(FILA *F, int total_instrucoes){
         bool RJ, RK;
     };
     struct fila fila_espera[total_instrucoes-1];
+
+    printFus(fus);
 
     while(indice < total_instrucoes){
 
@@ -231,7 +233,7 @@ int inicializarFus(FILA *F, int total_instrucoes){
         }
 
         //unidade mult1 e mult2
-        else if(strcmp(instrucao->instructionName, "mul\n") == 0 || strcmp(instrucao->instructionName, "mult\n") == 0){
+        else if(strcmp(instrucao->instructionName, "mul\n") == 0){
 
             if(fus[1].busy == false){
 
@@ -335,7 +337,7 @@ int inicializarFus(FILA *F, int total_instrucoes){
 
         }
 
-        else if(strcmp(instrucao->instructionName, "msub\n") == 0){
+        else if(strcmp(instrucao->instructionName, "mult\n") == 0 || strcmp(instrucao->instructionName, "msub\n") == 0){
 
             if(fus[1].busy == false){
 
@@ -469,7 +471,7 @@ int inicializarFus(FILA *F, int total_instrucoes){
 
                 strcpy(fus[0].opName, instrucao->instructionName);
                 fus[0].id = indice;
-
+                
                 //verificar nas instrucoes anteriores se possui dependecia de dados
                 //percorrer o rss verificando se os registradores já estão sendo utilizados para escrita
                 fus[0].rk = true;
@@ -760,7 +762,7 @@ int inicializarFus(FILA *F, int total_instrucoes){
                     break;
                 }
             }
-
+            
             //Estagio de execucao;
             while(fus[indiceAtual].time > 0){
                 if(fus[indiceAtual].time == 1)
@@ -1265,9 +1267,6 @@ int inicializarFus(FILA *F, int total_instrucoes){
         ciclo++;
 
     }
-
-    return ciclo;
-
 }
 
 void printFus(struct functionalUnitStatus fus[5]){

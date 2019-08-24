@@ -28,14 +28,12 @@ struct functionalUnitStatus{
 struct functionalUnitStatus fus[5];
 
 struct registerResultStatus{
-    char *regName;
-    char *ufName;
     int indice_unidade;
 };
 
 struct registerResultStatus rss[32];
 
-int inicializarFus(FILA *F, int total_instrucoes);
+void inicializarFus(FILA *F, int total_instrucoes);
 void printFus();
 unsigned int execucao(unsigned int operando1, unsigned int operando2, unsigned int operando3, char instrucao[7], int imediato);
 

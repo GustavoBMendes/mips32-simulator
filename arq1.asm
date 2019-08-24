@@ -19,6 +19,7 @@ mfhi $t5
 mflo $t6
 mthi $t3
 mtlo $t4
+movn $t5, $t1, $zero
 movz $t5, $t1, $t2
 msub $t7, $t5, $t6
 mul $t8, $t0, $t7

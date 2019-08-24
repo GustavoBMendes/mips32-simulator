@@ -294,7 +294,9 @@ void arquivoBin(){
 				fputs(getRegistrador(str), bin);
 			if(fgets(str, 7, arq) != NULL)
 				fputs(getRegistrador(str), bin);
-			fputs("0000000000", bin);
+			if(fgets(str, 7, arq) != NULL)
+				fputs(getRegistrador(str), bin);
+			fputs("00000", bin);
 			fputs("000100", bin);
 
 		}
@@ -428,7 +430,7 @@ void arquivoBin(){
 		}
 
 		else
-			printf("\nInstrução não encontrada, ou label encontrado");
+			printf("\nTradutor: Label encontrado, ou instrução não encontrada\n");
 		
 		i++;
 
@@ -580,7 +582,7 @@ char tradutorHex(char* substr){
         return 'F';
 
 	else
-		printf("\nProblema com Opcode!");
+		printf("\nTradutor: Problema com Opcode!");
 
 }
 
