@@ -32,8 +32,8 @@ int mduDivHI(int regOrigem1, int regOrigem2, int HI, int LO){
 * @function void mduDiv(mdu *mdu_executavel)
 * @abstract Executa a operação DIV através da chamada da função div() no módulo "instruções".
 */
-int mduDivLO(int regOrigem1, int regOrigem2,int HI, int LO){
-    int res = DivLO(regOrigem1,regOrigem2,HI,LO);
+int mduDivLO(int regOrigem1, int regOrigem2,int regOrigem3){
+    int res = DivLO(regOrigem1,regOrigem2,regOrigem3);
     return res;
 }
 /* 

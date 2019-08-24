@@ -10,7 +10,7 @@ extern unsigned int saida_mdu;
 
 
 int mduDivHI(int regOrigem1, int regOrigem2, int HI, int LO);
-int mduDivLO(int regOrigem1, int regOrigem2,int HI, int LO);
+int mduDivLO(int regOrigem1, int regOrigem2,int regOrigem3);
 int mduMul(int regOrigem1, int regOrigem2); 
 int mduMult(int regOrigem1, int regOrigem2); 
 int mduMadd(int regOrigem1, int regOrigem2); 

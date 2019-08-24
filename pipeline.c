@@ -66,6 +66,7 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
     }
 
     unsigned int operando1, operando2, operando3, imediato;
+    unsigned int HI = 0, LO = 0;
 
     if(strcmp(instrucao, "add\n") == 0){
 
@@ -127,15 +128,15 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
 
     else if(strcmp(instrucao, "b\n") == 0){
 
-        iDest = getReg(linha->regDestino);
-        operando1 = reg[iDest];
+        int aux = 0;
 
         imediato = linha->imediato;
 
-        PC = b(PC, imediato);
+        aux = b(aux, imediato);
 
-        inserirNoBarramento(PC);
-        writeInMemory(PC);
+        inserirMultiplexador(aux);
+        inserirNoBarramento(aux);
+        writeInMemory(aux);
 
         return 32;
 
@@ -277,9 +278,11 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
 
         iOp2 = getReg(linha->reg1);
         operando2 = reg[iOp2];
+
+        iOp3 = getReg(linha->reg2);
+        operando3 = reg[iOp3];
         
-        HI = DivHI(operando1, operando2, HI, LO);
-        LO = DivLO(operando1, operando2, HI, LO);
+        LO = DivLO(operando1, operando2, operando3);
 
     }
 
@@ -328,8 +331,11 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
 
         iOp2 = getReg(linha->reg1);
         operando2 = reg[iOp2];
-        HI += LO;
-        HI = madd(operando1, operando2, HI);    //registrador acumulador, HI e LO são deste tipo
+
+        iOp3 = getReg(linha->reg2);
+        operando3 = reg[iOp3];
+
+        operando1 = madd(operando2, operando3, operando1);
 
     }
 
@@ -389,9 +395,10 @@ int Estage(char* instrucao, FILA *exeQueue, int PC, int *reg){
         iOp2 = getReg(linha->reg1);
         operando2 = reg[iOp2];
 
-        HI += LO;
+        iOp3 = getReg(linha->reg2);
+        operando3 = reg[iOp3];
 
-        HI = msub(operando1, operando2, HI);
+        operando1 = msub(operando2, operando3, operando1);
 
     }
 

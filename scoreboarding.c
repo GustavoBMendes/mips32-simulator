@@ -1318,10 +1318,8 @@ unsigned int execucao(unsigned int operando1, unsigned int operando2, unsigned i
     else if(strcmp(nome_instrucao, "bne\n") == 0)
         PC = bne(operando1, operando2, PC, imediato);
 
-    else if(strcmp(nome_instrucao, "div\n") == 0){
-        HI = DivHI(operando1, operando2, HI, LO);
-        LO = DivLO(operando1, operando2, HI, LO);
-    }
+    else if(strcmp(nome_instrucao, "div\n") == 0)
+        LO = DivLO(operando1, operando2, operando3);
 
     else if(strcmp(nome_instrucao, "j\n") == 0)
         PC = j(PC, imediato);

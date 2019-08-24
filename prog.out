@@ -1,19 +1,68 @@
 Programa:
-	lui $t0, 10
-	lui $t1, 14
-	sub $t2, $t0, $t1
-	bgez $t2, 4
-	add $t2, $zero, $zero
-	skip:
+	add $t0, $zero, $zero
+	addi $t0, $zero, 1
+	and $t1, $t0, $zero
+	andi $t1, $t0, 1
+	b 0
+	beq $t0, $t1, 0
+	beql $t0, $t1, 0
+	bgez $t0, 0
+	bgtz $t0, 0
+	blez $t0, 0
+	bltz $t0, 0
+	bne $t0, $t1, 0
+	div $t2, $t1, $t0
+	j 0
+	jr $zero
+	lui $t3, 10
+	madd $t4, $t3, $t2
+	mfhi $t5
+	mflo $t6
+	mthi $t3
+	mtlo $t4
+	movz $t5, $t1, $t2
+	msub $t7, $t5, $t6
+	mul $t8, $t0, $t7
+	mult $t9, $t0, $t1
+	nor $s0, $t9, $t8
+	or $s1, $t0, $zero
+	ori $s2, $t1, 10
+	sub $s3, $s2, $s1
+	xor $s4, $s3, $zero
+	xori $s5, $s4, 5
 
 Binário:
-	3C08000A
-	3C09000E
-	0148481D
-	05410004
-	01400020
-	01400020
-	01400020
+	01000020
+	21000001
+	3128
+	0003400
+	0001109
+	0005109
+	0000501
+	0001D00
+	0001900
+	0000500
+	0001509
+	0000149
+	0060800
+	0000000
+	0023C0B
+	002018B
+	4000000
+	A040000
+	C040160
+	0040180
+	00401A9
+	402
+	0C21E00
+	0CA1206
+	0867009
+	08A0009
+	D924002
+	09CA207
+	0A4C009
+	EAD0001
+	EAD0001
 
 Previsão:
 	Total de saltos: 0
@@ -21,104 +70,535 @@ Previsão:
 	Erros: 0
 
 Ciclos:
-	10 ciclos
+	35 ciclos
 Ciclo 1:
 	Busca:
-		lui $t0, 10
+		add $t0, $zero, $zero
 
 Ciclo 2:
 	Execução:
-		lui $t0, 10
+		add $t0, $zero, $zero
 
 	Busca:
-		lui $t1, 14
+		addi $t0, $zero, 1
 
 Ciclo 3:
 	Busca da memória:
-		lui $t0, 10
+		add $t0, $zero, $zero
 
 	Execução:
-		lui $t1, 14
+		addi $t0, $zero, 1
 
 	Busca:
-		sub $t2, $t0, $t1
+		and $t1, $t0, $zero
 
 Ciclo 4:
 	Alinhamento:
-		lui $t0, 10
+		add $t0, $zero, $zero
 
 	Busca da memória:
-		lui $t1, 14
+		addi $t0, $zero, 1
 
 	Execução:
-		sub $t2, $t0, $t1
+		and $t1, $t0, $zero
 
 	Busca:
-		bgez $t2, 4
+		andi $t1, $t0, 1
 
 Ciclo 5:
 	Escrita:
-		lui $t0, 10
+		add $t0, $zero, $zero
 
 	Efetivando:
-		lui $t0, 10
+		add $t0, $zero, $zero
 
 	Alinhamento:
-		lui $t1, 14
+		addi $t0, $zero, 1
 
 	Busca da memória:
-		sub $t2, $t0, $t1
+		and $t1, $t0, $zero
 
 	Execução:
-		bgez $t2, 4
+		andi $t1, $t0, 1
 
 	Busca:
-		add $t2, $zero, $zero
+		b 0
 
 Ciclo 6:
 	Escrita:
-		lui $t1, 14
+		addi $t0, $zero, 1
 
 	Efetivando:
-		lui $t1, 14
+		addi $t0, $zero, 1
 
 	Alinhamento:
-		sub $t2, $t0, $t1
+		and $t1, $t0, $zero
 
 	Busca da memória:
-		bgez $t2, 4
+		andi $t1, $t0, 1
 
 	Execução:
-		add $t2, $zero, $zero
+		b 0
 
 	Busca:
-		skip:
-Ciclo 6:
+		beq $t0, $t1, 0
+
+Ciclo 7:
 	Escrita:
-		sub $t2, $t0, $t1
+		and $t1, $t0, $zero
 
 	Efetivando:
-		sub $t2, $t0, $t1
+		and $t1, $t0, $zero
 
 	Alinhamento:
-		bgez $t2, 4
+		andi $t1, $t0, 1
 
 	Busca da memória:
-		add $t2, $zero, $zero
+		b 0
 
-Ciclo 6:
-	Alinhamento:
-		add $t2, $zero, $zero
+	Execução:
+		beq $t0, $t1, 0
 
-Ciclo 6:
+	Busca:
+		beql $t0, $t1, 0
+
+Ciclo 8:
 	Escrita:
-		add $t2, $zero, $zero
+		andi $t1, $t0, 1
 
 	Efetivando:
-		add $t2, $zero, $zero
+		andi $t1, $t0, 1
 
-Ciclo 6:
+	Alinhamento:
+		b 0
+
+	Busca da memória:
+		beq $t0, $t1, 0
+
+	Execução:
+		beql $t0, $t1, 0
+
+	Busca:
+		bgez $t0, 0
+
+Ciclo 9:
+	Alinhamento:
+		beq $t0, $t1, 0
+
+	Busca da memória:
+		beql $t0, $t1, 0
+
+	Execução:
+		bgez $t0, 0
+
+	Busca:
+		bgtz $t0, 0
+
+Ciclo 10:
+	Alinhamento:
+		beql $t0, $t1, 0
+
+	Busca da memória:
+		bgez $t0, 0
+
+	Execução:
+		bgtz $t0, 0
+
+	Busca:
+		blez $t0, 0
+
+Ciclo 11:
+	Alinhamento:
+		bgez $t0, 0
+
+	Busca da memória:
+		bgtz $t0, 0
+
+	Execução:
+		blez $t0, 0
+
+	Busca:
+		bltz $t0, 0
+
+Ciclo 12:
+	Alinhamento:
+		bgtz $t0, 0
+
+	Busca da memória:
+		blez $t0, 0
+
+	Execução:
+		bltz $t0, 0
+
+	Busca:
+		bne $t0, $t1, 0
+
+Ciclo 13:
+	Alinhamento:
+		blez $t0, 0
+
+	Busca da memória:
+		bltz $t0, 0
+
+	Execução:
+		bne $t0, $t1, 0
+
+	Busca:
+		div $t2, $t1, $t0
+
+Ciclo 14:
+	Alinhamento:
+		bltz $t0, 0
+
+	Busca da memória:
+		bne $t0, $t1, 0
+
+	Execução:
+		div $t2, $t1, $t0
+
+	Busca:
+		j 0
+
+Ciclo 15:
+	Alinhamento:
+		bne $t0, $t1, 0
+
+	Busca da memória:
+		div $t2, $t1, $t0
+
+	Execução:
+		j 0
+
+	Busca:
+		jr $zero
+
+Ciclo 16:
+	Alinhamento:
+		div $t2, $t1, $t0
+
+	Busca da memória:
+		j 0
+
+	Execução:
+		jr $zero
+
+	Busca:
+		lui $t3, 10
+
+Ciclo 17:
+	Escrita:
+		div $t2, $t1, $t0
+
+	Efetivando:
+		div $t2, $t1, $t0
+
+	Alinhamento:
+		j 0
+
+	Busca da memória:
+		jr $zero
+
+	Execução:
+		lui $t3, 10
+
+	Busca:
+		madd $t4, $t3, $t2
+
+Ciclo 18:
+	Alinhamento:
+		jr $zero
+
+	Busca da memória:
+		lui $t3, 10
+
+	Execução:
+		madd $t4, $t3, $t2
+
+	Busca:
+		mfhi $t5
+
+Ciclo 19:
+	Alinhamento:
+		lui $t3, 10
+
+	Busca da memória:
+		madd $t4, $t3, $t2
+
+	Execução:
+		mfhi $t5
+
+	Busca:
+		mflo $t6
+
+Ciclo 20:
+	Escrita:
+		lui $t3, 10
+
+	Efetivando:
+		lui $t3, 10
+
+	Alinhamento:
+		madd $t4, $t3, $t2
+
+	Busca da memória:
+		mfhi $t5
+
+	Execução:
+		mflo $t6
+
+	Busca:
+		mthi $t3
+
+Ciclo 21:
+	Escrita:
+		madd $t4, $t3, $t2
+
+	Efetivando:
+		madd $t4, $t3, $t2
+
+	Alinhamento:
+		mfhi $t5
+
+	Busca da memória:
+		mflo $t6
+
+	Execução:
+		mthi $t3
+
+	Busca:
+		mtlo $t4
+
+Ciclo 22:
+	Escrita:
+		mfhi $t5
+
+	Efetivando:
+		mfhi $t5
+
+	Alinhamento:
+		mflo $t6
+
+	Busca da memória:
+		mthi $t3
+
+	Execução:
+		mtlo $t4
+
+	Busca:
+		movz $t5, $t1, $t2
+
+Ciclo 23:
+	Escrita:
+		mflo $t6
+
+	Efetivando:
+		mflo $t6
+
+	Alinhamento:
+		mthi $t3
+
+	Busca da memória:
+		mtlo $t4
+
+	Execução:
+		movz $t5, $t1, $t2
+
+	Busca:
+		msub $t7, $t5, $t6
+
+Ciclo 24:
+	Escrita:
+		mthi $t3
+
+	Efetivando:
+		mthi $t3
+
+	Alinhamento:
+		mtlo $t4
+
+	Busca da memória:
+		movz $t5, $t1, $t2
+
+	Execução:
+		msub $t7, $t5, $t6
+
+	Busca:
+		mul $t8, $t0, $t7
+
+Ciclo 25:
+	Escrita:
+		mtlo $t4
+
+	Efetivando:
+		mtlo $t4
+
+	Alinhamento:
+		movz $t5, $t1, $t2
+
+	Busca da memória:
+		msub $t7, $t5, $t6
+
+	Execução:
+		mul $t8, $t0, $t7
+
+	Busca:
+		mult $t9, $t0, $t1
+
+Ciclo 26:
+	Escrita:
+		movz $t5, $t1, $t2
+
+	Efetivando:
+		movz $t5, $t1, $t2
+
+	Alinhamento:
+		msub $t7, $t5, $t6
+
+	Busca da memória:
+		mul $t8, $t0, $t7
+
+	Execução:
+		mult $t9, $t0, $t1
+
+	Busca:
+		nor $s0, $t9, $t8
+
+Ciclo 27:
+	Escrita:
+		msub $t7, $t5, $t6
+
+	Efetivando:
+		msub $t7, $t5, $t6
+
+	Alinhamento:
+		mul $t8, $t0, $t7
+
+	Busca da memória:
+		mult $t9, $t0, $t1
+
+	Execução:
+		nor $s0, $t9, $t8
+
+	Busca:
+		or $s1, $t0, $zero
+
+Ciclo 28:
+	Escrita:
+		mul $t8, $t0, $t7
+
+	Efetivando:
+		mul $t8, $t0, $t7
+
+	Alinhamento:
+		mult $t9, $t0, $t1
+
+	Busca da memória:
+		nor $s0, $t9, $t8
+
+	Execução:
+		or $s1, $t0, $zero
+
+	Busca:
+		ori $s2, $t1, 10
+
+Ciclo 29:
+	Escrita:
+		mult $t9, $t0, $t1
+
+	Efetivando:
+		mult $t9, $t0, $t1
+
+	Alinhamento:
+		nor $s0, $t9, $t8
+
+	Busca da memória:
+		or $s1, $t0, $zero
+
+	Execução:
+		ori $s2, $t1, 10
+
+	Busca:
+		sub $s3, $s2, $s1
+
+Ciclo 30:
+	Escrita:
+		nor $s0, $t9, $t8
+
+	Efetivando:
+		nor $s0, $t9, $t8
+
+	Alinhamento:
+		or $s1, $t0, $zero
+
+	Busca da memória:
+		ori $s2, $t1, 10
+
+	Execução:
+		sub $s3, $s2, $s1
+
+	Busca:
+		xor $s4, $s3, $zero
+
+Ciclo 31:
+	Escrita:
+		or $s1, $t0, $zero
+
+	Efetivando:
+		or $s1, $t0, $zero
+
+	Alinhamento:
+		ori $s2, $t1, 10
+
+	Busca da memória:
+		sub $s3, $s2, $s1
+
+	Execução:
+		xor $s4, $s3, $zero
+
+	Busca:
+		xori $s5, $s4, 5
+Ciclo 31:
+	Escrita:
+		ori $s2, $t1, 10
+
+	Efetivando:
+		ori $s2, $t1, 10
+
+	Alinhamento:
+		sub $s3, $s2, $s1
+
+	Busca da memória:
+		xor $s4, $s3, $zero
+
+	Execução:
+		xori $s5, $s4, 5
+Ciclo 31:
+	Escrita:
+		sub $s3, $s2, $s1
+
+	Efetivando:
+		sub $s3, $s2, $s1
+
+	Alinhamento:
+		xor $s4, $s3, $zero
+
+	Busca da memória:
+		xori $s5, $s4, 5
+Ciclo 31:
+	Escrita:
+		xor $s4, $s3, $zero
+
+	Efetivando:
+		xor $s4, $s3, $zero
+
+	Alinhamento:
+		xori $s5, $s4, 5
+Ciclo 31:
+	Escrita:
+		xori $s5, $s4, 5
+	Efetivando:
+		xori $s5, $s4, 5
 
 Instruções:
-	Emitidas: 6
-	Efetivadas: 6
+	Emitidas: 31
+	Efetivadas: 31

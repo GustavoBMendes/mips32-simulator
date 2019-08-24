@@ -21,7 +21,7 @@ int blez(int regOrigem1, int PC, int offset); //adicionado a OPU
 int bltz(int regOrigem1, int PC, int offset); //adicionado a OPU
 int bne(int regOrigem1,int regOrigem2,int PC, int offset); //adicionado a OPU
 int DivHI(int regOrigem1, int regOrigem2, int HI, int LO); //adicionado a mdu
-int DivLO(int regOrigem1, int regOrigem2,int HI, int LO);
+int DivLO(int regOrigem1, int regOrigem2,int regOrigem3);
 int j(int PC, int offset); //adicionado a OPU
 int jr(int PC, int regOrigem1); //adicionado a OPU
 unsigned int lui(int regDestino, int imediato); //revisar | adicionado a OPU

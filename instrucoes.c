@@ -150,7 +150,6 @@ int bne(int regOrigem1,int regOrigem2,int PC, int offset){
 * RESTO (MOD) ARMAZENADO NO REGISTRADOR HI
 */
 int DivHI(int regOrigem1, int regOrigem2, int HI, int LO){
-    LO = regOrigem1 / regOrigem2;
     HI = regOrigem1 % regOrigem2;
     return HI;
 }
@@ -160,10 +159,9 @@ int DivHI(int regOrigem1, int regOrigem2, int HI, int LO){
 * RESULTADO (QUOCIENTE) ARMAZENADO NO REGISTRADOR LO
 * RESTO (MOD) ARMAZENADO NO REGISTRADOR HI
 */
-int DivLO(int regOrigem1, int regOrigem2, int HI, int LO){
-    LO = regOrigem1 / regOrigem2;
-    HI = regOrigem1 % regOrigem2;
-    return LO;
+int DivLO(int regOrigem1, int regOrigem2, int regOrigem3){
+    regOrigem1 = regOrigem2 / regOrigem3;
+    return regOrigem1;
 }
 /* 
 * @function
@@ -197,6 +195,7 @@ unsigned int lui(int regDestino, int imediato){
 */
 int madd(int regOrigem1, int regOrigem2, int regAcumulador){
     regAcumulador += regOrigem1 * regOrigem2;
+    return regAcumulador;
 }
 /*
 * @function mfhi(int HI, int regOrigem1)
