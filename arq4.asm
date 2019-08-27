@@ -1,6 +1,7 @@
 lui $t0, 1
 bltz $t0, 56
-sub $t1, $t0, 3
+lui $t3, 3
+sub $t1, $t0, $t3
 beq $t1, $zero, 48
 lui $t2, 1
 beq $t0, $t2, 20

@@ -1,19 +1,20 @@
 Programa:
-	lui $t0, 10
-	lui $t1, 14
-	sub $t2, $t0, $t1
-	bgez $t2, 4
-	add $t2, $zero, $zero
-	skip:
+	lui $t0, 1
+	lui $t1, 3
+	lui $t2, 3
+	loop:
+	sub $t1, $t1, $t0
+	mul $t2, $t2, $t1
+	bgtz $t1, -12
 
 Binário:
-	3C08000A
-	3C09000E
-	0148481D
-	05410004
-	01400020
-	01400020
-	01400020
+	3C080001
+	3C090003
+	3C0A0003
+	0129401
+	014A480
+	1D20480
+	1D20480
 
 Previsão:
 	Total de saltos: 0
@@ -21,104 +22,123 @@ Previsão:
 	Erros: 0
 
 Ciclos:
-	10 ciclos
+	12 ciclos
 Ciclo 1:
 	Busca:
-		lui $t0, 10
+		lui $t0, 1
 
 Ciclo 2:
 	Execução:
-		lui $t0, 10
+		lui $t0, 1
 
 	Busca:
-		lui $t1, 14
+		lui $t1, 3
 
 Ciclo 3:
 	Busca da memória:
-		lui $t0, 10
+		lui $t0, 1
 
 	Execução:
-		lui $t1, 14
+		lui $t1, 3
 
 	Busca:
-		sub $t2, $t0, $t1
+		lui $t2, 3
 
 Ciclo 4:
 	Alinhamento:
-		lui $t0, 10
+		lui $t0, 1
 
 	Busca da memória:
-		lui $t1, 14
+		lui $t1, 3
 
 	Execução:
-		sub $t2, $t0, $t1
+		lui $t2, 3
 
 	Busca:
-		bgez $t2, 4
+		loop:
 
 Ciclo 5:
 	Escrita:
-		lui $t0, 10
+		lui $t0, 1
 
 	Efetivando:
-		lui $t0, 10
+		lui $t0, 1
 
 	Alinhamento:
-		lui $t1, 14
+		lui $t1, 3
 
 	Busca da memória:
-		sub $t2, $t0, $t1
-
-	Execução:
-		bgez $t2, 4
+		lui $t2, 3
 
 	Busca:
-		add $t2, $zero, $zero
+		sub $t1, $t1, $t0
 
 Ciclo 6:
 	Escrita:
-		lui $t1, 14
+		lui $t1, 3
 
 	Efetivando:
-		lui $t1, 14
+		lui $t1, 3
 
 	Alinhamento:
-		sub $t2, $t0, $t1
-
-	Busca da memória:
-		bgez $t2, 4
+		lui $t2, 3
 
 	Execução:
-		add $t2, $zero, $zero
+		sub $t1, $t1, $t0
 
 	Busca:
-		skip:
-Ciclo 6:
+		mul $t2, $t2, $t1
+
+Ciclo 7:
 	Escrita:
-		sub $t2, $t0, $t1
+		lui $t2, 3
 
 	Efetivando:
-		sub $t2, $t0, $t1
-
-	Alinhamento:
-		bgez $t2, 4
+		lui $t2, 3
 
 	Busca da memória:
-		add $t2, $zero, $zero
+		sub $t1, $t1, $t0
 
-Ciclo 6:
+	Execução:
+		mul $t2, $t2, $t1
+
+	Busca:
+		bgtz $t1, -12
+Ciclo 8:
 	Alinhamento:
-		add $t2, $zero, $zero
+		sub $t1, $t1, $t0
 
-Ciclo 6:
+	Busca da memória:
+		mul $t2, $t2, $t1
+
+	Execução:
+		bgtz $t1, -12
+	Busca:
+		bgtz $t1, -12
+Ciclo 8:
 	Escrita:
-		add $t2, $zero, $zero
+		sub $t1, $t1, $t0
 
 	Efetivando:
-		add $t2, $zero, $zero
+		sub $t1, $t1, $t0
 
-Ciclo 6:
+	Alinhamento:
+		mul $t2, $t2, $t1
+
+	Busca da memória:
+		bgtz $t1, -12
+Ciclo 8:
+	Escrita:
+		mul $t2, $t2, $t1
+
+	Efetivando:
+		mul $t2, $t2, $t1
+
+	Alinhamento:
+		bgtz $t1, -12
+Ciclo 8:
+Ciclo 8:
 
 Instruções:
-	Emitidas: 6
-	Efetivadas: 6
+	Emitidas: 8
+	Efetivadas: 8
