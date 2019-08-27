@@ -20,9 +20,11 @@ int main(int argc, char *argv[]){
     char programName[20];
     int detail = 0, help = 0;
     
-    if(strcmp(argv[1], "-i") == 0){
+    if(strcmp(argv[1], "-i") == 0)
         strcpy(programName, argv[2]);
-    }
+
+    else if(strcmp(argv[1], "-h") == 0)
+        help = 1;
     
     if(argc > 3){
         if(strcmp(argv[3], "--detail") == 0){
@@ -132,10 +134,10 @@ int main(int argc, char *argv[]){
         fprintf(out, "Ciclos:\n\t%d ciclos\n", total_ciclos);
 
         int ciclo = 1;
-
+        int c = 1;
         while(total_ciclos > 0){
         
-            fprintf(out, "Ciclo %d:\n", ciclo);
+            fprintf(out, "Ciclo %d:\n", c);
 
             for (i = 0; i < ciclo; i++){
 
@@ -265,6 +267,7 @@ int main(int argc, char *argv[]){
             if(ciclo < total_instrucoes)
                 ciclo++;
 
+            c++;
             total_ciclos--;
         }
         
